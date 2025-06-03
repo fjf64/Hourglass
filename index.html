@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hourglass</title>
+    <style>
+        body {
+            background: black;
+            color:whitesmoke;
+        }
+
+        #mainContainer {
+            height:100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #mainTime {
+            font-size: 30vw;
+        }
+
+
+        footer {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="mainContainer">
+        <h1 id="mainTime">00:00</h1>
+    </div>
+    <footer>Made by Wolf Lieff</footer>
+
+    <script>
+        var schedules = [
+            [
+                "YSHS",
+                [
+                    ["1", "8:30-9:17"],
+                    ["2", "9:21-10:06"],
+                    ["3", "10:10-10:55"],
+                    ["4", "10:59-11:44"],
+                    ["lunch", "11:44-12:14"],
+                    ["5", "12:18-13:04"],
+                    ["6", "13:08-13:53"],
+                    ["7", "13:57-14:42"],
+                    ["8", "14:46-15:30"],
+                ],
+            ]
+            [
+            "YSHS two hour delay",
+            [
+                ["1", "10:30-11:02"],
+                ["2", "11:06-11:36"],
+                ["lunch", "11:36-12:06"],
+                ["3", "12:10-12:40"],
+                ["4", "12:44-13:14"],
+                ["5", "13:18-13:48"],
+                ["6", "13:52-14:22"],
+                ["7", "14:26-14:56"],
+                ["8", "15:00-15:30"],
+            ]
+            ],
+        ];
+        function TimeDifference(a, b) {
+            var returnal = {
+                seconds: 0,
+                minutes: 0,
+                hours: 0,
+                days: 0,
+                weeks: 0
+            }
+            var parsedA = Date.parse(a)
+            var parsedB = Date.parse(b)
+            var timeDifference = parsedA - parsedB
+            returnal.weeks = Math.floor(timeDifference / 604800000)
+            returnal.days = Math.floor((timeDifference % 604800000) / 86400000)
+            returnal.hours = Math.floor((timeDifference % 604800000 % 86400000) / 3600000)
+            returnal.minutes = Math.floor((timeDifference % 604800000 % 86400000 % 3600000) / 60000)
+            returnal.seconds = Math.floor((timeDifference % 604800000 % 86400000 % 3600000 % 60000) / 1000)
+            return returnal
+        }
+        function Main() {
+
+        }
+        setInterval(Main, 100)
+        Main()
+    </script>
+</body>
+
+</html>
