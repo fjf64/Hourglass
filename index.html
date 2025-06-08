@@ -22,22 +22,83 @@
             font-size: 30vw;
         }
 
+        #settings {
+            position: absolute;
+            font-size: 4vw;
+            margin-left: -7.5px;
+            background: maroon;
+            top: 8vh;
+            width: 100%;
+            border: 5px solid white;
+            border-left:none;
+            border-right: none;
+            border-radius: .2vh;
+            z-index: 1;
+            transition: 0.4s;
+            opacity: 0;
+            transform: translate(0, -100%);
+
+        }
+
+        .menu-button {
+            position: absolute;
+            cursor: cell;
+            z-index: 2;
+        }
+
 
         footer {
             text-align: center;
+        }
+
+        .bar1,
+        .bar2,
+        .bar3 {
+            width: 6vh;
+            height: 1vh;
+            background-color: white;
+            margin: 1vh 0;
+            transition: 0.4s;
+        }
+
+        .change .bar1 {
+            transform: translate(0, 2vh) rotate(-45deg);
+            /* width: 3vh; */
+        }
+
+        .change .bar2 {
+            opacity: 0;
+        }
+
+        .change .bar3 {
+            transform: translate(0, -2vh) rotate(45deg);
+        }
+
+        #settings.change {
+            /* display: block; */
+            transform: translate(0, 0vh);
+            opacity: 1;
         }
     </style>
 </head>
 
 <body>
+    <div class="menu-button" onclick="IdToggle(settings, ['menu-button', 'settings'])" id="menu-button">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+    </div>
     <div id="mainContainer">
         <h1 id="mainTime">00:00</h1>
     </div>
-    <div id="settings"></div>
+    <div id="settings" class="menu">
+        
+        <button>blah blah</button>
+    </div>
     <footer>Made by Wolf Lieff</footer>
 
     <script>
-        var togglese = {} // ID:state
+        var toggles = {} // ID:state
         var schedules = {
             "YSHS":
                 [
@@ -64,6 +125,19 @@
                     ["8", "15:00-15:30"],
                 ]
         };
+        function IdToggle(itemId, Ids = []) {
+            if (toggles[itemId] == undefined || toggles[itemId] == false) {
+
+                toggles[itemId] = true
+            } else {
+                toggles[itemId] = false
+            }
+            if (Ids != []) {
+                for (let x of Ids) {
+                    document.getElementById(x).classList.toggle('change')
+                }
+            }
+        }
         function ClockToEpoch(timeStr) {
             const [hours, minutes] = timeStr.split(':').map(Number);
             const now = new Date();
@@ -134,13 +208,13 @@
             } else if (currrentPassedPeriods[0].length == usedSchedule.length) {// after
                 console.log('after')
             } else if (currrentPassedPeriods[0].length == currrentPassedPeriods[1].length) { // break
-                console.log('inbetween'+usedSchedule[currrentPassedPeriods[0][currrentPassedPeriods[0].length - 1]]) //first
+                console.log('inbetween' + usedSchedule[currrentPassedPeriods[0][currrentPassedPeriods[0].length - 1]]) //first
             } else if (currrentPassedPeriods[0].length > currrentPassedPeriods[1].length) { // period x
                 var scheduleChunk = usedSchedule[currrentPassedPeriods[0][currrentPassedPeriods[0].length - 1]]
                 var timeDiff = ClockToEpoch(scheduleChunk[1].split('-')[1]) - currentDate
                 var mainMinutes = Math.floor(timeDiff / 60000)
                 var mainSeconds = Math.floor((timeDiff % 60000) / 1000)
-                clock.innerHTML = (mainMinutes+":"+mainSeconds)
+                clock.innerHTML = (mainMinutes + ":" + mainSeconds)
             }
 
         }
