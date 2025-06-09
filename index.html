@@ -27,7 +27,7 @@
             position: absolute;
             font-size: 3vh;
             margin-left: -7.5px;
-            background: maroon;
+            background: black;
             top: 0vh;
             padding-top: 7vh;
             width: 100%;
@@ -36,7 +36,7 @@
             border-right: none;
             border-radius: .2vh;
             z-index: 1;
-            transition: 0.4s;
+            transition: transform 0.4s ease, opacity 0.5s cubic-bezier(0,1.02,.48,1.0);
             opacity: 0;
             transform: translate(0, -100%);
 
@@ -77,9 +77,16 @@
         }
 
         #settings.change {
-            /* display: block; */
             transform: translate(0, 0vh);
             opacity: 1;
+        }
+
+        input {
+            border-style: solid;
+            border-width: .5vh;
+            border-color: grey;
+            /* border-radius: ; */
+            display: inline-block;
         }
     </style>
 </head>
@@ -98,7 +105,8 @@
             <option value="YSHS">Yellow Springs High School</option>
             <option value="YSHS Two Hour Delay">"YSHS Two Hour Delay"</option>
         </select>
-         <p style="color:white;"><input type="text" value="" size="10" id="dev-time-fix"> : |DEV| Fix Time</p>
+        <p style="color:white;"><input type="text" value="" class="button" size="10" id="dev-time-fix"> : |DEV| Fix Time (24H)</p>
+        </p>
         <p>sadasda</p>
         <p>sadasda</p>
     </div>
