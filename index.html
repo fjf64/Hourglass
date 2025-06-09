@@ -12,6 +12,7 @@
         }
 
         #mainContainer {
+            top: 1vh;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -24,13 +25,14 @@
 
         #settings {
             position: absolute;
-            font-size: 4vw;
+            font-size: 3vh;
             margin-left: -7.5px;
             background: maroon;
-            top: 8vh;
+            top: 0vh;
+            padding-top: 7vh;
             width: 100%;
-            border: 5px solid white;
-            border-left:none;
+            border-bottom: 5px solid white;
+            border-left: none;
             border-right: none;
             border-radius: .2vh;
             z-index: 1;
@@ -92,8 +94,13 @@
         <h1 id="mainTime">00:00</h1>
     </div>
     <div id="settings" class="menu">
-        
-        <button>blah blah</button>
+        <select id='schedule'>
+            <option value="YSHS">Yellow Springs High School</option>
+            <option value="YSHS Two Hour Delay">"YSHS Two Hour Delay"</option>
+        </select>
+         <p style="color:white;"><input type="text" value="" size="10" id="dev-time-fix"> : |DEV| Fix Time</p>
+        <p>sadasda</p>
+        <p>sadasda</p>
     </div>
     <footer>Made by Wolf Lieff</footer>
 
@@ -196,19 +203,27 @@
             return returnal
         }
         function Main() {
-            var currentSchedule = 'YSHS'
+            var currentSchedule = document.getElementById('schedule').value
             var usedSchedule = schedules[currentSchedule]
             var clock = document.getElementById('mainTime')
             var currentDate = Date.now() + (3600000 * 0) //'3600000 * x'=hours TEST
+            var devTimeFix = document.getElementById('dev-time-fix').value
+            if (devTimeFix != '0' && devTimeFix != '') {
+                currentDate = ClockToEpoch(devTimeFix)
+            }
             // var currentDate = ClockToEpoch('15:40') //TEST
             var currrentPassedPeriods = PassedPeriods(currentSchedule, currentDate)
             // console.log(PassedPeriods(currentSchedule, currentDate))
             if (currrentPassedPeriods[0].length == 0) {// before
-                console.log('before')
+                clock.innerHTML = "Before"
+
             } else if (currrentPassedPeriods[0].length == usedSchedule.length) {// after
-                console.log('after')
+                clock.innerHTML = "After"
+
             } else if (currrentPassedPeriods[0].length == currrentPassedPeriods[1].length) { // break
-                console.log('inbetween' + usedSchedule[currrentPassedPeriods[0][currrentPassedPeriods[0].length - 1]]) //first
+                // console.log('inbetween' + usedSchedule[currrentPassedPeriods[0][currrentPassedPeriods[0].length - 1]]) //first
+                clock.innerHTML = "Break"
+
             } else if (currrentPassedPeriods[0].length > currrentPassedPeriods[1].length) { // period x
                 var scheduleChunk = usedSchedule[currrentPassedPeriods[0][currrentPassedPeriods[0].length - 1]]
                 var timeDiff = ClockToEpoch(scheduleChunk[1].split('-')[1]) - currentDate
