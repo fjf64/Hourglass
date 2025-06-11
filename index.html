@@ -237,6 +237,9 @@
                 var timeDiff = ClockToEpoch(scheduleChunk[1].split('-')[1]) - currentDate
                 var mainMinutes = Math.floor(timeDiff / 60000)
                 var mainSeconds = Math.floor((timeDiff % 60000) / 1000)
+                if (mainSeconds.toString().length <= 1) {
+                    mainSeconds = '0'+mainSeconds
+                }
                 clock.innerHTML = (mainMinutes + ":" + mainSeconds)
             }
 
