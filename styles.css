@@ -1,0 +1,81 @@
+body {
+            background: black;
+            color: whitesmoke;
+        }
+
+        #mainContainer {
+            top: 1vh;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #mainTime {
+            font-size: 30vw;
+        }
+
+        #settings {
+            position: absolute;
+            font-size: 3vh;
+            margin-left: -7.5px;
+            background: black;
+            top: 0vh;
+            padding-top: 7vh;
+            width: 100%;
+            border-bottom: 5px solid white;
+            border-left: none;
+            border-right: none;
+            border-radius: .2vh;
+            z-index: 1;
+            transition: transform 0.4s ease, opacity 0.5s cubic-bezier(0,1.02,.48,1.0);
+            opacity: 0;
+            transform: translate(0, -100%);
+
+        }
+
+        .menu-button {
+            position: absolute;
+            cursor: cell;
+            z-index: 2;
+        }
+
+
+        footer {
+            text-align: center;
+        }
+
+        .bar1,
+        .bar2,
+        .bar3 {
+            width: 6vh;
+            height: 1vh;
+            background-color: white;
+            margin: 1vh 0;
+            transition: 0.4s;
+        }
+
+        .change .bar1 {
+            transform: translate(0, 2vh) rotate(-45deg);
+            /* width: 3vh; */
+        }
+
+        .change .bar2 {
+            opacity: 0;
+        }
+
+        .change .bar3 {
+            transform: translate(0, -2vh) rotate(45deg);
+        }
+
+        #settings.change {
+            transform: translate(0, 0vh);
+            opacity: 1;
+        }
+
+        input {
+            border-style: solid;
+            border-width: .5vh;
+            border-color: grey;
+            display: inline-block;
+        }
