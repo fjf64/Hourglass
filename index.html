@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hourglass</title>
+    <link rel="icon" type="image/x-icon" href="Hourglass.png">
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -20,11 +21,11 @@
 
     <div id="settings" class="menu">
 
-        <div style="grid-column: 1;background-color: rgb(27, 27, 48);width: 100%;"></div>
+        <div class="settings-grid" style="grid-column: 1;width: 100%;"></div>
 
-        <div style="grid-column: 2;background-color: black;width: 100%;"></div>
+        <div class="settings-grid" style="grid-column: 2;width: 100%;"></div>
 
-        <div style="grid-column: 3;background-color: rgb(27, 27, 48);">
+        <div class="settings-grid" style="grid-column: 3;">
             <select id='schedule' style="height: 5vh; width: 100%;text-align: center;">
                 <option style="font-size: 1.5vh;" value="YSHS">Yellow Springs High School</option>
                 <option style="font-size: 1.5vh;" value="YSHS Two Hour Delay">"YSHS Two Hour Delay"</option>
@@ -41,7 +42,7 @@
             </div>
         </div>
 
-        <div style="grid-column: 4;background-color: black;">
+        <div class="settings-grid" style="grid-column: 4;">
             <div id="added-periods"
                 style="width:100%;display: flex;justify-content: center;flex-direction: column;align-items:center;">
             </div>

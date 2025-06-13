@@ -93,7 +93,7 @@ function PassedPeriods(schedule, currentTime) {
 function appendPeriod() {
 	var newElement = document.createElement("div");
 	newElement.className = "period-input-div"; // 👈 your specific class
-	inputBoxes = "<input class='period-input-box' size='5'></input>";
+	inputBoxes = "<input class='period-input-box'></input>"; // size='10'
 	newElement.innerHTML = "<p style='margin:0;'>" + inputBoxes + " - " + inputBoxes + "</p>";
 	document.getElementById("added-periods").appendChild(newElement);
 }
