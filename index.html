@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div class="menu-button" onclick="IdToggle(settings, ['menu-button', 'settings'])" id="menu-button">
+    <div class="menu-button" onclick="IdToggle('settings', ['menu-button', 'settings'])" id="menu-button">
         <div class="bar1"></div>
         <div class="bar2"></div>
         <div class="bar3"></div>
@@ -17,18 +17,46 @@
     <div id="mainContainer">
         <h1 id="mainTime">00:00</h1>
     </div>
+
     <div id="settings" class="menu">
-        <select id='schedule'>
-            <option value="YSHS">Yellow Springs High School</option>
-            <option value="YSHS Two Hour Delay">"YSHS Two Hour Delay"</option>
-        </select>
-        <p style="color:white;"><input type="text" value="" class="button" size="10" id="dev-time-fix"> : |DEV| Fix Time (24H)</p>
-        </p>
-        <p>sadasda</p>
-        <p>sadasda</p>
+
+        <div style="grid-column: 1;background-color: rgb(27, 27, 48);width: 100%;"></div>
+
+        <div style="grid-column: 2;background-color: black;width: 100%;"></div>
+
+        <div style="grid-column: 3;background-color: rgb(27, 27, 48);">
+            <select id='schedule' style="height: 5vh; width: 100%;text-align: center;">
+                <option style="font-size: 1.5vh;" value="YSHS">Yellow Springs High School</option>
+                <option style="font-size: 1.5vh;" value="YSHS Two Hour Delay">"YSHS Two Hour Delay"</option>
+            </select>
+            <div id="period-selectors" style="display: block;">
+                <div id="period-count" style="display: inline-block;">
+                    <button id="append-period" onclick="appendPeriod()">+</button>
+                    <button id="remove-period" onclick="removePeriod()">-</button>
+                </div>
+                <div style='display: block;' id="import-export">
+                    <button class="button">Import</button>
+                    <button class="button">Export</button>
+                </div>
+            </div>
+        </div>
+
+        <div style="grid-column: 4;background-color: black;">
+            <div id="added-periods"
+                style="width:100%;display: flex;justify-content: center;flex-direction: column;align-items:center;">
+            </div>
+        </div>
+        <div id="dev-settings">
+            <p class="selector"><input type="text" value="" class="button" size="10" id="dev-time-fix"> : |DEV| Fix Time
+                (24H)</p>
+        </div>
+
     </div>
-    <footer>Made by Wolf Lieff</footer>
-    <script src="main.js"></script> 
+
+    <footer>
+        <p style="font-size: 2vh;" onclick="IdToggle('dev-settings', ['dev-settings'])">Made by Wolf Lieff</p>
+    </footer>
+    <script src="main.js"></script>
 </body>
 
 </html>
