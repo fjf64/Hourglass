@@ -35,6 +35,7 @@ body {
 	grid-template-columns: 25% 25% 25% 25%;
 	/* grid-template-rows: repeat(3, 1fr); */
 	/* height: 100vh; */
+	line-height: 4vh;
 }
 #settings button,
 #settings select,
@@ -46,9 +47,9 @@ input {
 	border-color: grey;
 }
 .settings-grid {
-	border-left: 0.1vw solid white;
-	border-right: 0.1vw solid white;
-	border-top: 0.1vw solid white;
+	border-left: .25vh solid white;
+	border-right: 0.25vh solid white;
+	border-top: 0.25vh solid white;
 	background-color: black;
 }
 .period-input-div {
@@ -128,4 +129,61 @@ input {
 .selector {
 	color: white;
 	font-size: 2.5vh;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 2vh;
+  height: 4vh;
+  bottom:0;
+  top: 0;
+  margin: 0;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1vh;
+  width: 2vh;
+  left: 0vh;
+  bottom: 0vh;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 .1vh #2196F3;
+}
+
+input:checked + .slider:before {
+  /* -webkit-transform: translateX(26px); */
+  /* -ms-transform: translateX(26px); */
+  transform: translateY(-3vh);
+}
+.am-pm {
+	content: "apple";
 }

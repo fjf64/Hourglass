@@ -92,9 +92,10 @@ function PassedPeriods(schedule, currentTime) {
 }
 function appendPeriod() {
 	var newElement = document.createElement("div");
-	newElement.className = "period-input-div"; // 👈 your specific class
-	inputBoxes = "<input class='period-input-box'></input>"; // size='10'
-	newElement.innerHTML = "<p style='margin:0;'>" + inputBoxes + " - " + inputBoxes + "</p>";
+	newElement.className = "period-input-div"; 
+	var inputBoxes = "<input class='period-input-box'></input>";
+	var switchElement = '<button class="am-pm" onclick="amPmButton(this)">AM</button>'
+	newElement.innerHTML = "<p style='margin:0;'>" + inputBoxes + switchElement + " - " + inputBoxes + switchElement + "</p>";
 	document.getElementById("added-periods").appendChild(newElement);
 }
 function removePeriod() {
@@ -104,7 +105,12 @@ function removePeriod() {
 		div.removeChild(lastItem);
 	}
 }
-
+function amPmButton(selfItem) {
+	if (selfItem.innerHTML == 'AM') 
+	{selfItem.innerHTML = 'PM'} else {
+		selfItem.innerHTML = 'AM'
+	}
+}
 function Main() {
 	var currentSchedule = document.getElementById("schedule").value;
 	var usedSchedule = schedules[currentSchedule];
