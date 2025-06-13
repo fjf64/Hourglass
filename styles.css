@@ -185,5 +185,8 @@ input:checked + .slider:before {
   transform: translateY(-3vh);
 }
 .am-pm {
-	content: "apple";
+	display: none;
+}
+.am-pm.change {
+	display: inline-block;
 }

@@ -92,9 +92,13 @@ function PassedPeriods(schedule, currentTime) {
 }
 function appendPeriod() {
 	var newElement = document.createElement("div");
-	newElement.className = "period-input-div"; 
+	newElement.className = "period-input-div";
 	var inputBoxes = "<input class='period-input-box'></input>";
-	var switchElement = '<button class="am-pm" onclick="amPmButton(this)">AM</button>'
+	if (document.getElementById('24h-box').checked) {
+	var switchElement = '<button class="am-pm" onclick="amPmButton(this)">AM</button>';
+	} else {
+		var switchElement = '<button class="am-pm change" onclick="amPmButton(this)">AM</button>';
+	}
 	newElement.innerHTML = "<p style='margin:0;'>" + inputBoxes + switchElement + " - " + inputBoxes + switchElement + "</p>";
 	document.getElementById("added-periods").appendChild(newElement);
 }
@@ -105,10 +109,18 @@ function removePeriod() {
 		div.removeChild(lastItem);
 	}
 }
+function amPmSwitch(thisItem) {
+	if (true) {
+		for (let x of document.getElementsByClassName('am-pm')) {
+			x.classList.toggle("change")
+		}
+	}
+}
 function amPmButton(selfItem) {
-	if (selfItem.innerHTML == 'AM') 
-	{selfItem.innerHTML = 'PM'} else {
-		selfItem.innerHTML = 'AM'
+	if (selfItem.innerHTML == "AM") {
+		selfItem.innerHTML = "PM";
+	} else {
+		selfItem.innerHTML = "AM";
 	}
 }
 function Main() {
