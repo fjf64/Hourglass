@@ -93,13 +93,13 @@ function PassedPeriods(schedule, currentTime) {
 function appendPeriod() {
 	var newElement = document.createElement("div");
 	newElement.className = "period-input-div";
-	var inputBoxes = "<input class='period-input-box'></input>";
+	var inputBoxes = "<input class='period-input-box' size='1'></input>";
 	if (document.getElementById('24h-box').checked) {
 	var switchElement = '<button class="am-pm" onclick="amPmButton(this)">AM</button>';
 	} else {
 		var switchElement = '<button class="am-pm change" onclick="amPmButton(this)">AM</button>';
 	}
-	newElement.innerHTML = "<p style='margin:0;'>" + inputBoxes + switchElement + " - " + inputBoxes + switchElement + "</p>";
+	newElement.innerHTML = "<p style='margin:0;'>" +"<input class='period-input-box' placeholder='period' size='3' value='"+(document.getElementById("added-periods").children.length+1)+"'></input>"+':'+ inputBoxes + switchElement + " - " + inputBoxes + switchElement + "</p>";
 	document.getElementById("added-periods").appendChild(newElement);
 }
 function removePeriod() {
@@ -125,14 +125,20 @@ function amPmButton(selfItem) {
 }
 function saveDraft() {
 	var children = document.getElementById('added-periods').children;
+	var draftName = document.getElementById('draft-name').value
 	for (let child of children) {
 		var elements = child.children[0].children
-		if (elements[1].classList.value.indexOf('change') > -1) {
-
-		} else {
-			console.log(elements[0].value+':'+elements[2].value)
+		var mA = 0
+		var mB = 0
+		if (elements[2].innerHTML == 'PM' && elements[2].classList.value.indexOf('change') > -1) {
+			mA = 12
 		}
-	}
+		if (elements[4].innerHTML == 'PM' && elements[4].classList.value.indexOf('change') > -1) {
+			mB = 12
+		}
+		console.log(elements[0].value+':'+elements[2].value) //24 Hour
+		
+}
 }
 
 function Main() {
