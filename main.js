@@ -123,6 +123,18 @@ function amPmButton(selfItem) {
 		selfItem.innerHTML = "AM";
 	}
 }
+function saveDraft() {
+	var children = document.getElementById('added-periods').children;
+	for (let child of children) {
+		var elements = child.children[0].children
+		if (elements[1].classList.value.indexOf('change') > -1) {
+
+		} else {
+			console.log(elements[0].value+':'+elements[2].value)
+		}
+	}
+}
+
 function Main() {
 	var currentSchedule = document.getElementById("schedule").value;
 	var usedSchedule = schedules[currentSchedule];
