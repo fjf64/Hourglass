@@ -23,6 +23,9 @@ var schedules = {
 		["8", "15:00-15:30"],
 	],
 };
+function sleep(ms) {
+	return new Promise((resolve) => setTimeout(resolve, ms));
+}
 function IdToggle(itemId, Ids = []) {
 	if (toggles[itemId] == undefined || toggles[itemId] == false) {
 		toggles[itemId] = true;
@@ -93,13 +96,13 @@ function PassedPeriods(schedule, currentTime) {
 function appendPeriod() {
 	var newElement = document.createElement("div");
 	newElement.className = "period-input-div";
-	var inputBoxes = "<input class='period-input-box' size='1'></input>";
-	if (document.getElementById('24h-box').checked) {
-	var switchElement = '<button class="am-pm" onclick="amPmButton(this)">AM</button>';
+	var inputBoxes = "<input class='period-input-box'></input>";
+	if (document.getElementById("24h-box").checked) {
+		var switchElement = '<button class="am-pm" onclick="amPmButton(this)">AM</button>';
 	} else {
 		var switchElement = '<button class="am-pm change" onclick="amPmButton(this)">AM</button>';
 	}
-	newElement.innerHTML = "<p style='margin:0;'>" +"<input class='period-input-box' placeholder='period' size='3' value='"+(document.getElementById("added-periods").children.length+1)+"'></input>"+':'+ inputBoxes + switchElement + " - " + inputBoxes + switchElement + "</p>";
+	newElement.innerHTML = "<p style='margin:0;'>" + "<input class='period-input-box' placeholder='period' size='3' value='" + (document.getElementById("added-periods").children.length + 1) + "'></input>" + ":" + inputBoxes + switchElement + " - " + inputBoxes + switchElement + "</p>";
 	document.getElementById("added-periods").appendChild(newElement);
 }
 function removePeriod() {
@@ -111,8 +114,8 @@ function removePeriod() {
 }
 function amPmSwitch(thisItem) {
 	if (true) {
-		for (let x of document.getElementsByClassName('am-pm')) {
-			x.classList.toggle("change")
+		for (let x of document.getElementsByClassName("am-pm")) {
+			x.classList.toggle("change");
 		}
 	}
 }
@@ -123,22 +126,72 @@ function amPmButton(selfItem) {
 		selfItem.innerHTML = "AM";
 	}
 }
-function saveDraft() {
-	var children = document.getElementById('added-periods').children;
-	var draftName = document.getElementById('draft-name').value
+async function saveDraft() {
+	var numberRegex = /^\d{1,2}:\d{2}$/;
+	var children = document.getElementById("added-periods").children;
+	if (document.getElementById("draft-name").value == undefined || document.getElementById("draft-name").value == "" || children.length == 0) {
+		abortSave();
+		return;
+	}
+	if (Object.keys(schedules).includes(document.getElementById("draft-name").value)) {
+		document.getElementById("draft-name").value = ''
+		abortSave()
+		return
+	}
+	var draftName = document.getElementById("draft-name").value;
+	var periods = [];
 	for (let child of children) {
-		var elements = child.children[0].children
-		var mA = 0
-		var mB = 0
-		if (elements[2].innerHTML == 'PM' && elements[2].classList.value.indexOf('change') > -1) {
-			mA = 12
+		var elements = child.children[0].children;
+		console.log(numberRegex.test(elements[1].value))
+		console.log(numberRegex.test(elements[3].value))
+		if (!numberRegex.test(elements[1].value) || !numberRegex.test(elements[3].value)) {
+			abortSave();
+			return;
 		}
-		if (elements[4].innerHTML == 'PM' && elements[4].classList.value.indexOf('change') > -1) {
-			mB = 12
+		var mA = 0;
+		var mB = 0;
+		// if (elements[2].innerHTML == "PM" && elements[4].innerHTML == "AM" && elements[2].classList.value.indexOf("change") > -1) {
+		// 	abortSave();
+		// 	return;
+		// }
+		if (elements[2].innerHTML == "PM" && elements[2].classList.value.indexOf("change") > -1) {
+			mA = 12;
 		}
-		console.log(elements[0].value+':'+elements[2].value) //24 Hour
-		
+		if (elements[4].innerHTML == "PM" && elements[4].classList.value.indexOf("change") > -1) {
+			mB = 12;
+		}
+		var times = [];
+		var ogTimes = [elements[1].value, elements[3].value];
+		ampmList = [mA, mB];
+		for (let x in [elements[1].value, elements[3].value]) {
+			var tempTime = ogTimes[x].split(":");
+			var tempTimeList = [];
+			tempTimeList[0] = parseInt(tempTime[0]) + ampmList[x];
+			tempTimeList[1] = tempTime[1];
+			times.push(tempTimeList.join(":"));
+		}
+		if (ClockToEpoch(times[0]) - ClockToEpoch(times[1]) >= 0) {
+			abortSave();
+			return;
+		}
+		periods.push([elements[0].value, times.join("-")]);
+	}
+	schedules[draftName] = periods;
+	selectElement = document.createElement("option");
+	selectElement.style.fontSize = "1.5vh";
+	selectElement.value = draftName;
+	selectElement.textContent = draftName;
+	document.getElementById("schedule").appendChild(selectElement);
 }
+var saveBackground = document.getElementById("settings-column-4").style.background;
+async function abortSave() {
+	document.getElementById("settings-column-4").style.background = "maroon";
+	await sleep(500);
+	document.getElementById("settings-column-4").style.background = saveBackground;
+	await sleep(500);
+	document.getElementById("settings-column-4").style.background = "maroon";
+	await sleep(500);
+	document.getElementById("settings-column-4").style.background = saveBackground;
 }
 
 function Main() {
@@ -156,7 +209,7 @@ function Main() {
 	if (currrentPassedPeriods[0].length == 0) {
 		// before
 		clock.innerHTML = "Before";
-	} else if (currrentPassedPeriods[0].length == usedSchedule.length) {
+	} else if (currrentPassedPeriods[1].length == usedSchedule.length) {
 		// after
 		clock.innerHTML = "After";
 	} else if (currrentPassedPeriods[0].length == currrentPassedPeriods[1].length) {
