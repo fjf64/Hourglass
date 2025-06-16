@@ -102,7 +102,7 @@ function appendPeriod() {
 	} else {
 		var switchElement = '<button class="am-pm change" onclick="amPmButton(this)">AM</button>';
 	}
-	newElement.innerHTML = "<p style='margin:0;'>" + "<input class='period-input-box' placeholder='period' size='3' value='" + (document.getElementById("added-periods").children.length + 1) + "'></input>" + ":" + inputBoxes + switchElement + " - " + inputBoxes + switchElement + "</p>";
+	newElement.innerHTML = "<p style='margin:0;'>" + "<input class='period-input-box' placeholder='period' size='3' value='" + (document.getElementById("added-periods").children.length + 1) + "'></input>" + " : " + inputBoxes + switchElement + " - " + inputBoxes + switchElement + "</p>";
 	document.getElementById("added-periods").appendChild(newElement);
 }
 function removePeriod() {
@@ -134,17 +134,17 @@ async function saveDraft() {
 		return;
 	}
 	if (Object.keys(schedules).includes(document.getElementById("draft-name").value)) {
-		document.getElementById("draft-name").value = ''
-		abortSave()
-		return
+		document.getElementById("draft-name").value = "";
+		abortSave();
+		return;
 	}
 	var draftName = document.getElementById("draft-name").value;
 	var periods = [];
 	for (let child of children) {
 		var elements = child.children[0].children;
-		console.log(numberRegex.test(elements[1].value))
-		console.log(numberRegex.test(elements[3].value))
-		if (!numberRegex.test(elements[1].value) || !numberRegex.test(elements[3].value)) {
+		console.log(numberRegex.test(elements[1].value));
+		console.log(numberRegex.test(elements[3].value));
+		if (!numberRegex.test(elements[1].value) || !numberRegex.test(elements[3].value) || elements[0].value.includes("\\n")) {
 			abortSave();
 			return;
 		}
@@ -183,6 +183,45 @@ async function saveDraft() {
 	selectElement.textContent = draftName;
 	document.getElementById("schedule").appendChild(selectElement);
 }
+function exportCurrent() {
+	var exportNewLine = [];
+	for (let x of schedules[document.getElementById("schedule").value]) {
+		exportNewLine.push(x.join("\n"));
+	}
+	var exporting = exportNewLine.join("\n\n");
+	var blob = new Blob([exporting], { type: "text/plain" });
+	const url = URL.createObjectURL(blob);
+	const link = document.createElement("a");
+	link.href = url;
+	link.download = "schedule_" + document.getElementById("schedule").value + ".txt";
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
+	URL.revokeObjectURL(url);
+}
+function importSchedule() {
+	const input = document.getElementById("fileInput");
+	for (const file of input.files) {
+		if (!file) continue;
+		const reader = new FileReader();
+		reader.onload = (function (currentFile) {
+			return function (event) {
+				const content = event.target.result;
+				const periods = content.split("\n\n");
+				const returnal = periods.map((p) => p.split("\n"));
+				const nameKey = currentFile.name.replace(".txt", "").replace(/^schedule_/, "");
+				schedules[nameKey] = returnal;
+				selectElement = document.createElement("option");
+				selectElement.style.fontSize = "1.5vh";
+				selectElement.value = nameKey;
+				selectElement.textContent = nameKey;
+				document.getElementById("schedule").appendChild(selectElement);
+			};
+		})(file);
+		reader.readAsText(file); // Don't forget this
+	}
+}
+
 var saveBackground = document.getElementById("settings-column-4").style.background;
 async function abortSave() {
 	document.getElementById("settings-column-4").style.background = "maroon";
@@ -228,5 +267,18 @@ function Main() {
 		clock.innerHTML = mainMinutes + ":" + mainSeconds;
 	}
 }
+
+const fakeInput = document.getElementById('fileInput');
+  const fakeFileName = document.getElementById('fileName');
+
+  fakeInput.addEventListener('change', () => {
+    fakeFileName.textContent = fakeInput.files.length
+      ? fakeInput.files[0].name
+      : '';
+  });
+
+
+
+
 setInterval(Main, 1000);
 Main();
