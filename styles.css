@@ -35,9 +35,9 @@ body {
 	grid-template-columns: 25% 25% 25% 25%;
 	/* grid-template-rows: repeat(3, 1fr); */
 	/* height: 100vh; */
-	line-height: 4vh;
+	line-height: 3vh;
 }
-#settings button,
+#settings .button,
 #settings select,
 input {
 	font-size: 2vh;
@@ -202,16 +202,21 @@ input:checked + .slider:before {
 }
 .custom-file-upload {
 	display: inline-block;
-	padding: 8px 12px;
+	padding-left: 2.5%;
+	padding-right: 2.5%;
 	cursor: pointer;
-	background-color: grey;
-	color: white;
+	background-color: #ccc;
+	color: black;
 	/* border-radius: 5px; */
 	font-size: 2vh;
-	min-width: 3.5vh;
+	/* min-width: 3.5vh; */
 	border-style: solid;
 	border-width: 0.5vh;
+	margin-left: 2.5%;
+	/* margin-right: 2.5%; */
+	width: 87.5%;
 	border-color: greenyellow;
+	text-align: center;
 }
 
 input[type="file"] {
@@ -222,4 +227,13 @@ input[type="file"] {
 	margin-left: 10px;
 	font-size: 2vh;
 	font-family: sans-serif;
+}
+.period-button {
+	text-align: center;
+	margin-left: 2.5%;
+	width: 95%;
+	font-size: 2vh;
+	border-style: solid;
+	border-width: 0.5vh;
+	border-color: grey;
 }
