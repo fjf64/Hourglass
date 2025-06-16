@@ -105,6 +105,7 @@ function appendPeriod() {
 	newElement.innerHTML = "<p style='margin:0;'>" + "<input class='period-input-box' placeholder='period' size='3' value='" + (document.getElementById("added-periods").children.length + 1) + "'></input>" + " : " + inputBoxes + switchElement + " - " + inputBoxes + switchElement + "</p>";
 	document.getElementById("added-periods").appendChild(newElement);
 }
+appendPeriod()
 function removePeriod() {
 	var div = document.getElementById("added-periods"); // or any selector like '#myDiv'
 	var lastItem = div.lastElementChild;
