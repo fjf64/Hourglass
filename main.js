@@ -105,7 +105,7 @@ function appendPeriod() {
 	newElement.innerHTML = "<p style='margin:0;'>" + "<input class='period-input-box' placeholder='period' size='3' value='" + (document.getElementById("added-periods").children.length + 1) + "'></input>" + " : " + inputBoxes + switchElement + " - " + inputBoxes + switchElement + "</p>";
 	document.getElementById("added-periods").appendChild(newElement);
 }
-appendPeriod()
+appendPeriod();
 function removePeriod() {
 	var div = document.getElementById("added-periods"); // or any selector like '#myDiv'
 	var lastItem = div.lastElementChild;
@@ -143,8 +143,6 @@ async function saveDraft() {
 	var periods = [];
 	for (let child of children) {
 		var elements = child.children[0].children;
-		console.log(numberRegex.test(elements[1].value));
-		console.log(numberRegex.test(elements[3].value));
 		if (!numberRegex.test(elements[1].value) || !numberRegex.test(elements[3].value) || elements[0].value.includes("\\n")) {
 			abortSave();
 			return;
@@ -222,6 +220,28 @@ function importSchedule() {
 		reader.readAsText(file); // Don't forget this
 	}
 }
+function exportCode() {
+	var exportNewLine = [];
+	for (let x of schedules[document.getElementById("schedule").value]) {
+		exportNewLine.push(x.join("\n"));
+	}
+	var exporting = exportNewLine.join("\n\n");
+	var exporting = [document.getElementById("schedule").value,exporting].join("\n\n\n");
+	console.log(btoa(exporting));
+}
+
+function importCode(code) {
+	const namePeriods = atob(code).split("\n\n\n")
+	const periods = namePeriods[1].split("\n\n");
+	const returnal = periods.map((p) => p.split("\n"));
+	const nameKey = namePeriods[0];
+	schedules[nameKey] = returnal;
+	selectElement = document.createElement("option");
+	selectElement.style.fontSize = "1.5vh";
+	selectElement.value = nameKey;
+	selectElement.textContent = nameKey;
+	document.getElementById("schedule").appendChild(selectElement);
+}
 
 var saveBackground = document.getElementById("settings-column-4").style.background;
 async function abortSave() {
@@ -245,7 +265,6 @@ function Main() {
 	}
 	// var currentDate = ClockToEpoch('15:40') //TEST
 	var currrentPassedPeriods = PassedPeriods(currentSchedule, currentDate);
-	// console.log(PassedPeriods(currentSchedule, currentDate))
 	if (currrentPassedPeriods[0].length == 0) {
 		// before
 		clock.innerHTML = "Before";
@@ -254,7 +273,6 @@ function Main() {
 		clock.innerHTML = "After";
 	} else if (currrentPassedPeriods[0].length == currrentPassedPeriods[1].length) {
 		// break
-		// console.log('inbetween' + usedSchedule[currrentPassedPeriods[0][currrentPassedPeriods[0].length - 1]]) //first
 		clock.innerHTML = "Break";
 	} else if (currrentPassedPeriods[0].length > currrentPassedPeriods[1].length) {
 		// period x
@@ -269,17 +287,12 @@ function Main() {
 	}
 }
 
-const fakeInput = document.getElementById('fileInput');
-  const fakeFileName = document.getElementById('fileName');
+const fakeInput = document.getElementById("fileInput");
+const fakeFileName = document.getElementById("fileName");
 
-  fakeInput.addEventListener('change', () => {
-    fakeFileName.textContent = fakeInput.files.length
-      ? fakeInput.files[0].name
-      : '';
-  });
-
-
-
+fakeInput.addEventListener("change", () => {
+	fakeFileName.textContent = fakeInput.files.length ? fakeInput.files[0].name : "";
+});
 
 setInterval(Main, 1000);
 Main();
