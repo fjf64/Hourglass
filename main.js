@@ -128,15 +128,18 @@ function amPmButton(selfItem) {
 	}
 }
 async function saveDraft() {
+	var saveBackground = "black";
+	var badBackground = "maroon";
+	var goodBackground = "greenyellow";
 	var numberRegex = /^\d{1,2}:\d{2}$/;
 	var children = document.getElementById("added-periods").children;
 	if (document.getElementById("draft-name").value == undefined || document.getElementById("draft-name").value == "" || children.length == 0) {
-		abortSave();
+		flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 2);
 		return;
 	}
 	if (Object.keys(schedules).includes(document.getElementById("draft-name").value)) {
 		document.getElementById("draft-name").value = "";
-		abortSave();
+		flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 2);
 		return;
 	}
 	var draftName = document.getElementById("draft-name").value;
@@ -144,15 +147,11 @@ async function saveDraft() {
 	for (let child of children) {
 		var elements = child.children[0].children;
 		if (!numberRegex.test(elements[1].value) || !numberRegex.test(elements[3].value) || elements[0].value.includes("\\n")) {
-			abortSave();
+			flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 2);
 			return;
 		}
 		var mA = 0;
 		var mB = 0;
-		// if (elements[2].innerHTML == "PM" && elements[4].innerHTML == "AM" && elements[2].classList.value.indexOf("change") > -1) {
-		// 	abortSave();
-		// 	return;
-		// }
 		if (elements[2].innerHTML == "PM" && elements[2].classList.value.indexOf("change") > -1) {
 			mA = 12;
 		}
@@ -170,7 +169,7 @@ async function saveDraft() {
 			times.push(tempTimeList.join(":"));
 		}
 		if (ClockToEpoch(times[0]) - ClockToEpoch(times[1]) >= 0) {
-			abortSave();
+			flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 250, 2);
 			return;
 		}
 		periods.push([elements[0].value, times.join("-")]);
@@ -181,6 +180,8 @@ async function saveDraft() {
 	selectElement.value = draftName;
 	selectElement.textContent = draftName;
 	document.getElementById("schedule").appendChild(selectElement);
+	flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);
+
 }
 function exportCurrent() {
 	var exportNewLine = [];
@@ -226,12 +227,12 @@ function exportCode() {
 		exportNewLine.push(x.join("\n"));
 	}
 	var exporting = exportNewLine.join("\n\n");
-	var exporting = [document.getElementById("schedule").value,exporting].join("\n\n\n");
+	var exporting = [document.getElementById("schedule").value, exporting].join("\n\n\n");
 	console.log(btoa(exporting));
 }
 
 function importCode(code) {
-	const namePeriods = atob(code).split("\n\n\n")
+	const namePeriods = atob(code).split("\n\n\n");
 	const periods = namePeriods[1].split("\n\n");
 	const returnal = periods.map((p) => p.split("\n"));
 	const nameKey = namePeriods[0];
@@ -243,15 +244,24 @@ function importCode(code) {
 	document.getElementById("schedule").appendChild(selectElement);
 }
 
-var saveBackground = document.getElementById("settings-column-4").style.background;
-async function abortSave() {
-	document.getElementById("settings-column-4").style.background = "maroon";
-	await sleep(500);
-	document.getElementById("settings-column-4").style.background = saveBackground;
-	await sleep(500);
-	document.getElementById("settings-column-4").style.background = "maroon";
-	await sleep(500);
-	document.getElementById("settings-column-4").style.background = saveBackground;
+
+async function flashElement(element, effect, ogColor, newColor, time = 500, count = 1) {
+	//effect in path list
+	poppedEffect = JSON.parse(JSON.stringify(effect))
+	var target = element;
+	poppedEffect.pop()
+	for (let x of poppedEffect) {
+		target = target[x];
+	}
+	i = 0;
+	while (i < count) {
+		console.log(target[effect[effect.length - 1]])
+		target[effect[effect.length - 1]] = newColor;
+		await sleep(time);
+		target[effect[effect.length - 1]] = ogColor;
+		await sleep(time);
+		i++;
+	}
 }
 
 function Main() {
