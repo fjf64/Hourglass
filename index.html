@@ -36,7 +36,8 @@
 
                     <div style='display: block;' id="import-export">
                         <button class="period-button" onclick="exportCurrent()">Export Selected Schedule</button>
-                        <button class="period-button" onclick="exportCode()">Schedule Code</button>
+                        <button class="period-button" onclick="exportCode()">Copy Current Schedule Code</button>
+                        <button class="period-button custom-file-upload" onclick="importCode()"> Paste Schedule Code</button>
                         <label for="fileInput" class="custom-file-upload">Import Schedule</label>
                         <input type="file" id="fileInput" accept=".txt" onchange="importSchedule()" />
                         <!-- <span class="file-name" id="fileName"></span> -->

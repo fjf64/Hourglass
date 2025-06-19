@@ -23,6 +23,11 @@ var schedules = {
 		["8", "15:00-15:30"],
 	],
 };
+
+var saveBackground = "black";
+	var badBackground = "maroon";
+	var goodBackground = "greenyellow";
+
 function sleep(ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -128,9 +133,6 @@ function amPmButton(selfItem) {
 	}
 }
 async function saveDraft() {
-	var saveBackground = "black";
-	var badBackground = "maroon";
-	var goodBackground = "greenyellow";
 	var numberRegex = /^\d{1,2}:\d{2}$/;
 	var children = document.getElementById("added-periods").children;
 	if (document.getElementById("draft-name").value == undefined || document.getElementById("draft-name").value == "" || children.length == 0) {
@@ -181,7 +183,6 @@ async function saveDraft() {
 	selectElement.textContent = draftName;
 	document.getElementById("schedule").appendChild(selectElement);
 	flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);
-
 }
 function exportCurrent() {
 	var exportNewLine = [];
@@ -228,10 +229,41 @@ function exportCode() {
 	}
 	var exporting = exportNewLine.join("\n\n");
 	var exporting = [document.getElementById("schedule").value, exporting].join("\n\n\n");
-	console.log(btoa(exporting));
+	var copyText = btoa(exporting);
+	// copyText.select();
+	// copyText.setSelectionRange(0, 99999); // For mobile devices
+	navigator.clipboard.writeText(copyText);
+	alert("Copied the text: " + copyText);
 }
 
-function importCode(code) {
+async function importCode() {
+	var code
+	var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
+	// const clipboardContents = await navigator.clipboard.read();
+
+	try {
+		const clipboardContents = await navigator.clipboard.read();
+		for (const item of clipboardContents) {
+			for (const mimeType of item.types) {
+				if (mimeType === "text/plain") {
+					const blob = await item.getType("text/plain");
+					const blobText = await blob.text();
+					if (!base64regex.test(blobText)) {
+						flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 1);
+						return;
+					}
+					code = blobText
+				} else {
+					flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 1);
+					throw new Error(`${mimeType} not supported.`);
+				}
+			}
+		}
+	} catch (error) {
+		console.log(error.message);
+		return
+	}
+
 	const namePeriods = atob(code).split("\n\n\n");
 	const periods = namePeriods[1].split("\n\n");
 	const returnal = periods.map((p) => p.split("\n"));
@@ -242,20 +274,20 @@ function importCode(code) {
 	selectElement.value = nameKey;
 	selectElement.textContent = nameKey;
 	document.getElementById("schedule").appendChild(selectElement);
-}
+		flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);
 
+}
 
 async function flashElement(element, effect, ogColor, newColor, time = 500, count = 1) {
 	//effect in path list
-	poppedEffect = JSON.parse(JSON.stringify(effect))
+	poppedEffect = JSON.parse(JSON.stringify(effect));
 	var target = element;
-	poppedEffect.pop()
+	poppedEffect.pop();
 	for (let x of poppedEffect) {
 		target = target[x];
 	}
 	i = 0;
 	while (i < count) {
-		console.log(target[effect[effect.length - 1]])
 		target[effect[effect.length - 1]] = newColor;
 		await sleep(time);
 		target[effect[effect.length - 1]] = ogColor;
