@@ -20,7 +20,7 @@ body {
 	font-size: 5vh;
 	margin: 0;
 	left: -1px;
-	background: black;
+	background: #050d07;
 	top: 1vh;
 	padding-top: 7vh;
 	width: calc(100%);
@@ -51,7 +51,7 @@ input {
 	border-left: 0.25vh solid white;
 	border-right: 0.25vh solid white;
 	border-top: 0.25vh solid white;
-	background-color: black;
+	background-color: #0a190e;
 }
 .period-input-div {
 	font-size: 2vh;
@@ -144,11 +144,14 @@ input {
 .switch {
 	position: relative;
 	display: inline-block;
-	width: 2vh;
+	width: 4vh;
 	height: 3vh;
 	bottom: 0;
 	top: 0;
 	margin: 0;
+	border-style: solid;
+	border-width: 0.5vh;
+	border-color: grey;
 }
 
 .switch input {
@@ -172,9 +175,9 @@ input {
 .slider:before {
 	position: absolute;
 	content: "";
-	height: 1vh;
-	top: 2vh;
-	width: 2vh;
+	height: .5vh;
+	top: 2.5vh;
+	width: 4vh;
 	left: 0vh;
 	bottom: 0vh;
 	background-color: white;
@@ -193,10 +196,15 @@ input:focus + .slider {
 input:checked + .slider:before {
 	/* -webkit-transform: translateX(26px); */
 	/* -ms-transform: translateX(26px); */
-	transform: translateY(-2vh);
+	transform: translateY(-2.6vh);
 }
 .am-pm {
 	display: none;
+		font-size: 2vh;
+	min-width: 3.5vh;
+	border-style: solid;
+	border-width: 0.5vh;
+	border-color: grey;
 }
 .am-pm.change {
 	display: inline-block;
@@ -206,7 +214,7 @@ input:checked + .slider:before {
 	/* padding-left: 2.5%; */
 	/* padding-right: 2.5%; */
 	cursor: pointer;
-	background-color: #ccc;
+	background-color: #e9e9ed;
 	color: black;
 	font-size: 2vh;
 	border-style: solid;
@@ -215,7 +223,7 @@ input:checked + .slider:before {
 	margin-left: 2.5%;
 	margin-right: 2.5%;
 	/* width: 92.5%; */
-	border-color: greenyellow;
+	border-color: #6c9d1d;
 	text-align: center;
 }
 

@@ -22,7 +22,10 @@
 
     <div id="settings" class="menu">
 
-        <div class="settings-grid" style="grid-column: 1;width: 100%;border-left: none;"></div>
+        <div class="settings-grid" style="grid-column: 1;width: 100%;border-left: none;">
+            <p class="selector"><input type="text" value="" class="button" size="10" id="dev-time-fix"> : |DEV| Fix Time
+                (24H)</p>
+        </div>
 
         <div class="settings-grid" style="grid-column: 2;width: 100%;"></div>
 
@@ -32,12 +35,15 @@
                     <option style="font-size: 1.5vh;" value="YSHS">Yellow Springs High School</option>
                     <option style="font-size: 1.5vh;" value="YSHS Two Hour Delay">"YSHS Two Hour Delay"</option>
                 </select>
-                <div id="period-selectors" style="display: block;justify-content: center;align-items: center;width: 100%;">
+                <hr style="height: .1vw; border: none; background-color: white;width: 95%;">
+                <div id="period-selectors"
+                    style="display: block;justify-content: center;align-items: center;width: 100%;">
 
                     <div style='display: block;' id="import-export">
                         <button class="period-button" onclick="exportCurrent()">Export Selected Schedule</button>
                         <button class="period-button" onclick="exportCode()">Copy Current Schedule Code</button>
-                        <button class="period-button custom-file-upload" onclick="importCode()"> Paste Schedule Code</button>
+                        <button class=" custom-file-upload" style='width: 95%;' onclick="importCode()"> Paste Schedule
+                            Code</button>
                         <label for="fileInput" class="custom-file-upload">Import Schedule</label>
                         <input type="file" id="fileInput" accept=".txt" onchange="importSchedule()" />
                         <!-- <span class="file-name" id="fileName"></span> -->
@@ -52,22 +58,19 @@
             </div>
         </div>
 
-        <div id="settings-column-4" class="settings-grid" style="grid-column: 4;border-right:none;display: flex;justify-content: center;">
+        <div id="settings-column-4" class="settings-grid"
+            style="grid-column: 4;border-right:none;display: flex;justify-content: center;">
             <div id="period-count" style="display: inline-block;width: 25%;">
                 <button class='button' style="margin-left: 2.5%;" id="append-period" onclick="appendPeriod()">+</button>
                 <button class='button' id="remove-period" onclick="removePeriod()">-</button>
-                <div class="hour-switch" style="margin-left: 2.5%;white-space: nowrap;">
-                    <button style="min-width: 0;padding: 0;"><label class="switch"><input id="24h-box" type="checkbox"
-                                onclick="amPmSwitch(this)" checked><span class="slider"></span></label></button>
-                    <p
-                        style="display: inline-block;font-size: 2vh;color: black;position:relative;left: -.5vh;top:1vh;margin: 0;">
-                        24H</p>
-                </div>
+                <button style="min-width: 0;padding: 0;"><label class="switch"><input id="24h-box" type="checkbox"
+                            onclick="amPmSwitch(this)" checked><span class="slider"><p style="font-size: 2vh;line-height: 0;padding: 0;margin: 0;margin-top: 1.5vh;">24H</p></span></label></button>
+                <!-- <p style="display: inline-block;font-size: 2vh;color: black;position:relative;left: -.5vh;top:1vh;margin: 0;">24H</p> -->
             </div>
             <div style="display: inline-block;">
-            <div id="added-periods"
-                style="width:100%;display: flex;justify-content: center;flex-direction: column;align-items:center;">
-            </div>
+                <div id="added-periods"
+                    style="width:100%;display: flex;justify-content: center;flex-direction: column;align-items:center;">
+                </div>
             </div>
         </div>
         <div id="dev-settings">

@@ -24,9 +24,9 @@ var schedules = {
 	],
 };
 
-var saveBackground = "black";
-	var badBackground = "maroon";
-	var goodBackground = "greenyellow";
+var saveBackground = "#0a190e";
+var badBackground = "maroon";
+var goodBackground = "greenyellow";
 
 function sleep(ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
@@ -237,7 +237,7 @@ function exportCode() {
 }
 
 async function importCode() {
-	var code
+	var code;
 	var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
 	// const clipboardContents = await navigator.clipboard.read();
 
@@ -252,7 +252,7 @@ async function importCode() {
 						flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 1);
 						return;
 					}
-					code = blobText
+					code = blobText;
 				} else {
 					flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 1);
 					throw new Error(`${mimeType} not supported.`);
@@ -261,7 +261,7 @@ async function importCode() {
 		}
 	} catch (error) {
 		console.log(error.message);
-		return
+		return;
 	}
 
 	const namePeriods = atob(code).split("\n\n\n");
@@ -274,8 +274,8 @@ async function importCode() {
 	selectElement.value = nameKey;
 	selectElement.textContent = nameKey;
 	document.getElementById("schedule").appendChild(selectElement);
-		flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);
-
+	flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);
+	flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);
 }
 
 async function flashElement(element, effect, ogColor, newColor, time = 500, count = 1) {
