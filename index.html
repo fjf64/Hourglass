@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- ToDo - hover over schedules to get key, color options, encrypted schedule code -->
+<!-- ToDo - hover over schedules to get key, color options, reset button for color options, toggle extras by click on clock -->
 
 <head>
     <meta charset="UTF-8">
@@ -12,9 +12,9 @@
 
 <body>
     <div class="menu-button" onclick="IdToggle('settings', ['menu-button', 'settings'])" id="menu-button">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-        <div class="bar3"></div>
+        <div class="bar1" id="menu-1"></div>
+        <div class="bar2" id="menu-2"></div>
+        <div class="bar3" id="menu-3"></div>
     </div>
     <div id="mainContainer">
         <h1 id="mainTime">00:00</h1>
@@ -23,8 +23,9 @@
     <div id="settings" class="menu">
 
         <div class="settings-grid" style="grid-column: 1;width: 100%;border-left: none;">
-            <p class="selector"><input type="text" value="" class="button" size="10" id="dev-time-fix"> : |DEV| Fix Time
-                (24H)</p>
+            <p class="selector"><input id='background-picker' type="color" value="black" class="button" onchange="ChangeElement('background-picker', document.getElementById('mainContainer'), ['style','background'], 'black')"> : Background Color</p>
+            <p class="selector"><input id='text-picker' type="color" value="white" class="button" onchange="ChangeElement('text-picker', document.getElementById('mainTime'), ['style','background'], 'white')"> : Text Color</p>
+            <p class="selector"><input id='menu-picker' type="color" value="white" class="button" onchange="ChangeElement('menu-picker', document.getElementById('menu-1'), ['style','background'], 'white');ChangeElement('menu-picker', document.getElementById('menu-2'), ['style','background'], 'white');ChangeElement('menu-picker', document.getElementById('menu-3'), ['style','background'], 'white');"> : Menu Color</p>
         </div>
 
         <div class="settings-grid" style="grid-column: 2;width: 100%;"></div>
