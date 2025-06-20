@@ -306,7 +306,7 @@ async function flashElement(element, effect, ogColor, newColor, time = 500, coun
 // 	}
 // 	target[effect[effect.length - 1]] = selfId.value;
 // }
-function ChangeElement(selfElement, element, effect) {
+async function ChangeElement(selfElement, element, effect) {
 	let target = element;
 	let path = [...effect];
 	let last = path.pop();
@@ -314,6 +314,8 @@ function ChangeElement(selfElement, element, effect) {
 		target = target[key];
 	}
 	target[last] = selfElement.value;
+	console.log(selfElement.value)
+	setTimeout(() => target[last] = selfElement.value, 0)
 }
 
 

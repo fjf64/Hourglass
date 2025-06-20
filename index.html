@@ -9,6 +9,9 @@
     
     <link rel="icon" type="image/x-icon" href="Hourglass.png">
     <link rel="stylesheet" href="styles.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
 </head>
 
 <body>
@@ -24,9 +27,9 @@
     <div id="settings" class="menu">
 
         <div class="settings-grid" style="grid-column: 1;width: 100%;border-left: none;">
-            <p class="selector"><input type="image" class='reset-button' value='black' src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])"/><input id='background-picker' type="color" value="black" class="button" onchange="ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])"> : Background Color</p>
-            <p class="selector"><input type="image" class='reset-button' value='white' src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('mainTime'), ['style','color'])"/><input id='text-picker' type="color" value="white" class="button" onchange="ChangeElement(this, document.getElementById('mainTime'), ['style','color'])"> : Text Color</p>
-            <p class="selector"><input type="image" class='reset-button' value='white' src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);"/><input id='menu-picker' type="color" value="white" class="button" onchange="ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);"> : Menu Color</p>
+            <p class="selector"><input type="image" class='reset-button' value='#000000' src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('background-picker'), ['value']);ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])"/><input id='background-picker' type="color" value="#000000" class="button" onchange="ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])"> : Background Color</p>
+            <p class="selector"><input type="image" class='reset-button' value='#ffffff' src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('text-picker'), ['value']);ChangeElement(this, document.getElementById('mainTime'), ['style','color'])"/><input id='text-picker' type="color" value="#ffffff" class="button" onchange="ChangeElement(this, document.getElementById('mainTime'), ['style','color'])"> : Text Color</p>
+            <p class="selector"><input type="image" class='reset-button' value='#ffffff' src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('menu-picker'), ['value']);ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);"/><input id='menu-picker' type="color" value="#ffffff" class="button" onchange="ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);"> : Menu Color</p>
         </div>
 
         <div class="settings-grid" style="grid-column: 2;width: 100%;"></div>
