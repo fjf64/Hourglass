@@ -295,16 +295,27 @@ async function flashElement(element, effect, ogColor, newColor, time = 500, coun
 		i++;
 	}
 }
-function ChangeElement(selfId, element, effect, backUp) {
-	//effect in path list
-	poppedEffect = JSON.parse(JSON.stringify(effect));
-	var target = element;
-	poppedEffect.pop();
-	for (let x of poppedEffect) {
-		target = target[x];
+// function ChangeElement(selfId, element, effect) {
+// 	//effect in path list
+// 	console.log(selfId)
+// 	poppedEffect = JSON.parse(JSON.stringify(effect));
+// 	var target = element;
+// 	poppedEffect.pop();
+// 	for (let x of poppedEffect) {
+// 		target = target[x];
+// 	}
+// 	target[effect[effect.length - 1]] = selfId.value;
+// }
+function ChangeElement(selfElement, element, effect) {
+	let target = element;
+	let path = [...effect];
+	let last = path.pop();
+	for (let key of path) {
+		target = target[key];
 	}
-	target[effect[effect.length - 1]] = document.getElementById(selfId).value;
+	target[last] = selfElement.value;
 }
+
 
 function Main() {
 	var currentSchedule = document.getElementById("schedule").value;

@@ -175,7 +175,7 @@ input {
 .slider:before {
 	position: absolute;
 	content: "";
-	height: .5vh;
+	height: 0.5vh;
 	top: 2.5vh;
 	width: 4vh;
 	left: 0vh;
@@ -200,7 +200,7 @@ input:checked + .slider:before {
 }
 .am-pm {
 	display: none;
-		font-size: 2vh;
+	font-size: 2vh;
 	min-width: 3.5vh;
 	border-style: solid;
 	border-width: 0.5vh;
@@ -240,6 +240,19 @@ input[type="file"] {
 	text-align: center;
 	margin-left: 2.5%;
 	width: 95%;
+	font-size: 2vh;
+	border-style: solid;
+	border-width: 0.5vh;
+	border-color: grey;
+}
+
+.reset-button {
+	min-width: 0;
+	width: 1.5vh;
+	height: auto;
+	margin: 0;
+	position: relative;
+	top: 0.75vh;
 	font-size: 2vh;
 	border-style: solid;
 	border-width: 0.5vh;
