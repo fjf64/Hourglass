@@ -31,6 +31,25 @@ var goodBackground = "greenyellow";
 function sleep(ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
+function deepEqual(a, b) {
+  if (a === b) return true;
+
+  if (typeof a !== typeof b) return false;
+
+  if (Array.isArray(a) && Array.isArray(b)) {
+    if (a.length !== b.length) return false;
+    return a.every((val, i) => deepEqual(val, b[i]));
+  }
+
+  if (typeof a === 'object' && a !== null && b !== null) {
+    const keysA = Object.keys(a);
+    const keysB = Object.keys(b);
+    if (keysA.length !== keysB.length) return false;
+    return keysA.every(key => deepEqual(a[key], b[key]));
+  }
+
+  return false;
+}
 function IdToggle(itemId, Ids = [], toggle) {
 	if (toggles[itemId] == undefined || toggles[itemId] == false) {
 		toggles[itemId] = true;
@@ -236,7 +255,26 @@ function exportCode() {
 	alert("Copied the text: " + copyText);
 }
 
-async function importCode() {
+async function insertSchedule(nameKey, items) {
+	schedules[nameKey] = items;
+	selectElement = document.createElement("option");
+	selectElement.style.fontSize = "1.5vh";
+	selectElement.value = nameKey;
+	//WIP add //deepEqual(a, b)
+	selectElement.textContent = nameKey;
+	document.getElementById("schedule").appendChild(selectElement);
+	flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);
+	flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);
+}
+async function importCode(code) {
+	const namePeriods = atob(code).split("\n\n\n");
+	const periods = namePeriods[1].split("\n\n");
+	const returnal = periods.map((p) => p.split("\n"));
+	const nameKey = namePeriods[0];
+	insertSchedule(nameKey, returnal)
+}
+
+async function importClipCode() {
 	var code;
 	var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
 	// const clipboardContents = await navigator.clipboard.read();
@@ -253,6 +291,18 @@ async function importCode() {
 						return;
 					}
 					code = blobText;
+				} else if (mimeType === "text/html") {
+					const blob = await item.getType("text/html");
+					var blobText = await blob.text();
+					const parser = new DOMParser();
+					const doc = parser.parseFromString(blobText, "text/html");
+					const text = doc.body.textContent.trim();
+					blobText = doc.body.textContent.trim();
+					if (!base64regex.test(blobText)) {
+						flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 1);
+						return;
+					}
+					code = blobText;
 				} else {
 					flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 1);
 					throw new Error(`${mimeType} not supported.`);
@@ -264,18 +314,7 @@ async function importCode() {
 		return;
 	}
 
-	const namePeriods = atob(code).split("\n\n\n");
-	const periods = namePeriods[1].split("\n\n");
-	const returnal = periods.map((p) => p.split("\n"));
-	const nameKey = namePeriods[0];
-	schedules[nameKey] = returnal;
-	selectElement = document.createElement("option");
-	selectElement.style.fontSize = "1.5vh";
-	selectElement.value = nameKey;
-	selectElement.textContent = nameKey;
-	document.getElementById("schedule").appendChild(selectElement);
-	flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);
-	flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);
+	importCode(code);
 }
 
 async function flashElement(element, effect, ogColor, newColor, time = 500, count = 1) {
@@ -295,17 +334,6 @@ async function flashElement(element, effect, ogColor, newColor, time = 500, coun
 		i++;
 	}
 }
-// function ChangeElement(selfId, element, effect) {
-// 	//effect in path list
-// 	console.log(selfId)
-// 	poppedEffect = JSON.parse(JSON.stringify(effect));
-// 	var target = element;
-// 	poppedEffect.pop();
-// 	for (let x of poppedEffect) {
-// 		target = target[x];
-// 	}
-// 	target[effect[effect.length - 1]] = selfId.value;
-// }
 async function ChangeElement(selfElement, element, effect) {
 	let target = element;
 	let path = [...effect];
@@ -314,10 +342,8 @@ async function ChangeElement(selfElement, element, effect) {
 		target = target[key];
 	}
 	target[last] = selfElement.value;
-	console.log(selfElement.value)
-	setTimeout(() => target[last] = selfElement.value, 0)
+	setTimeout(() => (target[last] = selfElement.value), 0);
 }
-
 
 function Main() {
 	var currentSchedule = document.getElementById("schedule").value;
@@ -358,6 +384,18 @@ const fakeFileName = document.getElementById("fileName");
 fakeInput.addEventListener("change", () => {
 	fakeFileName.textContent = fakeInput.files.length ? fakeInput.files[0].name : "";
 });
+
+window.onload = () => {
+	var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
+	const params = new URLSearchParams(window.location.search);
+	const action = params.get("code");
+	
+	if (!base64regex.test(action)) {
+		// flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 1);
+		return;
+	}
+	importCode(action);
+};
 
 setInterval(Main, 1000);
 Main();

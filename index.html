@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- ToDo - hover over schedules to get key, toggle extras by click on clock -->
+<!-- To-Do - hover over schedules to get key, toggle period shower -->
 
 <head>
     <meta charset="UTF-8">
@@ -47,7 +47,7 @@
                     <div style='display: block;' id="import-export">
                         <button class="period-button" onclick="exportCurrent()">Export Selected Schedule</button>
                         <button class="period-button" onclick="exportCode()">Copy Current Schedule Code</button>
-                        <button class=" custom-file-upload" style='width: 95%;' onclick="importCode()"> Paste Schedule
+                        <button class=" custom-file-upload" style='width: 95%;' onclick="importClipCode()"> Paste Schedule
                             Code</button>
                         <label for="fileInput" class="custom-file-upload">Import Schedule</label>
                         <input type="file" id="fileInput" accept=".txt" onchange="importSchedule()" />
