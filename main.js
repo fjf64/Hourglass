@@ -32,23 +32,23 @@ function sleep(ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 function deepEqual(a, b) {
-  if (a === b) return true;
+	if (a === b) return true;
 
-  if (typeof a !== typeof b) return false;
+	if (typeof a !== typeof b) return false;
 
-  if (Array.isArray(a) && Array.isArray(b)) {
-    if (a.length !== b.length) return false;
-    return a.every((val, i) => deepEqual(val, b[i]));
-  }
+	if (Array.isArray(a) && Array.isArray(b)) {
+		if (a.length !== b.length) return false;
+		return a.every((val, i) => deepEqual(val, b[i]));
+	}
 
-  if (typeof a === 'object' && a !== null && b !== null) {
-    const keysA = Object.keys(a);
-    const keysB = Object.keys(b);
-    if (keysA.length !== keysB.length) return false;
-    return keysA.every(key => deepEqual(a[key], b[key]));
-  }
+	if (typeof a === "object" && a !== null && b !== null) {
+		const keysA = Object.keys(a);
+		const keysB = Object.keys(b);
+		if (keysA.length !== keysB.length) return false;
+		return keysA.every((key) => deepEqual(a[key], b[key]));
+	}
 
-  return false;
+	return false;
 }
 function IdToggle(itemId, Ids = [], toggle) {
 	if (toggles[itemId] == undefined || toggles[itemId] == false) {
@@ -154,12 +154,19 @@ function amPmButton(selfItem) {
 async function saveDraft() {
 	var numberRegex = /^\d{1,2}:\d{2}$/;
 	var children = document.getElementById("added-periods").children;
-	if (document.getElementById("draft-name").value == undefined || document.getElementById("draft-name").value == "" || children.length == 0) {
+	if (document.getElementById("draft-name").value == undefined || document.getElementById("draft-name").value == "") {
+		editLog("Bad Draft Name.", 4000);
+		flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 2);
+		return;
+	}
+	if (children.length == 0) {
+		editLog("No periods in schedule.", 4000);
 		flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 2);
 		return;
 	}
 	if (Object.keys(schedules).includes(document.getElementById("draft-name").value)) {
 		document.getElementById("draft-name").value = "";
+		editLog("Draft name already used. ", 4000);
 		flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 2);
 		return;
 	}
@@ -167,7 +174,13 @@ async function saveDraft() {
 	var periods = [];
 	for (let child of children) {
 		var elements = child.children[0].children;
-		if (!numberRegex.test(elements[1].value) || !numberRegex.test(elements[3].value) || elements[0].value.includes("\\n")) {
+		if (!numberRegex.test(elements[1].value) || !numberRegex.test(elements[3].value)) {
+			editLog("Time must be in 'hh:mm' format.", 4000);
+			flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 2);
+			return;
+		}
+		if (elements[0].value.includes("\\n")) {
+			editLog("No '\\n' allowed in period name.", 4000);
 			flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 2);
 			return;
 		}
@@ -190,6 +203,7 @@ async function saveDraft() {
 			times.push(tempTimeList.join(":"));
 		}
 		if (ClockToEpoch(times[0]) - ClockToEpoch(times[1]) >= 0) {
+			editLog("Period can't start after it began.", 4000);
 			flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 250, 2);
 			return;
 		}
@@ -257,9 +271,9 @@ function exportCode() {
 
 async function insertSchedule(nameKey, items) {
 	if (Object.keys(schedules).includes(nameKey)) {
-			flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, '#808080', 500, 1);
-
-		return
+		editLog('Schedule already named: '+nameKey, 4000)
+		flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, "#808080", 500, 1);
+		return;
 	}
 	schedules[nameKey] = items;
 	selectElement = document.createElement("option");
@@ -276,7 +290,7 @@ async function importCode(code) {
 	const periods = namePeriods[1].split("\n\n");
 	const returnal = periods.map((p) => p.split("\n"));
 	const nameKey = namePeriods[0];
-	insertSchedule(nameKey, returnal)
+	insertSchedule(nameKey, returnal);
 }
 
 async function importClipCode() {
@@ -292,6 +306,7 @@ async function importClipCode() {
 					const blob = await item.getType("text/plain");
 					const blobText = await blob.text();
 					if (!base64regex.test(blobText)) {
+						editLog("Bad Code.", 4000);
 						flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 1);
 						return;
 					}
@@ -304,6 +319,7 @@ async function importClipCode() {
 					const text = doc.body.textContent.trim();
 					blobText = doc.body.textContent.trim();
 					if (!base64regex.test(blobText)) {
+						editLog("Bad Code.", 4000);
 						flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 1);
 						return;
 					}
@@ -349,8 +365,8 @@ async function ChangeElement(selfElement, element, effect) {
 	target[last] = selfElement.value;
 	setTimeout(() => (target[last] = selfElement.value), 0);
 }
-function editLog(text) {
-	flashElement(document.getElementById("log"), ["innerHTML"], '', text, 3000, 1);
+function editLog(text, time) {
+	flashElement(document.getElementById("log"), ["innerHTML"], "", text, time, 1);
 }
 
 function Main() {
@@ -386,18 +402,18 @@ function Main() {
 	}
 }
 
-const fakeInput = document.getElementById("fileInput");
-const fakeFileName = document.getElementById("fileName");
+// const fakeInput = document.getElementById("fileInput");
+// const fakeFileName = document.getElementById("fileName");
 
-fakeInput.addEventListener("change", () => {
-	fakeFileName.textContent = fakeInput.files.length ? fakeInput.files[0].name : "";
-});
+// fakeInput.addEventListener("change", () => {
+// fakeFileName.textContent = fakeInput.files.length ? fakeInput.files[0].name : "";
+// });
 
 window.onload = () => {
 	var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
 	const params = new URLSearchParams(window.location.search);
 	const action = params.get("code");
-	
+
 	if (!base64regex.test(action)) {
 		// flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 1);
 		return;

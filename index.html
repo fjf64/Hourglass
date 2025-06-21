@@ -26,7 +26,7 @@
 
     <div id="settings" class="menu">
 
-        <div id="log-container"><p id="log">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p></div>
+        <div id="log-container"><p style="text-wrap: nowrap;" id="log"></p></div>
         
         <div class="settings-grid" style="grid-column: 1;width: 100%;border-left: none;">
             <p class="selector"><input type="image" class='reset-button' value='#000000' src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('background-picker'), ['value']);ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])"/><input id='background-picker' type="color" value="#000000" class="button" onchange="ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])"> : Background Color</p>
@@ -40,7 +40,7 @@
             <div style="display: flex;justify-content: center;flex-direction: column;align-items:center;">
                 <select id='schedule' style="height: 5vh;width: 95%;text-align: center;margin-top: 1vh;">
                     <option style="font-size: 1.5vh;" value="YSHS">Yellow Springs High School</option>
-                    <option style="font-size: 1.5vh;" value="YSHS Two Hour Delay">"YSHS Two Hour Delay"</option>
+                    <option style="font-size: 1.5vh;" value="YSHS Two Hour Delay">YSHS Two Hour Delay</option>
                 </select>
                 <hr style="height: .1vw; border: none; background-color: white;width: 95%;">
                 <div id="period-selectors"

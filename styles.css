@@ -277,7 +277,7 @@ input[type="file"] {
 	position: relative;
 	/* top: -2.5vh; */
 	font-size: 2vh;
-	min-width: 100%;
+	min-width: 300%;
 	min-height: 7vh;
 	display: flex;
 	align-items: center;
