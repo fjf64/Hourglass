@@ -31,7 +31,7 @@ var goodBackground = "greenyellow";
 function sleep(ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
-function IdToggle(itemId, Ids = []) {
+function IdToggle(itemId, Ids = [], toggle) {
 	if (toggles[itemId] == undefined || toggles[itemId] == false) {
 		toggles[itemId] = true;
 	} else {
@@ -39,7 +39,7 @@ function IdToggle(itemId, Ids = []) {
 	}
 	if (Ids != []) {
 		for (let x of Ids) {
-			document.getElementById(x).classList.toggle("change");
+			document.getElementById(x).classList.toggle(toggle);
 		}
 	}
 }

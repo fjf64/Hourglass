@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- ToDo - hover over schedules to get key, color options, reset button for color options, toggle extras by click on clock -->
+<!-- ToDo - hover over schedules to get key, toggle extras by click on clock -->
 
 <head>
     <meta charset="UTF-8">
@@ -15,13 +15,13 @@
 </head>
 
 <body>
-    <div class="menu-button" onclick="IdToggle('settings', ['menu-button', 'settings'])" id="menu-button">
+    <div class="menu-button" onclick="IdToggle('settings', ['menu-button', 'settings'], 'change')" id="menu-button">
         <div class="bar1" id="menu-1"></div>
         <div class="bar2" id="menu-2"></div>
         <div class="bar3" id="menu-3"></div>
     </div>
     <div id="mainContainer">
-        <h1 id="mainTime">00:00</h1>
+        <h1 id="mainTime" onclick="IdToggle('settings', ['menu-button', 'footer'], 'change1')">00:00</h1>
     </div>
 
     <div id="settings" class="menu">
@@ -79,15 +79,15 @@
             </div>
         </div>
         <div id="dev-settings">
-            <p style="font-size: 4vh;">In developer mode. Click "Made by Wolf Lieff" to exit.</p>
+            <p style="font-size: 2vh;">In developer mode. Click "Made by Wolf Lieff" to exit.</p>
             <p class="selector"><input type="text" value="" class="button" size="10" id="dev-time-fix"> : |DEV| Fix Time
                 (24H)</p>
         </div>
 
     </div>
 
-    <footer>
-        <p style="font-size: 2vh;" onclick="IdToggle('dev-settings', ['dev-settings'])">Made by Wolf Lieff</p>
+    <footer class="footer" id="footer">
+        <p style="font-size: 2vh;" onclick="IdToggle('dev-settings', ['dev-settings'], 'change')">Made by Wolf Lieff</p>
     </footer>
     <script src="main.js"></script>
 </body>
