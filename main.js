@@ -256,6 +256,11 @@ function exportCode() {
 }
 
 async function insertSchedule(nameKey, items) {
+	if (Object.keys(schedules).includes(nameKey)) {
+			flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, '#808080', 500, 1);
+
+		return
+	}
 	schedules[nameKey] = items;
 	selectElement = document.createElement("option");
 	selectElement.style.fontSize = "1.5vh";

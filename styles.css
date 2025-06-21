@@ -23,7 +23,7 @@ body {
 	left: -1px;
 	background: #050d07;
 	top: 1vh;
-	padding-top: 7vh;
+	padding-top: 0vh;
 	width: calc(100%);
 	border-bottom: 5px solid white;
 	border-left: none;
@@ -75,7 +75,7 @@ input {
 	/* height: 150%; */
 	/* width: 50vw; */
 	max-width: 3vw;
-	/* min-width: 1ch; */
+	min-width: 0;
 }
 #dev-settings {
 	display: none;
