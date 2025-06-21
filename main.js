@@ -418,7 +418,9 @@ window.onload = () => {
 		// flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 1);
 		return;
 	}
+	if (action) {
 	importCode(action);
+	}
 };
 
 setInterval(Main, 1000);
