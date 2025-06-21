@@ -269,9 +269,32 @@ function exportCode() {
 	alert("Copied the text: " + copyText);
 }
 
+function exportURL() {
+	var btoaSchedules = [];
+	for (let sched of Object.keys(schedules)) {
+		var exportNewLine = [];
+		for (let x of schedules[sched]) {
+			exportNewLine.push(x.join("\n"));
+		}
+		var exporting = exportNewLine.join("\n\n");
+		var exporting = [sched, exporting].join("\n\n\n");
+		btoaSchedules.push(btoa(exporting));
+	}
+
+	const url = new URL(window.location.origin + window.location.pathname);
+	url.searchParams.set("code", btoaSchedules.join("_"));
+
+	// Now you can use this URL
+	console.log(url.href); // e.g., http://localhost:5500/index.html?code=...
+
+	// Optionally set it as an href somewhere:
+	navigator.clipboard.writeText(url.href);
+	alert("Copied the text: " + url.href);
+}
+
 async function insertSchedule(nameKey, items) {
 	if (Object.keys(schedules).includes(nameKey)) {
-		editLog('Schedule already named: '+nameKey, 4000)
+		editLog("Schedule already named: " + nameKey, 4000);
 		flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, "#808080", 500, 1);
 		return;
 	}
@@ -414,12 +437,14 @@ window.onload = () => {
 	const params = new URLSearchParams(window.location.search);
 	const action = params.get("code");
 
-	if (!base64regex.test(action)) {
-		// flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 1);
-		return;
-	}
+	// if (!base64regex.test(action)) {
+	// flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 1);
+	// return;
+	// }
 	if (action) {
-	importCode(action);
+		for (let x of action.split("_")) {
+			importCode(x);
+		}
 	}
 };
 

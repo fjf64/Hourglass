@@ -230,7 +230,7 @@ input:checked + .slider:before {
 	font-size: 2vh;
 	border-style: solid;
 	border-width: 0.5vh;
-	width: 92.625%;
+	width: 92%;
 	margin-left: 2.5%;
 	margin-right: 2.5%;
 	/* width: 92.5%; */
@@ -282,4 +282,8 @@ input[type="file"] {
 	display: flex;
 	align-items: center;
 	/* background: aliceblue; */
+}
+
+.middle-align {
+	width: 100%;display:flex;justify-content: center;
 }
