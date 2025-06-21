@@ -349,6 +349,9 @@ async function ChangeElement(selfElement, element, effect) {
 	target[last] = selfElement.value;
 	setTimeout(() => (target[last] = selfElement.value), 0);
 }
+function editLog(text) {
+	flashElement(document.getElementById("log"), ["innerHTML"], '', text, 3000, 1);
+}
 
 function Main() {
 	var currentSchedule = document.getElementById("schedule").value;

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- To-Do - hover over schedules to get key, toggle period shower -->
+<!-- To-Do - hover over schedules to get key, toggle current period 1/2/lunch shower, auto select first link schedule, multi schedule URL, clock font size -->
 
 <head>
     <meta charset="UTF-8">
@@ -25,7 +25,8 @@
     </div>
 
     <div id="settings" class="menu">
-        <div style="display: inline-block;line-height: 0;left: 9vh;position: relative;top: -2.5vh;font-size: 4vh;"><p id="log">aaaaaaaaaaaaaaaa</p></div>
+
+        <div id="log-container"><p id="log">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p></div>
         
         <div class="settings-grid" style="grid-column: 1;width: 100%;border-left: none;">
             <p class="selector"><input type="image" class='reset-button' value='#000000' src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('background-picker'), ['value']);ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])"/><input id='background-picker' type="color" value="#000000" class="button" onchange="ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])"> : Background Color</p>
@@ -35,9 +36,9 @@
 
         <div class="settings-grid" style="grid-column: 2;width: 100%;"></div>
 
-        <div class="settings-grid" style="grid-column: 3;">
+        <div class="settings-grid" style="grid-column: 3;border-right-style: dashed;">
             <div style="display: flex;justify-content: center;flex-direction: column;align-items:center;">
-                <select id='schedule' style="height: 5vh;width: 95%;text-align: center;">
+                <select id='schedule' style="height: 5vh;width: 95%;text-align: center;margin-top: 1vh;">
                     <option style="font-size: 1.5vh;" value="YSHS">Yellow Springs High School</option>
                     <option style="font-size: 1.5vh;" value="YSHS Two Hour Delay">"YSHS Two Hour Delay"</option>
                 </select>
@@ -65,17 +66,15 @@
         </div>
 
         <div id="settings-column-4" class="settings-grid"
-            style="grid-column: 4;border-right:none;display: flex;justify-content: center;">
-            <div id="period-count" style="display: inline-block;width: 25%;">
-                <button class='button' style="margin-left: 2.5%;" id="append-period" onclick="appendPeriod()">+</button>
-                <button class='button' id="remove-period" onclick="removePeriod()">-</button>
-                <button style="min-width: 0;padding: 0;"><label class="switch"><input id="24h-box" type="checkbox"
+            style="grid-column: 4;border-right:none;border-left: none;">
+            <div id="period-count" style="display: flex;flex-wrap: wrap;justify-content: center;width: 100%; margin-top: 1vh;margin-bottom: 1vh;">
+                <button class='button' style="margin-left: 2.5%;margin-left: 1vh;margin-right: .5vh;" id="append-period" onclick="appendPeriod()">+</button>
+                <button class='button' id="remove-period" style="margin-left: .5vh;margin-right: .5vh;" onclick="removePeriod()">-</button>
+                <button style="min-width: 0;padding: 0;display: inline-block;margin-left: .5vh;margin-right: 1vh;"><label class="switch"><input id="24h-box" type="checkbox"
                             onclick="amPmSwitch(this)" checked><span class="slider"><p style="font-size: 2vh;line-height: 0;padding: 0;margin: 0;margin-top: 1.5vh;">24H</p></span></label></button>
-                <!-- <p style="display: inline-block;font-size: 2vh;color: black;position:relative;left: -.5vh;top:1vh;margin: 0;">24H</p> -->
             </div>
-            <div style="display: inline-block;">
-                <div id="added-periods"
-                    style="width:100%;display: flex;justify-content: center;flex-direction: column;align-items:center;">
+            <div style="display: flex;justify-content: center;flex-direction: column;align-items:center;">
+                <div id="added-periods">
                 </div>
             </div>
         </div>
