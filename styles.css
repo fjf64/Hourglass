@@ -100,8 +100,8 @@ footer {
 	background-color: white;
 	/* margin: 1vh 0; */
 	margin-bottom: 1vh;
-	margin-left: .5vh;
-	margin-top: .5vh;
+	margin-left: 0.5vh;
+	margin-top: 0.5vh;
 	transition: 0.4s;
 }
 
@@ -285,5 +285,42 @@ input[type="file"] {
 }
 
 .middle-align {
-	width: 100%;display:flex;justify-content: center;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+.custom-select {
+	position: relative;
+	/* display: inline-block; */
+}
+
+.select-box {
+	/* padding: 10px; */
+	border: 0.5vh solid #ccc;
+	cursor: pointer;
+	background: black;
+	font-size: 2vh;
+}
+
+.options {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	border: 0.5vh solid #ccc;
+	background: black;
+	z-index: 1;
+}
+
+.custom-select:hover .options {
+	display: block;
+}
+
+.option {
+	/* padding: 10px; */
+	font-size: 2vh;
+}
+
+.option:hover {
+	background-color: green;
 }

@@ -339,7 +339,7 @@ async function importClipCode() {
 					var blobText = await blob.text();
 					const parser = new DOMParser();
 					const doc = parser.parseFromString(blobText, "text/html");
-					const text = doc.body.textContent.trim();
+					// const text = doc.body.textContent.trim();
 					blobText = doc.body.textContent.trim();
 					if (!base64regex.test(blobText)) {
 						editLog("Bad Code.", 4000);
@@ -425,6 +425,18 @@ function Main() {
 	}
 }
 
+  function optionHover(option, toggle) {
+	if (toggle) {
+		console.log('on '+option)
+	} else {
+		console.log('off '+option)
+	}
+  }
+  function selectOption(element, option) {
+	element.setAttribute('data-value', option.getAttribute('data-value'))
+	element.textContent = option.textContent
+  }
+
 // const fakeInput = document.getElementById("fileInput");
 // const fakeFileName = document.getElementById("fileName");
 
@@ -433,7 +445,7 @@ function Main() {
 // });
 
 window.onload = () => {
-	var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
+	// var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
 	const params = new URLSearchParams(window.location.search);
 	const action = params.get("code");
 
