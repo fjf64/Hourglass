@@ -42,7 +42,7 @@
             <p class="selector"><input type="image" class='reset-button' value='#ffffff'
                     src="image-removebg-preview.png"
                     onclick="ChangeElement(this, document.getElementById('text-picker'), ['value']);ChangeElement(this, document.getElementById('mainTime'), ['style','color'])" /><input
-                    id='text-picker' tywpe="color" value="#ffffff" class="button"
+                    id='text-picker' type="color" value="#ffffff" class="button"
                     onchange="ChangeElwement(this, document.getElementById('mainTime'), ['style','color'])"> : Text
                 Color
             </p>
@@ -58,21 +58,25 @@
 
         <div class="settings-grid" style="grid-column: 3;border-right-style: dashed;">
 
-            <div class="custom-select">
-                <div class="select-box" id="schedule-picker">Select an option</div>
-                <div class="options" >
-                    <div data-value="1" class="option" onmouseover="optionHover('Option 1', true)" onmouseout="optionHover('Option 1', false)" onclick="selectOption(document.getElementById('schedule-picker'), this)">Option 1</div>
-                    <div data-value="2" class="option" onmouseover="optionHover('Option 2', true)" onmouseout="optionHover('Option 2', false)" onclick="selectOption(document.getElementById('schedule-picker'), this)">Option 2</div>
-                    <div data-value="3" class="option" onmouseover="optionHover('Option 3', true)" onmouseout="optionHover('Option 3', false)" onclick="selectOption(document.getElementById('schedule-picker'), this)">Option 3</div>
-                </div>
+                <div class="custom-select">
+                    <div data-value="YSHS" class="select-box" id="schedule-picker">Yellow Springs High School ▼</div>
+                    <div class="options" id="schedules">
+                        <div data-value="YSHS" class="option" onmouseover="optionHover(this, true)"
+                            onmouseout="optionHover(this, false)"
+                            onclick="selectOption(document.getElementById('schedule-picker'), this)">Yellow Springs High
+                            School</div>
+                        <div data-value="YSHS Two Hour Delay" class="option" onmouseover="optionHover(this, true)"
+                            onmouseout="optionHover(this, false)"
+                            onclick="selectOption(document.getElementById('schedule-picker'), this)">YSHS Two Hour Delay
+                        </div>
+                    </div>
             </div>
+
             <div style="display: flex;justify-content: center;flex-direction: column;align-items:center;">
-                <select id='schedule' style="height: 5vh;width: 95%;text-align: center;margin-top: 1vh;">
+                <!-- <select id='schedule' style="height: 5vh;width: 95%;text-align: center;margin-top: 1vh;">
                     <option style="font-size: 1.5vh;" value="YSHS">Yellow Springs High School</option>
                     <option style="font-size: 1.5vh;" value="YSHS Two Hour Delay">YSHS Two Hour Delay</option>
-                </select>
-
-
+                </select> -->
                 <hr style="height: .1vw; border: none; background-color: white;width: 95%;">
                 <div id="period-selectors"
                     style="display: block;justify-content: center;align-items: center;width: 100%;">

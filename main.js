@@ -28,6 +28,8 @@ var saveBackground = "#0a190e";
 var badBackground = "maroon";
 var goodBackground = "greenyellow";
 
+var scheduleValue = document.getElementById('schedule-picker').getAttribute('data-value')
+
 function sleep(ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -50,6 +52,15 @@ function deepEqual(a, b) {
 
 	return false;
 }
+
+function createElementFromHTML(htmlString) {
+  var div = document.createElement('div');
+  div.innerHTML = htmlString.trim();
+
+  // Change this to div.childNodes to support multiple top-level nodes.
+  return div.firstChild;
+}
+
 function IdToggle(itemId, Ids = [], toggle) {
 	if (toggles[itemId] == undefined || toggles[itemId] == false) {
 		toggles[itemId] = true;
@@ -209,17 +220,11 @@ async function saveDraft() {
 		}
 		periods.push([elements[0].value, times.join("-")]);
 	}
-	schedules[draftName] = periods;
-	selectElement = document.createElement("option");
-	selectElement.style.fontSize = "1.5vh";
-	selectElement.value = draftName;
-	selectElement.textContent = draftName;
-	document.getElementById("schedule").appendChild(selectElement);
-	flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);
+	addToSchedule(draftName, periods)
 }
 function exportCurrent() {
 	var exportNewLine = [];
-	for (let x of schedules[document.getElementById("schedule").value]) {
+	for (let x of schedules[scheduleValue]) {
 		exportNewLine.push(x.join("\n"));
 	}
 	var exporting = exportNewLine.join("\n\n");
@@ -227,7 +232,7 @@ function exportCurrent() {
 	const url = URL.createObjectURL(blob);
 	const link = document.createElement("a");
 	link.href = url;
-	link.download = "schedule_" + document.getElementById("schedule").value + ".txt";
+	link.download = "schedule_" + scheduleValue + ".txt";
 	document.body.appendChild(link);
 	link.click();
 	document.body.removeChild(link);
@@ -244,12 +249,7 @@ function importSchedule() {
 				const periods = content.split("\n\n");
 				const returnal = periods.map((p) => p.split("\n"));
 				const nameKey = currentFile.name.replace(".txt", "").replace(/^schedule_/, "");
-				schedules[nameKey] = returnal;
-				selectElement = document.createElement("option");
-				selectElement.style.fontSize = "1.5vh";
-				selectElement.value = nameKey;
-				selectElement.textContent = nameKey;
-				document.getElementById("schedule").appendChild(selectElement);
+				addToSchedule(nameKey, returnal)
 			};
 		})(file);
 		reader.readAsText(file); // Don't forget this
@@ -257,11 +257,11 @@ function importSchedule() {
 }
 function exportCode() {
 	var exportNewLine = [];
-	for (let x of schedules[document.getElementById("schedule").value]) {
+	for (let x of schedules[scheduleValue]) {
 		exportNewLine.push(x.join("\n"));
 	}
 	var exporting = exportNewLine.join("\n\n");
-	var exporting = [document.getElementById("schedule").value, exporting].join("\n\n\n");
+	var exporting = [scheduleValue, exporting].join("\n\n\n");
 	var copyText = btoa(exporting);
 	// copyText.select();
 	// copyText.setSelectionRange(0, 99999); // For mobile devices
@@ -292,28 +292,12 @@ function exportURL() {
 	alert("Copied the text: " + url.href);
 }
 
-async function insertSchedule(nameKey, items) {
-	if (Object.keys(schedules).includes(nameKey)) {
-		editLog("Schedule already named: " + nameKey, 4000);
-		flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, "#808080", 500, 1);
-		return;
-	}
-	schedules[nameKey] = items;
-	selectElement = document.createElement("option");
-	selectElement.style.fontSize = "1.5vh";
-	selectElement.value = nameKey;
-	//WIP add //deepEqual(a, b)
-	selectElement.textContent = nameKey;
-	document.getElementById("schedule").appendChild(selectElement);
-	flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);
-	flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);
-}
 async function importCode(code) {
 	const namePeriods = atob(code).split("\n\n\n");
 	const periods = namePeriods[1].split("\n\n");
 	const returnal = periods.map((p) => p.split("\n"));
 	const nameKey = namePeriods[0];
-	insertSchedule(nameKey, returnal);
+	addToSchedule(nameKey, returnal);
 }
 
 async function importClipCode() {
@@ -392,8 +376,44 @@ function editLog(text, time) {
 	flashElement(document.getElementById("log"), ["innerHTML"], "", text, time, 1);
 }
 
+
+  function optionHover(selfItem, toggle) {
+	if (toggle) {
+		// console.log('on ')
+	} else {
+		// console.log('off ')
+	}
+  }
+  function selectOption(element, option) { 
+	element.setAttribute('data-value', option.getAttribute('data-value'))
+	element.textContent = option.textContent+' ▼'
+	scheduleValue = option.getAttribute('data-value')
+  }
+
+  function addToSchedule(nameKey, items) {
+	if (Object.keys(schedules).includes(nameKey)) {
+		editLog("Schedule already named: " + nameKey, 4000);
+		flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, "#808080", 500, 1);
+		return;
+	}
+	schedules[nameKey] = items;
+	var selectElement = createElementFromHTML('<div data-value="YSHS" class="option" onmouseover="optionHover(this, true)" onmouseout="optionHover(this, false)" onclick="">Yellow Springs High School</div>')
+	selectElement.setAttribute("onclick",'selectOption(document.getElementById("schedule-picker"), this)');
+	selectElement.setAttribute("onmouseover",'optionHover(this, true)');
+	selectElement.setAttribute("onmouseout",'optionHover(this, false)');
+	selectElement.setAttribute("data-value",nameKey);
+	selectElement.textContent = nameKey
+	console.log(selectElement)
+	document.getElementById("schedules").appendChild(selectElement);
+
+	flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);
+  }
+
+
+
+
 function Main() {
-	var currentSchedule = document.getElementById("schedule").value;
+	var currentSchedule = scheduleValue;
 	var usedSchedule = schedules[currentSchedule];
 	var clock = document.getElementById("mainTime");
 	var currentDate = Date.now() + 3600000 * 0; //'3600000 * x'=hours TEST
@@ -425,24 +445,7 @@ function Main() {
 	}
 }
 
-  function optionHover(option, toggle) {
-	if (toggle) {
-		console.log('on '+option)
-	} else {
-		console.log('off '+option)
-	}
-  }
-  function selectOption(element, option) {
-	element.setAttribute('data-value', option.getAttribute('data-value'))
-	element.textContent = option.textContent
-  }
 
-// const fakeInput = document.getElementById("fileInput");
-// const fakeFileName = document.getElementById("fileName");
-
-// fakeInput.addEventListener("change", () => {
-// fakeFileName.textContent = fakeInput.files.length ? fakeInput.files[0].name : "";
-// });
 
 window.onload = () => {
 	// var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;

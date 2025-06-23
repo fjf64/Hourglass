@@ -292,27 +292,41 @@ input[type="file"] {
 .custom-select {
 	position: relative;
 	/* display: inline-block; */
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	padding-top: 1vh;
+	padding-bottom: 0vh;
 }
 
 .select-box {
 	/* padding: 10px; */
-	border: 0.5vh solid #ccc;
+	border: 0.5vh solid gray;
 	cursor: pointer;
-	background: black;
+	/* min-width: 95%; */
+	width: 92.5%;
+	padding: .25vh;
+	/* max-width: 95%; */
+	/* margin-left: 2.5%; */
+	background: #e9e9ed;
 	font-size: 2vh;
+	color: black;
 }
 
 .options {
 	display: none;
 	position: absolute;
 	top: 100%;
+	width: 100%;
 	left: 0;
+	/* margin-left: 2.5%; */
 	border: 0.5vh solid #ccc;
-	background: black;
+	background: #e9e9ed;
 	z-index: 1;
+	color: black;
 }
 
-.custom-select:hover .options {
+.custom-select:hover .options, .custom-select:active .options {
 	display: block;
 }
 
@@ -322,5 +336,5 @@ input[type="file"] {
 }
 
 .option:hover {
-	background-color: green;
+	background-color: yellowgreen;
 }
