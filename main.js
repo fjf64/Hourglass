@@ -61,7 +61,7 @@ function createElementFromHTML(htmlString) {
   return div.firstChild;
 }
 
-function IdToggle(itemId, Ids = [], toggle) {
+function IdToggle(itemId, Ids = [], toggle='change') {
 	if (toggles[itemId] == undefined || toggles[itemId] == false) {
 		toggles[itemId] = true;
 	} else {
@@ -362,14 +362,18 @@ async function flashElement(element, effect, ogColor, newColor, time = 500, coun
 		i++;
 	}
 }
-async function ChangeElement(selfElement, element, effect) {
+async function ChangeElement(selfElement, element, effect, valueOverride = false) {
 	let target = element;
 	let path = [...effect];
 	let last = path.pop();
 	for (let key of path) {
 		target = target[key];
 	}
+	if (!valueOverride) {
 	target[last] = selfElement.value;
+	} else {
+		target[last] = valueOverride
+	}
 	setTimeout(() => (target[last] = selfElement.value), 0);
 }
 function editLog(text, time) {
@@ -385,9 +389,11 @@ function editLog(text, time) {
 	}
   }
   function selectOption(element, option) { 
+	ChangeElement('', document.getElementById('schedules'), ['style','display'], 'none')
 	element.setAttribute('data-value', option.getAttribute('data-value'))
 	element.textContent = option.textContent+' ▼'
 	scheduleValue = option.getAttribute('data-value')
+	
   }
 
   function addToSchedule(nameKey, items) {
@@ -403,7 +409,6 @@ function editLog(text, time) {
 	selectElement.setAttribute("onmouseout",'optionHover(this, false)');
 	selectElement.setAttribute("data-value",nameKey);
 	selectElement.textContent = nameKey
-	console.log(selectElement)
 	document.getElementById("schedules").appendChild(selectElement);
 
 	flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);

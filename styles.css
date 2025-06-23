@@ -326,13 +326,14 @@ input[type="file"] {
 	color: black;
 }
 
-.custom-select:hover .options, .custom-select:active .options {
+.options.change {
 	display: block;
 }
 
 .option {
 	/* padding: 10px; */
 	font-size: 2vh;
+	border: 0.25vh solid #ccc;
 }
 
 .option:hover {
