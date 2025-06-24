@@ -305,7 +305,7 @@ input[type="file"] {
 	cursor: pointer;
 	/* min-width: 95%; */
 	width: 92.5%;
-	padding: .25vh;
+	padding: 0.25vh;
 	/* max-width: 95%; */
 	/* margin-left: 2.5%; */
 	background: #e9e9ed;
@@ -334,8 +334,21 @@ input[type="file"] {
 	/* padding: 10px; */
 	font-size: 2vh;
 	border: 0.25vh solid #ccc;
+	  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .option:hover {
 	background-color: yellowgreen;
+}
+
+.remove-schedule {
+	display: inline-block;
+	margin-right: 1vh;
+	
+}
+.schedule-text {
+	display: inline-block;
+	flex-grow: .1;
 }

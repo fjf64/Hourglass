@@ -403,12 +403,13 @@ function editLog(text, time) {
 		return;
 	}
 	schedules[nameKey] = items;
-	var selectElement = createElementFromHTML('<div data-value="YSHS" class="option" onmouseover="optionHover(this, true)" onmouseout="optionHover(this, false)" onclick="">Yellow Springs High School</div>')
+	var selectElement = createElementFromHTML('<div data-value="YSHS Two Hour Delay" class="option"><p class="schedule-text"></p><button class="button remove-schedule">-</button></div>')
 	selectElement.setAttribute("onclick",'selectOption(document.getElementById("schedule-picker"), this)');
 	selectElement.setAttribute("onmouseover",'optionHover(this, true)');
 	selectElement.setAttribute("onmouseout",'optionHover(this, false)');
+	selectElement.querySelector(".schedule-text").textContent = nameKey;
 	selectElement.setAttribute("data-value",nameKey);
-	selectElement.textContent = nameKey
+	// selectElement.textContent = nameKey
 	document.getElementById("schedules").appendChild(selectElement);
 
 	flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);

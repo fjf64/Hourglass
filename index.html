@@ -1,140 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- To-Do - hover over schedules to get key, toggle current period 1/2/lunch shower, auto select first link schedule, clock font size, cache saving, add/delete schedules, organize codes -->
+	<!-- To-Do - hover over schedules to get key, toggle current period 1/2/lunch shower, auto select first link schedule, clock font size, cache saving, add/delete schedules, organize codes -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hourglass</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Hourglass</title>
 
-    <link rel="icon" type="image/x-icon" href="Hourglass.png">
-    <link rel="stylesheet" href="styles.css">
+		<link rel="icon" type="image/x-icon" href="Hourglass.png" />
+		<link rel="stylesheet" href="styles.css" />
 
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+	</head>
 
-</head>
+	<body>
+		<div class="menu-button" onclick="IdToggle('settings', ['menu-button', 'settings'], 'change')" id="menu-button">
+			<div class="bar1" id="menu-1"></div>
+			<div class="bar2" id="menu-2"></div>
+			<div class="bar3" id="menu-3"></div>
+		</div>
+		<div id="mainContainer">
+			<h1 id="mainTime" onclick="IdToggle('settings', ['menu-button', 'footer'], 'change1')">00:00</h1>
+		</div>
 
-<body>
-    <div class="menu-button" onclick="IdToggle('settings', ['menu-button', 'settings'], 'change')" id="menu-button">
-        <div class="bar1" id="menu-1"></div>
-        <div class="bar2" id="menu-2"></div>
-        <div class="bar3" id="menu-3"></div>
-    </div>
-    <div id="mainContainer">
-        <h1 id="mainTime" onclick="IdToggle('settings', ['menu-button', 'footer'], 'change1')">00:00</h1>
-    </div>
+		<div id="settings" class="menu">
+			<div id="log-container">
+				<p style="text-wrap: nowrap" id="log"></p>
+			</div>
 
-    <div id="settings" class="menu">
+			<div class="settings-grid" style="grid-column: 1; width: 100%; border-left: none">
+				<p style="font-size: 3vh; margin-left: 1vh">Click the timer to toggle the UI</p>
+				<p class="selector"><input type="image" class="reset-button" value="#000000" src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('background-picker'), ['value']);ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])" /><input id="background-picker" type="color" value="#000000" class="button" onchange="ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])" /> : Background Color</p>
+				<p class="selector"><input type="image" class="reset-button" value="#ffffff" src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('text-picker'), ['value']);ChangeElement(this, document.getElementById('mainTime'), ['style','color'])" /><input id="text-picker" type="color" value="#ffffff" class="button" onchange="ChangeElwement(this, document.getElementById('mainTime'), ['style','color'])" /> : Text Color</p>
+				<p class="selector">
+					<input type="image" class="reset-button" value="#ffffff" src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('menu-picker'), ['value']);ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" />
+					<input id="menu-picker" type="color" value="#ffffff" class="button" onchange="ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" />
+					: Menu Color
+				</p>
+			</div>
 
-        <div id="log-container">
-            <p style="text-wrap: nowrap;" id="log"></p>
-        </div>
+			<div class="settings-grid" style="grid-column: 2; width: 100%"></div>
 
-        <div class="settings-grid" style="grid-column: 1;width: 100%;border-left: none;">
+			<div class="settings-grid" style="grid-column: 3; border-right-style: dashed">
+				<div class="custom-select">
+					<div data-value="YSHS" class="select-box" id="schedule-picker" onclick="ChangeElement('', document.getElementById('schedules'), ['style','display'], 'block')">Yellow Springs High School ▼</div>
+					<div class="options" id="schedules" onmouseout="IdToggle('schedules', ['schedules'])">
+					    <div data-value="YSHS" class="option" onmouseover="optionHover(this, true)" onmouseout="optionHover(this, false)" onclick="selectOption(document.getElementById('schedule-picker'), this)"><p class='schedule-text'>Yellow Springs High School</p><button class="button remove-schedule">-</button></div>
+						<div data-value="YSHS Two Hour Delay" class="option" onmouseover="optionHover(this, true)" onmouseout="optionHover(this, false)" onclick="selectOption(document.getElementById('schedule-picker'), this)"><p class='schedule-text'>YSHS Two Hour Delay</p><button class="button remove-schedule">-</button></div>
+					</div>
+				</div>
 
-            <p style="font-size: 3vh;margin-left: 1vh;">Click the timer to toggle the UI</p>
-            <p class="selector"><input type="image" class='reset-button' value='#000000'
-                    src="image-removebg-preview.png"
-                    onclick="ChangeElement(this, document.getElementById('background-picker'), ['value']);ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])" /><input
-                    id='background-picker' type="color" value="#000000" class="button"
-                    onchange="ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])"> :
-                Background Color</p>
-            <p class="selector"><input type="image" class='reset-button' value='#ffffff'
-                    src="image-removebg-preview.png"
-                    onclick="ChangeElement(this, document.getElementById('text-picker'), ['value']);ChangeElement(this, document.getElementById('mainTime'), ['style','color'])" /><input
-                    id='text-picker' type="color" value="#ffffff" class="button"
-                    onchange="ChangeElwement(this, document.getElementById('mainTime'), ['style','color'])"> : Text
-                Color
-            </p>
-            <p class="selector"><input type="image" class='reset-button' value='#ffffff'
-                    src="image-removebg-preview.png"
-                    onclick="ChangeElement(this, document.getElementById('menu-picker'), ['value']);ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" /><input
-                    id='menu-picker' type="color" value="#ffffff" class="button"
-                    onchange="ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);">
-                : Menu Color</p>
-        </div>
-
-        <div class="settings-grid" style="grid-column: 2;width: 100%;"></div>
-
-        <div class="settings-grid" style="grid-column: 3;border-right-style: dashed;">
-
-                <div class="custom-select">
-                    <div data-value="YSHS" class="select-box" id="schedule-picker" onclick="ChangeElement('', document.getElementById('schedules'), ['style','display'], 'block')">Yellow Springs High School ▼</div>
-                    <div class="options" id="schedules" onmouseout="IdToggle('schedules', ['schedules'])">
-                        <div data-value="YSHS" class="option" onmouseover="optionHover(this, true)"
-                            onmouseout="optionHover(this, false)"
-                            onclick="selectOption(document.getElementById('schedule-picker'), this)">Yellow Springs High
-                            School</div>
-                        <div data-value="YSHS Two Hour Delay" class="option" onmouseover="optionHover(this, true)"
-                            onmouseout="optionHover(this, false)"
-                            onclick="selectOption(document.getElementById('schedule-picker'), this)">YSHS Two Hour Delay
-                        </div>
-                    </div>
-            </div>
-
-            <div style="display: flex;justify-content: center;flex-direction: column;align-items:center;">
-                <!-- <select id='schedule' style="height: 5vh;width: 95%;text-align: center;margin-top: 1vh;">
+				<div style="display: flex; justify-content: center; flex-direction: column; align-items: center">
+					<!-- <select id='schedule' style="height: 5vh;width: 95%;text-align: center;margin-top: 1vh;">
                     <option style="font-size: 1.5vh;" value="YSHS">Yellow Springs High School</option>
                     <option style="font-size: 1.5vh;" value="YSHS Two Hour Delay">YSHS Two Hour Delay</option>
                 </select> -->
-                <hr style="height: .1vw; border: none; background-color: white;width: 95%;">
-                <div id="period-selectors"
-                    style="display: block;justify-content: center;align-items: center;width: 100%;">
-                    <div class="middle-align"><input type="text" value=""
-                            style='margin-right: 2.5%;margin-left:2.5%;min-width: 0;width: 90%;text-align: center;'
-                            class="button" id="draft-name" placeholder="Draft Name"></div>
-                    <button class="period-button" style='margin-left:2.5%;width: 95%;' onclick="saveDraft()">Save
-                        Current Draft --></button>
-                    <hr style="height: .1vw; border: none; background-color: white;width: 95%;">
-                    <div style='display: block;' id="import-export">
-                        <button class="period-button" onclick="exportCurrent()">Export Selected Schedule</button>
-                        <button class="period-button" onclick="exportCode()">Copy Current Schedule Code</button>
-                        <button class="period-button" onclick="exportURL()">Export URL</button>
-                        <button class=" custom-file-upload" style='width: 95%;' onclick="importClipCode()"> Paste
-                            Schedule
-                            Code</button>
-                        <div class="middle-align" style="margin-top: .5vh;">
-                            <label for="fileInput" class="custom-file-upload">Import Schedule</label>
-                            <input type="file" id="fileInput" accept=".txt" onchange="importSchedule()" />
-                        </div>
-                        <!-- <span class="file-name" id="fileName"></span> -->
+					<hr style="height: 0.1vw; border: none; background-color: white; width: 95%" />
+					<div id="period-selectors" style="display: block; justify-content: center; align-items: center; width: 100%">
+						<div class="middle-align"><input type="text" value="" style="margin-right: 2.5%; margin-left: 2.5%; min-width: 0; width: 90%; text-align: center" class="button" id="draft-name" placeholder="Draft Name" /></div>
+						<button class="period-button" style="margin-left: 2.5%; width: 95%" onclick="saveDraft()">Save Current Draft --></button>
+						<hr style="height: 0.1vw; border: none; background-color: white; width: 95%" />
+						<div style="display: block" id="import-export">
+							<button class="period-button" onclick="exportCurrent()">Export Selected Schedule</button>
+							<button class="period-button" onclick="exportCode()">Copy Current Schedule Code</button>
+							<button class="period-button" onclick="exportURL()">Export URL</button>
+							<button class="custom-file-upload" style="width: 95%" onclick="importClipCode()">Paste Schedule Code</button>
+							<div class="middle-align" style="margin-top: 0.5vh">
+								<label for="fileInput" class="custom-file-upload">Import Schedule</label>
+								<input type="file" id="fileInput" accept=".txt" onchange="importSchedule()" />
+							</div>
+							<!-- <span class="file-name" id="fileName"></span> -->
+						</div>
+					</div>
+				</div>
+			</div>
 
-                    </div>
-                </div>
-            </div>
-        </div>
+			<div id="settings-column-4" class="settings-grid" style="grid-column: 4; border-right: none; border-left: none">
+				<div id="period-count" style="display: flex; flex-wrap: wrap; justify-content: center; width: 100%; margin-top: 1vh; margin-bottom: 1vh">
+					<button class="button" style="margin-left: 2.5%; margin-left: 1vh; margin-right: 0.5vh" id="append-period" onclick="appendPeriod()">+</button>
+					<button class="button" id="remove-period" style="margin-left: 0.5vh; margin-right: 0.5vh" onclick="removePeriod()">-</button>
+					<button style="min-width: 0; padding: 0; display: inline-block; margin-left: 0.5vh; margin-right: 1vh">
+						<label class="switch"
+							><input id="24h-box" type="checkbox" onclick="amPmSwitch(this)" checked /><span class="slider">
+								<p style="font-size: 2vh; line-height: 0; padding: 0; margin: 0; margin-top: 1.5vh">24H</p>
+							</span></label
+						>
+					</button>
+				</div>
+				<div style="display: flex; justify-content: center; flex-direction: column; align-items: center">
+					<div id="added-periods"></div>
+				</div>
+			</div>
+			<div id="dev-settings">
+				<p style="font-size: 2vh">In developer mode. Click "Made by Wolf Lieff" to exit.</p>
+				<p class="selector"><input type="text" value="" class="button" size="10" id="dev-time-fix" /> : |DEV| Fix Time (24H)</p>
+			</div>
+		</div>
 
-        <div id="settings-column-4" class="settings-grid" style="grid-column: 4;border-right:none;border-left: none;">
-            <div id="period-count"
-                style="display: flex;flex-wrap: wrap;justify-content: center;width: 100%; margin-top: 1vh;margin-bottom: 1vh;">
-                <button class='button' style="margin-left: 2.5%;margin-left: 1vh;margin-right: .5vh;" id="append-period"
-                    onclick="appendPeriod()">+</button>
-                <button class='button' id="remove-period" style="margin-left: .5vh;margin-right: .5vh;"
-                    onclick="removePeriod()">-</button>
-                <button
-                    style="min-width: 0;padding: 0;display: inline-block;margin-left: .5vh;margin-right: 1vh;"><label
-                        class="switch"><input id="24h-box" type="checkbox" onclick="amPmSwitch(this)" checked><span
-                            class="slider">
-                            <p style="font-size: 2vh;line-height: 0;padding: 0;margin: 0;margin-top: 1.5vh;">24H</p>
-                        </span></label></button>
-            </div>
-            <div style="display: flex;justify-content: center;flex-direction: column;align-items:center;">
-                <div id="added-periods">
-                </div>
-            </div>
-        </div>
-        <div id="dev-settings">
-            <p style="font-size: 2vh;">In developer mode. Click "Made by Wolf Lieff" to exit.</p>
-            <p class="selector"><input type="text" value="" class="button" size="10" id="dev-time-fix"> : |DEV| Fix Time
-                (24H)</p>
-        </div>
-
-    </div>
-
-    <footer class="footer" id="footer">
-        <p style="font-size: 2vh;" onclick="IdToggle('dev-settings', ['dev-settings'], 'change')">Made by Wolf Lieff</p>
-    </footer>
-    <script src="main.js"></script>
-</body>
-
+		<footer class="footer" id="footer">
+			<p style="font-size: 2vh" onclick="IdToggle('dev-settings', ['dev-settings'], 'change')">Made by Wolf Lieff</p>
+		</footer>
+		<script src="main.js"></script>
+	</body>
 </html>
