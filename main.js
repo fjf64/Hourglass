@@ -23,6 +23,9 @@ var schedules = {
 	// 	["8", "15:00-15:30"],
 	// ],
 };
+saveVariables = {
+	scheduleOrder:{}
+}
 
 var saveBackground = "#0a190e";
 var badBackground = "maroon";
@@ -414,6 +417,13 @@ function addToSchedule(nameKey, items) {
 		e.stopPropagation(); // prevent triggering parent onclick
 		selectElement.remove();
 		delete schedules[nameKey];
+		if (scheduleValue == nameKey) {
+			var firstOption = document.querySelector("#schedules .option");
+			document.getElementById('schedule-picker').setAttribute("data-value", firstOption.getAttribute("data-value"));
+			document.getElementById('schedule-picker').textContent = firstOption.querySelector(".schedule-text").textContent + " ▼";
+			console.log(document.getElementById("schedule-picker").getAttribute("data-value"))
+			scheduleValue = document.getElementById("schedule-picker").getAttribute("data-value");
+		}
 	};
 	document.getElementById("schedules").appendChild(selectElement);
 
@@ -467,9 +477,23 @@ window.onload = () => {
 			importCode(x);
 		}
 	}
+
+	new Sortable(document.getElementById("schedules"), {
+		animation: 150,
+		// handle: '.schedule-text', // only allow dragging by text
+		ghostClass: "drag-ghost", // optional class to style dragged item
+		onEnd: function (evt) {
+			console.log("New index:", evt.newIndex);
+			saveVariables.scheduleOrder = document.getElementById('schedules').children
+			// You can iterate over the children of #schedules here to get their new order
+		},
+	});
 };
+
+//YSHS
 importCode("WWVsbG93IFNwcmluZ3MgSGlnaCBTY2hvb2wKCgoxCjg6MzAtOToxNwoKMgo5OjIxLTEwOjA2CgozCjEwOjEwLTEwOjU1Cgo0CjEwOjU5LTExOjQ0CgpsdW5jaAoxMTo0NC0xMjoxNAoKNQoxMjoxOC0xMzowNAoKNgoxMzowOC0xMzo1MwoKNwoxMzo1Ny0xNDo0MgoKOAoxNDo0Ni0xNTozMA==");
 importCode("WVNIUyBUd28gSG91ciBEZWxheQoKCjEKMTA6MzAtMTE6MDIKCjIKMTE6MDYtMTE6MzYKCmx1bmNoCjExOjM2LTEyOjA2CgozCjEyOjEwLTEyOjQwCgo0CjEyOjQ0LTEzOjE0Cgo1CjEzOjE4LTEzOjQ4Cgo2CjEzOjUyLTE0OjIyCgo3CjE0OjI2LTE0OjU2Cgo4CjE1OjAwLTE1OjMw");
+saveVariables.scheduleOrder = document.getElementById('schedules').children
 
 setInterval(Main, 1000);
 Main();

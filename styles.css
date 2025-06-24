@@ -352,3 +352,7 @@ input[type="file"] {
 	display: inline-block;
 	flex-grow: .1;
 }
+.drag-ghost {
+	opacity: 0.5;
+	background-color: #444;
+}
