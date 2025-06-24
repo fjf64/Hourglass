@@ -1,34 +1,34 @@
 var toggles = {}; // ID:state
 var schedules = {
-	YSHS: [
-		["1", "8:30-9:17"],
-		["2", "9:21-10:06"],
-		["3", "10:10-10:55"],
-		["4", "10:59-11:44"],
-		["lunch", "11:44-12:14"],
-		["5", "12:18-13:04"],
-		["6", "13:08-13:53"],
-		["7", "13:57-14:42"],
-		["8", "14:46-15:30"],
-	],
-	"YSHS Two Hour Delay": [
-		["1", "10:30-11:02"],
-		["2", "11:06-11:36"],
-		["lunch", "11:36-12:06"],
-		["3", "12:10-12:40"],
-		["4", "12:44-13:14"],
-		["5", "13:18-13:48"],
-		["6", "13:52-14:22"],
-		["7", "14:26-14:56"],
-		["8", "15:00-15:30"],
-	],
+	// 'Yellow Springs High School': [
+	// 	["1", "8:30-9:17"],
+	// 	["2", "9:21-10:06"],
+	// 	["3", "10:10-10:55"],
+	// 	["4", "10:59-11:44"],
+	// 	["lunch", "11:44-12:14"],
+	// 	["5", "12:18-13:04"],
+	// 	["6", "13:08-13:53"],
+	// 	["7", "13:57-14:42"],
+	// 	["8", "14:46-15:30"],
+	// ],
+	// "YSHS Two Hour Delay": [
+	// 	["1", "10:30-11:02"],
+	// 	["2", "11:06-11:36"],
+	// 	["lunch", "11:36-12:06"],
+	// 	["3", "12:10-12:40"],
+	// 	["4", "12:44-13:14"],
+	// 	["5", "13:18-13:48"],
+	// 	["6", "13:52-14:22"],
+	// 	["7", "14:26-14:56"],
+	// 	["8", "15:00-15:30"],
+	// ],
 };
 
 var saveBackground = "#0a190e";
 var badBackground = "maroon";
 var goodBackground = "greenyellow";
 
-var scheduleValue = document.getElementById('schedule-picker').getAttribute('data-value')
+var scheduleValue = document.getElementById("schedule-picker").getAttribute("data-value");
 
 function sleep(ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
@@ -54,14 +54,14 @@ function deepEqual(a, b) {
 }
 
 function createElementFromHTML(htmlString) {
-  var div = document.createElement('div');
-  div.innerHTML = htmlString.trim();
+	var div = document.createElement("div");
+	div.innerHTML = htmlString.trim();
 
-  // Change this to div.childNodes to support multiple top-level nodes.
-  return div.firstChild;
+	// Change this to div.childNodes to support multiple top-level nodes.
+	return div.firstChild;
 }
 
-function IdToggle(itemId, Ids = [], toggle='change') {
+function IdToggle(itemId, Ids = [], toggle = "change") {
 	if (toggles[itemId] == undefined || toggles[itemId] == false) {
 		toggles[itemId] = true;
 	} else {
@@ -220,7 +220,7 @@ async function saveDraft() {
 		}
 		periods.push([elements[0].value, times.join("-")]);
 	}
-	addToSchedule(draftName, periods)
+	addToSchedule(draftName, periods);
 }
 function exportCurrent() {
 	var exportNewLine = [];
@@ -249,7 +249,7 @@ function importSchedule() {
 				const periods = content.split("\n\n");
 				const returnal = periods.map((p) => p.split("\n"));
 				const nameKey = currentFile.name.replace(".txt", "").replace(/^schedule_/, "");
-				addToSchedule(nameKey, returnal)
+				addToSchedule(nameKey, returnal);
 			};
 		})(file);
 		reader.readAsText(file); // Don't forget this
@@ -370,9 +370,9 @@ async function ChangeElement(selfElement, element, effect, valueOverride = false
 		target = target[key];
 	}
 	if (!valueOverride) {
-	target[last] = selfElement.value;
+		target[last] = selfElement.value;
 	} else {
-		target[last] = valueOverride
+		target[last] = valueOverride;
 	}
 	setTimeout(() => (target[last] = selfElement.value), 0);
 }
@@ -380,43 +380,45 @@ function editLog(text, time) {
 	flashElement(document.getElementById("log"), ["innerHTML"], "", text, time, 1);
 }
 
-
-  function optionHover(selfItem, toggle) {
+function optionHover(selfItem, toggle) {
 	if (toggle) {
 		// console.log('on ')
 	} else {
 		// console.log('off ')
 	}
-  }
-  function selectOption(element, option) { 
-	ChangeElement('', document.getElementById('schedules'), ['style','display'], 'none')
-	element.setAttribute('data-value', option.getAttribute('data-value'))
-	element.textContent = option.textContent+' ▼'
-	scheduleValue = option.getAttribute('data-value')
-	
-  }
+}
+function selectOption(element, option) {
+	ChangeElement("", document.getElementById("schedules"), ["style", "display"], "none");
+	element.setAttribute("data-value", option.getAttribute("data-value"));
+	// element.textContent = option.textContent + " ▼";
+	element.textContent = option.querySelector(".schedule-text").textContent + " ▼";
 
-  function addToSchedule(nameKey, items) {
+	scheduleValue = option.getAttribute("data-value");
+}
+
+function addToSchedule(nameKey, items) {
 	if (Object.keys(schedules).includes(nameKey)) {
 		editLog("Schedule already named: " + nameKey, 4000);
 		flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, "#808080", 500, 1);
 		return;
 	}
 	schedules[nameKey] = items;
-	var selectElement = createElementFromHTML('<div data-value="YSHS Two Hour Delay" class="option"><p class="schedule-text"></p><button class="button remove-schedule">-</button></div>')
-	selectElement.setAttribute("onclick",'selectOption(document.getElementById("schedule-picker"), this)');
-	selectElement.setAttribute("onmouseover",'optionHover(this, true)');
-	selectElement.setAttribute("onmouseout",'optionHover(this, false)');
+	var selectElement = createElementFromHTML('<div data-value="YSHS Two Hour Delay" class="option"><p class="schedule-text"></p><button class="button remove-schedule">-</button></div>');
+	selectElement.setAttribute("onclick", 'selectOption(document.getElementById("schedule-picker"), this)');
+	selectElement.setAttribute("onmouseover", "optionHover(this, true)");
+	selectElement.setAttribute("onmouseout", "optionHover(this, false)");
 	selectElement.querySelector(".schedule-text").textContent = nameKey;
-	selectElement.setAttribute("data-value",nameKey);
-	// selectElement.textContent = nameKey
+	selectElement.setAttribute("data-value", nameKey);
+
+	selectElement.querySelector(".remove-schedule").onclick = function (e) {
+		e.stopPropagation(); // prevent triggering parent onclick
+		selectElement.remove();
+		delete schedules[nameKey];
+	};
 	document.getElementById("schedules").appendChild(selectElement);
 
 	flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);
-  }
-
-
-
+}
 
 function Main() {
 	var currentSchedule = scheduleValue;
@@ -451,8 +453,6 @@ function Main() {
 	}
 }
 
-
-
 window.onload = () => {
 	// var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
 	const params = new URLSearchParams(window.location.search);
@@ -468,6 +468,8 @@ window.onload = () => {
 		}
 	}
 };
+importCode("WWVsbG93IFNwcmluZ3MgSGlnaCBTY2hvb2wKCgoxCjg6MzAtOToxNwoKMgo5OjIxLTEwOjA2CgozCjEwOjEwLTEwOjU1Cgo0CjEwOjU5LTExOjQ0CgpsdW5jaAoxMTo0NC0xMjoxNAoKNQoxMjoxOC0xMzowNAoKNgoxMzowOC0xMzo1MwoKNwoxMzo1Ny0xNDo0MgoKOAoxNDo0Ni0xNTozMA==");
+importCode("WVNIUyBUd28gSG91ciBEZWxheQoKCjEKMTA6MzAtMTE6MDIKCjIKMTE6MDYtMTE6MzYKCmx1bmNoCjExOjM2LTEyOjA2CgozCjEyOjEwLTEyOjQwCgo0CjEyOjQ0LTEzOjE0Cgo1CjEzOjE4LTEzOjQ4Cgo2CjEzOjUyLTE0OjIyCgo3CjE0OjI2LTE0OjU2Cgo4CjE1OjAwLTE1OjMw");
 
 setInterval(Main, 1000);
 Main();
