@@ -39,7 +39,7 @@
                     <input id="text-picker" type="color" value="#ffffff" class="button" onchange="ChangeElement(this, document.getElementById('mainTime'), ['style','color'])" /> : Text Color</p>
 				<p class="selector">
                     <input type="image" class="reset-button" value="30vw" src="image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
-                    <input id="font-size-picker" type="text" value="30vw" class="button" size="3" onchange="ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" /> : Clock Size</p>
+                    <input id="font-size-picker" type="text" value="30vw" class="button" size="3" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','font-size'],this.value+'vw')" /> : Clock Size</p>
 				<p class="selector">
                     <input type="image" class="reset-button" value="#ffffff" src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('menu-picker'), ['value']);ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" /> 
                     <input id="menu-picker" type="color" value="#ffffff" class="button" onchange="ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" /> : Menu Color </p>
