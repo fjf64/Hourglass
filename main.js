@@ -345,6 +345,10 @@ async function importClipCode() {
 
 	importCode(code);
 }
+function removeFixedDisplay(id) {
+	document.getElementById(id).style.removeProperty('display');
+
+}
 
 async function flashElement(element, effect, ogColor, newColor, time = 500, count = 1) {
 	//effect in path list
@@ -370,12 +374,11 @@ async function ChangeElement(selfElement, element, effect, valueOverride = false
 	for (let key of path) {
 		target = target[key];
 	}
-	if (!valueOverride) {
+	if (!valueOverride && !(selfElement == undefined)) {
 		target[last] = selfElement.value;
 	} else {
 		target[last] = valueOverride;
 	}
-	setTimeout(() => (target[last] = selfElement.value), 0);
 }
 function editLog(text, time) {
 	flashElement(document.getElementById("log"), ["innerHTML"], "", text, time, 1);

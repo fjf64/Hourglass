@@ -38,7 +38,7 @@
                     <input type="image" class="reset-button" value="#ffffff" src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('text-picker'), ['value']);ChangeElement(this, document.getElementById('mainTime'), ['style','color'])" />
                     <input id="text-picker" type="color" value="#ffffff" class="button" onchange="ChangeElement(this, document.getElementById('mainTime'), ['style','color'])" /> : Text Color</p>
 				<p class="selector">
-                    <input type="image" class="reset-button" value="30vw" src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('font-size-picker'), ['value']);ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
+                    <input type="image" class="reset-button" value="30vw" src="image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
                     <input id="font-size-picker" type="text" value="30vw" class="button" size="3" onchange="ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" /> : Clock Size</p>
 				<p class="selector">
                     <input type="image" class="reset-button" value="#ffffff" src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('menu-picker'), ['value']);ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" /> 
@@ -49,7 +49,8 @@
 
 			<div class="settings-grid" style="grid-column: 3; border-right-style: dashed">
 				<div class="custom-select">
-					<div data-value="Yellow Springs High School" class="select-box" id="schedule-picker" onclick="ChangeElement('', document.getElementById('schedules'), ['style','display'], 'block')">Yellow Springs High School ▼</div>
+					<!-- <div data-value="Yellow Springs High School" class="select-box" id="schedule-picker" onclick="ChangeElement('', document.getElementById('schedules'), ['style','display'], 'block')">Yellow Springs High School ▼</div> -->
+					<div data-value="Yellow Springs High School" class="select-box" id="schedule-picker" onclick="removeFixedDisplay('schedules');IdToggle('schedules', ['schedules'])">Yellow Springs High School ▼</div>
 					<div class="options" id="schedules" onmouseout="IdToggle('schedules', ['schedules'])">
 						<!-- <div data-value="YSHS" class="option" onmouseover="optionHover(this, true)" onmouseout="optionHover(this, false)" onclick="selectOption(document.getElementById('schedule-picker'), this)"><p class='schedule-text'>Yellow Springs High School</p><button class="button remove-schedule">-</button></div> -->
 						<!-- <div data-value="YSHS Two Hour Delay" class="option" onmouseover="optionHover(this, true)" onmouseout="optionHover(this, false)" onclick="selectOption(document.getElementById('schedule-picker'), this)"><p class='schedule-text'>YSHS Two Hour Delay</p><button class="button remove-schedule" onclick="rom">-</button></div> -->
