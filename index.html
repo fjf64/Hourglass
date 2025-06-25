@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!-- To-Do - hover over schedules to get key, toggle current period 1/2/lunch shower, auto select first link schedule, clock font size, cache saving, add/delete schedules, organize codes -->
+	<!-- To-Do - hover over schedules to get key, toggle current period 1/2/lunch shower, clock font size, cache saving, add/delete schedules, organize codes -->
 
 	<head>
 		<meta charset="UTF-8" />
@@ -11,8 +11,7 @@
 		<link rel="stylesheet" href="styles.css" />
 
 		<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-
+		<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 	</head>
 
 	<body>
@@ -32,13 +31,18 @@
 
 			<div class="settings-grid" style="grid-column: 1; width: 100%; border-left: none">
 				<p style="font-size: 3vh; margin-left: 1vh">Click the timer to toggle the UI</p>
-				<p class="selector"><input type="image" class="reset-button" value="#000000" src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('background-picker'), ['value']);ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])" /><input id="background-picker" type="color" value="#000000" class="button" onchange="ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])" /> : Background Color</p>
-				<p class="selector"><input type="image" class="reset-button" value="#ffffff" src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('text-picker'), ['value']);ChangeElement(this, document.getElementById('mainTime'), ['style','color'])" /><input id="text-picker" type="color" value="#ffffff" class="button" onchange="ChangeElwement(this, document.getElementById('mainTime'), ['style','color'])" /> : Text Color</p>
 				<p class="selector">
-					<input type="image" class="reset-button" value="#ffffff" src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('menu-picker'), ['value']);ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" />
-					<input id="menu-picker" type="color" value="#ffffff" class="button" onchange="ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" />
-					: Menu Color
-				</p>
+                    <input type="image" class="reset-button" value="#000000" src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('background-picker'), ['value']);ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])" />
+                    <input id="background-picker" type="color" value="#000000" class="button" onchange="ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])" /> : Background Color</p>
+				<p class="selector">
+                    <input type="image" class="reset-button" value="#ffffff" src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('text-picker'), ['value']);ChangeElement(this, document.getElementById('mainTime'), ['style','color'])" />
+                    <input id="text-picker" type="color" value="#ffffff" class="button" onchange="ChangeElement(this, document.getElementById('mainTime'), ['style','color'])" /> : Text Color</p>
+				<p class="selector">
+                    <input type="image" class="reset-button" value="30vw" src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('font-size-picker'), ['value']);ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
+                    <input id="font-size-picker" type="text" value="30vw" class="button" size="3" onchange="ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" /> : Clock Size</p>
+				<p class="selector">
+                    <input type="image" class="reset-button" value="#ffffff" src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('menu-picker'), ['value']);ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" /> 
+                    <input id="menu-picker" type="color" value="#ffffff" class="button" onchange="ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" /> : Menu Color </p>
 			</div>
 
 			<div class="settings-grid" style="grid-column: 2; width: 100%"></div>
@@ -47,7 +51,7 @@
 				<div class="custom-select">
 					<div data-value="Yellow Springs High School" class="select-box" id="schedule-picker" onclick="ChangeElement('', document.getElementById('schedules'), ['style','display'], 'block')">Yellow Springs High School ▼</div>
 					<div class="options" id="schedules" onmouseout="IdToggle('schedules', ['schedules'])">
-					    <!-- <div data-value="YSHS" class="option" onmouseover="optionHover(this, true)" onmouseout="optionHover(this, false)" onclick="selectOption(document.getElementById('schedule-picker'), this)"><p class='schedule-text'>Yellow Springs High School</p><button class="button remove-schedule">-</button></div> -->
+						<!-- <div data-value="YSHS" class="option" onmouseover="optionHover(this, true)" onmouseout="optionHover(this, false)" onclick="selectOption(document.getElementById('schedule-picker'), this)"><p class='schedule-text'>Yellow Springs High School</p><button class="button remove-schedule">-</button></div> -->
 						<!-- <div data-value="YSHS Two Hour Delay" class="option" onmouseover="optionHover(this, true)" onmouseout="optionHover(this, false)" onclick="selectOption(document.getElementById('schedule-picker'), this)"><p class='schedule-text'>YSHS Two Hour Delay</p><button class="button remove-schedule" onclick="rom">-</button></div> -->
 					</div>
 				</div>

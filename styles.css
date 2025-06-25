@@ -72,9 +72,6 @@ input {
 	border-style: solid;
 	border-width: 0.5vh;
 	border-color: grey;
-	/* max-width: 20%; */
-	/* height: 150%; */
-	/* width: 50vw; */
 	max-width: 3vw;
 	min-width: 0;
 }

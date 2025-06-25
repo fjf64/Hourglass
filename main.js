@@ -24,8 +24,8 @@ var schedules = {
 	// ],
 };
 saveVariables = {
-	scheduleOrder:{}
-}
+	scheduleOrder: {},
+};
 
 var saveBackground = "#0a190e";
 var badBackground = "maroon";
@@ -287,10 +287,8 @@ function exportURL() {
 	const url = new URL(window.location.origin + window.location.pathname);
 	url.searchParams.set("code", btoaSchedules.join("_"));
 
-	// Now you can use this URL
 	console.log(url.href); // e.g., http://localhost:5500/index.html?code=...
 
-	// Optionally set it as an href somewhere:
 	navigator.clipboard.writeText(url.href);
 	alert("Copied the text: " + url.href);
 }
@@ -419,9 +417,9 @@ function addToSchedule(nameKey, items) {
 		delete schedules[nameKey];
 		if (scheduleValue == nameKey) {
 			var firstOption = document.querySelector("#schedules .option");
-			document.getElementById('schedule-picker').setAttribute("data-value", firstOption.getAttribute("data-value"));
-			document.getElementById('schedule-picker').textContent = firstOption.querySelector(".schedule-text").textContent + " ▼";
-			console.log(document.getElementById("schedule-picker").getAttribute("data-value"))
+			document.getElementById("schedule-picker").setAttribute("data-value", firstOption.getAttribute("data-value"));
+			document.getElementById("schedule-picker").textContent = firstOption.querySelector(".schedule-text").textContent + " ▼";
+			// console.log(document.getElementById("schedule-picker").getAttribute("data-value"));
 			scheduleValue = document.getElementById("schedule-picker").getAttribute("data-value");
 		}
 	};
@@ -483,8 +481,8 @@ window.onload = () => {
 		// handle: '.schedule-text', // only allow dragging by text
 		ghostClass: "drag-ghost", // optional class to style dragged item
 		onEnd: function (evt) {
-			console.log("New index:", evt.newIndex);
-			saveVariables.scheduleOrder = document.getElementById('schedules').children
+			// console.log("New index:", evt.newIndex);
+			saveVariables.scheduleOrder = document.getElementById("schedules").children;
 			// You can iterate over the children of #schedules here to get their new order
 		},
 	});
@@ -493,7 +491,11 @@ window.onload = () => {
 //YSHS
 importCode("WWVsbG93IFNwcmluZ3MgSGlnaCBTY2hvb2wKCgoxCjg6MzAtOToxNwoKMgo5OjIxLTEwOjA2CgozCjEwOjEwLTEwOjU1Cgo0CjEwOjU5LTExOjQ0CgpsdW5jaAoxMTo0NC0xMjoxNAoKNQoxMjoxOC0xMzowNAoKNgoxMzowOC0xMzo1MwoKNwoxMzo1Ny0xNDo0MgoKOAoxNDo0Ni0xNTozMA==");
 importCode("WVNIUyBUd28gSG91ciBEZWxheQoKCjEKMTA6MzAtMTE6MDIKCjIKMTE6MDYtMTE6MzYKCmx1bmNoCjExOjM2LTEyOjA2CgozCjEyOjEwLTEyOjQwCgo0CjEyOjQ0LTEzOjE0Cgo1CjEzOjE4LTEzOjQ4Cgo2CjEzOjUyLTE0OjIyCgo3CjE0OjI2LTE0OjU2Cgo4CjE1OjAwLTE1OjMw");
-saveVariables.scheduleOrder = document.getElementById('schedules').children
+saveVariables.scheduleOrder = document.getElementById("schedules").children;
 
+var initialOption = document.querySelector("#schedules .option");
+document.getElementById("schedule-picker").setAttribute("data-value", initialOption.getAttribute("data-value"));
+document.getElementById("schedule-picker").textContent = initialOption.querySelector(".schedule-text").textContent + " ▼";
+scheduleValue = document.getElementById("schedule-picker").getAttribute("data-value");
 setInterval(Main, 1000);
 Main();
