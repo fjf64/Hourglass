@@ -292,16 +292,26 @@ input[type="file"] {
 	width: 100%;
 	display: flex;
 	justify-content: center;
+	flex-direction: column;
 	padding-top: 1vh;
 	padding-bottom: 0vh;
 }
 
+.schedules-grouper {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+}
+
 .select-box {
 	/* padding: 10px; */
-	border: 0.5vh solid gray;
+	border: 0.5vh solid #ccc;
 	cursor: pointer;
+	border-left: none;
+	border-top: none;
 	/* min-width: 95%; */
-	width: 92.5%;
+	/* width: 92.5%; */
+	width: auto;
 	padding: 0.25vh;
 	/* max-width: 95%; */
 	/* margin-left: 2.5%; */
@@ -309,10 +319,16 @@ input[type="file"] {
 	font-size: 2vh;
 	color: black;
 }
+#schedule-tooltip {
+	white-space: pre-line;
+	  /* font-family: monospace; */
+  line-height: 1.5;
+  width: max-content;
+}
 
 .options {
 	display: none;
-	position: absolute;
+	position: static;
 	top: 100%;
 	width: 100%;
 	left: 0;
@@ -331,9 +347,9 @@ input[type="file"] {
 	/* padding: 10px; */
 	font-size: 2vh;
 	border: 0.25vh solid #ccc;
-	  display: flex;
-  justify-content: space-between;
-  align-items: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .option:hover {
@@ -343,11 +359,10 @@ input[type="file"] {
 .remove-schedule {
 	display: inline-block;
 	margin-right: 1vh;
-	
 }
 .schedule-text {
 	display: inline-block;
-	flex-grow: .1;
+	flex-grow: 0.1;
 }
 .drag-ghost {
 	opacity: 0.5;

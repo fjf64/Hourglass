@@ -65,17 +65,17 @@ function createElementFromHTML(htmlString) {
 }
 
 function IdToggle(itemId, Ids = [], toggle = "change") {
-	if (toggles[itemId] == undefined || toggles[itemId] == false) {
-		toggles[itemId] = true;
-	} else {
-		toggles[itemId] = false;
-	}
-	if (Ids != []) {
-		for (let x of Ids) {
-			document.getElementById(x).classList.toggle(toggle);
+		if (toggles[itemId] == undefined || toggles[itemId] == false) {
+			toggles[itemId] = true;
+		} else {
+			toggles[itemId] = false;
+		}
+		if (Ids != []) {
+			for (let x of Ids) {
+				document.getElementById(x).classList.toggle(toggle);
+			}
 		}
 	}
-}
 function ClockToEpoch(timeStr) {
 	const [hours, minutes] = timeStr.split(":").map(Number);
 	const now = new Date();
@@ -346,8 +346,7 @@ async function importClipCode() {
 	importCode(code);
 }
 function removeFixedDisplay(id) {
-	document.getElementById(id).style.removeProperty('display');
-
+	document.getElementById(id).style.removeProperty("display");
 }
 
 async function flashElement(element, effect, ogColor, newColor, time = 500, count = 1) {
@@ -387,6 +386,7 @@ function editLog(text, time) {
 function optionHover(selfItem, toggle) {
 	if (toggle) {
 		// console.log('on ')
+		document.getElementById("schedule-tooltip").textContent = schedules[selfItem.getAttribute("data-value")].map(([period, time]) => `${period}: ${time}`).join("\n\n");
 	} else {
 		// console.log('off ')
 	}
@@ -394,10 +394,10 @@ function optionHover(selfItem, toggle) {
 function selectOption(element, option) {
 	ChangeElement("", document.getElementById("schedules"), ["style", "display"], "none");
 	element.setAttribute("data-value", option.getAttribute("data-value"));
-	// element.textContent = option.textContent + " ▼";
 	element.textContent = option.querySelector(".schedule-text").textContent + " ▼";
-
 	scheduleValue = option.getAttribute("data-value");
+	document.getElementById("schedule-tooltip").textContent = schedules[scheduleValue].map(([period, time]) => `${period}: ${time}`).join("\n\n");
+	console.log(schedules[scheduleValue].map(([period, time]) => `${period}: ${time}`).join("\n\n"));
 }
 
 function addToSchedule(nameKey, items) {
@@ -419,14 +419,14 @@ function addToSchedule(nameKey, items) {
 		selectElement.remove();
 		delete schedules[nameKey];
 		if (scheduleValue == nameKey) {
-			var firstOption = document.querySelector("#schedules .option");
+			var firstOption = document.querySelector("#schedule-specific .option");
 			document.getElementById("schedule-picker").setAttribute("data-value", firstOption.getAttribute("data-value"));
 			document.getElementById("schedule-picker").textContent = firstOption.querySelector(".schedule-text").textContent + " ▼";
 			// console.log(document.getElementById("schedule-picker").getAttribute("data-value"));
 			scheduleValue = document.getElementById("schedule-picker").getAttribute("data-value");
 		}
 	};
-	document.getElementById("schedules").appendChild(selectElement);
+	document.getElementById("schedule-specific").appendChild(selectElement);
 
 	flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);
 }
@@ -479,13 +479,13 @@ window.onload = () => {
 		}
 	}
 
-	new Sortable(document.getElementById("schedules"), {
+	new Sortable(document.getElementById("schedule-specific"), {
 		animation: 150,
 		// handle: '.schedule-text', // only allow dragging by text
 		ghostClass: "drag-ghost", // optional class to style dragged item
 		onEnd: function (evt) {
 			// console.log("New index:", evt.newIndex);
-			saveVariables.scheduleOrder = document.getElementById("schedules").children;
+			saveVariables.scheduleOrder = document.getElementById("schedule-specific").children;
 			// You can iterate over the children of #schedules here to get their new order
 		},
 	});
@@ -494,11 +494,10 @@ window.onload = () => {
 //YSHS
 importCode("WWVsbG93IFNwcmluZ3MgSGlnaCBTY2hvb2wKCgoxCjg6MzAtOToxNwoKMgo5OjIxLTEwOjA2CgozCjEwOjEwLTEwOjU1Cgo0CjEwOjU5LTExOjQ0CgpsdW5jaAoxMTo0NC0xMjoxNAoKNQoxMjoxOC0xMzowNAoKNgoxMzowOC0xMzo1MwoKNwoxMzo1Ny0xNDo0MgoKOAoxNDo0Ni0xNTozMA==");
 importCode("WVNIUyBUd28gSG91ciBEZWxheQoKCjEKMTA6MzAtMTE6MDIKCjIKMTE6MDYtMTE6MzYKCmx1bmNoCjExOjM2LTEyOjA2CgozCjEyOjEwLTEyOjQwCgo0CjEyOjQ0LTEzOjE0Cgo1CjEzOjE4LTEzOjQ4Cgo2CjEzOjUyLTE0OjIyCgo3CjE0OjI2LTE0OjU2Cgo4CjE1OjAwLTE1OjMw");
-saveVariables.scheduleOrder = document.getElementById("schedules").children;
+saveVariables.scheduleOrder = document.getElementById("schedule-specific").children;
 
 var initialOption = document.querySelector("#schedules .option");
-document.getElementById("schedule-picker").setAttribute("data-value", initialOption.getAttribute("data-value"));
-document.getElementById("schedule-picker").textContent = initialOption.querySelector(".schedule-text").textContent + " ▼";
-scheduleValue = document.getElementById("schedule-picker").getAttribute("data-value");
+selectOption(document.getElementById("schedule-picker"), initialOption);
+
 setInterval(Main, 1000);
 Main();
