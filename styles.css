@@ -290,9 +290,9 @@ input[type="file"] {
 	position: relative;
 	/* display: inline-block; */
 	width: 100%;
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
+	/* display: flex; */
+	/* justify-content: center; */
+	/* flex-direction: column; */
 	padding-top: 1vh;
 	padding-bottom: 0vh;
 }
@@ -301,29 +301,27 @@ input[type="file"] {
 	display: flex;
 	flex-direction: row;
 	align-items: flex-start;
+	width: 150%;
 }
 
 .select-box {
-	/* padding: 10px; */
 	border: 0.5vh solid #ccc;
 	cursor: pointer;
-	border-left: none;
-	border-top: none;
-	/* min-width: 95%; */
-	/* width: 92.5%; */
+	/* border-left: none; */
+	/* border-top: none; */
 	width: auto;
 	padding: 0.25vh;
-	/* max-width: 95%; */
-	/* margin-left: 2.5%; */
 	background: #e9e9ed;
 	font-size: 2vh;
 	color: black;
 }
 #schedule-tooltip {
 	white-space: pre-line;
-	  /* font-family: monospace; */
-  line-height: 1.5;
-  width: max-content;
+	/* font-family: monospace; */
+	line-height: 1.5;
+	width: 100%;
+	line-height: 2vh;
+	/* width: 75%; */
 }
 
 .options {
@@ -338,6 +336,13 @@ input[type="file"] {
 	z-index: 1;
 	color: black;
 }
+#schedules {
+	border: none;
+	background: none;
+	position: absolute;
+	width:100%
+}
+
 
 .options.change {
 	display: block;
@@ -360,10 +365,7 @@ input[type="file"] {
 	display: inline-block;
 	margin-right: 1vh;
 }
-.schedule-text {
-	display: inline-block;
-	flex-grow: 0.1;
-}
+
 .drag-ghost {
 	opacity: 0.5;
 	background-color: #444;

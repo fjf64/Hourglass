@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!-- To-Do - hover over schedules to get key, toggle current period 1/2/lunch shower, clock font size, cache saving, add/delete schedules, organize codes -->
+	<!-- To-Do - toggle current period 1/2/lunch shower, cache saving -->
 
 	<head>
 		<meta charset="UTF-8" />
@@ -41,7 +41,7 @@
 				</p>
 				<p class="selector">
 					<input type="image" class="reset-button" value="30vw" src="image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
-					<input id="font-size-picker" type="text" value="30vw" class="button" size="3" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','font-size'],this.value+'vw')" /> : Clock Size
+					<input id="font-size-picker" type="text" value="30vw" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','font-size'],this.value+'vw')" /> : Clock Size
 				</p>
 				<p class="selector">
 					<input type="image" class="reset-button" value="#ffffff" src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('menu-picker'), ['value']);ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" />
@@ -55,13 +55,14 @@
 				<div class="custom-select">
 					<div data-value="Yellow Springs High School" class="select-box" id="schedule-picker" onclick="removeFixedDisplay('schedules');IdToggle('schedules', ['schedules'])">Yellow Springs High School ▼</div>
 
-					<div class="options" id="schedules" style="border:none;background: none;" onmouseout="IdToggle('schedules', ['schedules'])">
+					<div class="options" id="schedules"> 
+                        <!-- onmouseout="IdToggle('schedules', ['schedules'])" -->
 						<div class="schedules-grouper">
 							<div class="options" style="display: block;border-top:none;" id="schedule-specific"></div>
-							<div class="select-box" style="cursor:default;">
+
+							<div style='width: 50%;padding: 0;padding-left: 1vh;margin-left: -.5vh;' class="select-box" style="cursor:default;">
 								<p id="schedule-tooltip">
-									aaaaaa <br />
-									aaaa
+									
 								</p>
 							</div>
 						</div>
