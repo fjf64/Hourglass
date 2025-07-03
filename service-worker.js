@@ -4,8 +4,8 @@ const urlsToCache = [
   '/index.html',
   '/style.css',
   '/script.js',
-  '/icon-192.png',
-  '/icon-512.png'
+  '/Icons/icon-192.png',
+  '/Icons/icon-512.png'
 ];
 //ADD ICON 512X IF ANDROID INSTALL NEEDED
 

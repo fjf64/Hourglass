@@ -7,12 +7,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Hourglass</title>
 
-		<link rel="icon" type="image/x-icon" href="icons/Hourglass.png" />
+		<link rel="icon" type="image/x-icon" href="Icons/Hourglass.png" />
 		<link rel="stylesheet" href="styles.css" />
 
 		<link rel="manifest" href="manifest.json" />
 		<meta name="theme-color" content="#ffffff" />
-		<link rel="apple-touch-icon" href="icon-192.png" />
+		<link rel="apple-touch-icon" href="Icons/icon-192.png" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
@@ -38,19 +38,19 @@
 			<div class="settings-grid" style="grid-column: 1; width: 100%; border-left: none">
 				<p style="font-size: 3vh; margin-left: 1vh">Click the timer to toggle the UI</p>
 				<p class="selector">
-					<input type="image" class="reset-button" value="#000000" src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('background-picker'), ['value']);ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])" />
+					<input type="image" class="reset-button" value="#000000" src="Icons/image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('background-picker'), ['value']);ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])" />
 					<input id="background-picker" type="color" value="#000000" class="button" onchange="ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])" /> : Background Color
 				</p>
 				<p class="selector">
-					<input type="image" class="reset-button" value="#ffffff" src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('text-picker'), ['value']);ChangeElement(this, document.getElementById('mainTime'), ['style','color'])" />
+					<input type="image" class="reset-button" value="#ffffff" src="Icons/image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('text-picker'), ['value']);ChangeElement(this, document.getElementById('mainTime'), ['style','color'])" />
 					<input id="text-picker" type="color" value="#ffffff" class="button" onchange="ChangeElement(this, document.getElementById('mainTime'), ['style','color'])" /> : Text Color
 				</p>
 				<p class="selector">
-					<input type="image" class="reset-button" value="30vw" src="image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
+					<input type="image" class="reset-button" value="30vw" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
 					<input id="font-size-picker" type="text" value="30vw" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','font-size'],this.value+'vw')" /> : Clock Size
 				</p>
 				<p class="selector">
-					<input type="image" class="reset-button" value="#ffffff" src="image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('menu-picker'), ['value']);ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" />
+					<input type="image" class="reset-button" value="#ffffff" src="Icons/image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('menu-picker'), ['value']);ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" />
 					<input id="menu-picker" type="color" value="#ffffff" class="button" onchange="ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" /> : Menu Color
 				</p>
 			</div>
