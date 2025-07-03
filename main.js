@@ -287,7 +287,7 @@ function exportURL() {
 	const url = new URL(window.location.origin + window.location.pathname);
 	url.searchParams.set("code", btoaSchedules.join("_"));
 
-	console.log(url.href); // e.g., http://localhost:5500/index.html?code=...
+	// console.log(url.href); // e.g., http://localhost:5500/index.html?code=...
 
 	navigator.clipboard.writeText(url.href);
 	alert("Copied the text: " + url.href);
@@ -397,7 +397,7 @@ function selectOption(element, option) {
 	element.textContent = option.querySelector(".schedule-text").textContent + " ▼";
 	scheduleValue = option.getAttribute("data-value");
 	document.getElementById("schedule-tooltip").textContent = schedules[scheduleValue].map(([period, time]) => `${period}: ${time}`).join("\n\n");
-	console.log(schedules[scheduleValue].map(([period, time]) => `${period}: ${time}`).join("\n\n"));
+	// console.log(schedules[scheduleValue].map(([period, time]) => `${period}: ${time}`).join("\n\n"));
 }
 
 function addToSchedule(nameKey, items) {
@@ -422,7 +422,6 @@ function addToSchedule(nameKey, items) {
 			var firstOption = document.querySelector("#schedule-specific .option");
 			document.getElementById("schedule-picker").setAttribute("data-value", firstOption.getAttribute("data-value"));
 			document.getElementById("schedule-picker").textContent = firstOption.querySelector(".schedule-text").textContent + " ▼";
-			// console.log(document.getElementById("schedule-picker").getAttribute("data-value"));
 			scheduleValue = document.getElementById("schedule-picker").getAttribute("data-value");
 		}
 	};

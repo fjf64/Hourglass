@@ -7,8 +7,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Hourglass</title>
 
-		<link rel="icon" type="image/x-icon" href="Hourglass.png" />
+		<link rel="icon" type="image/x-icon" href="icons/Hourglass.png" />
 		<link rel="stylesheet" href="styles.css" />
+
+		<link rel="manifest" href="manifest.json" />
+		<meta name="theme-color" content="#ffffff" />
+		<link rel="apple-touch-icon" href="icon-192.png" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
 		<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
@@ -54,16 +60,11 @@
 			<div class="settings-grid" style="grid-column: 3; border-right-style: dashed">
 				<div class="custom-select">
 					<div data-value="Yellow Springs High School" class="select-box" id="schedule-picker" onclick="removeFixedDisplay('schedules');IdToggle('schedules', ['schedules'])">Yellow Springs High School ▼</div>
-
-					<div class="options" id="schedules"> 
-                        <!-- onmouseout="IdToggle('schedules', ['schedules'])" -->
+					<div class="options" id="schedules">
 						<div class="schedules-grouper">
-							<div class="options" style="display: block;border-top:none;" id="schedule-specific"></div>
-
-							<div style='width: 50%;padding: 0;padding-left: 1vh;margin-left: -.5vh;' class="select-box" style="cursor:default;">
-								<p id="schedule-tooltip">
-									
-								</p>
+							<div class="options" style="display: block; border-top: none" id="schedule-specific"></div>
+							<div style="width: 50%; padding: 0; padding-left: 1vh; margin-left: -0.5vh" class="select-box" style="cursor: default">
+								<p id="schedule-tooltip"></p>
 							</div>
 						</div>
 					</div>
@@ -78,6 +79,20 @@
 						<button class="period-button" style="margin-left: 2.5%; width: 95%" onclick="saveDraft()">Save Current Draft --></button>
 						<hr style="height: 0.1vw; border: none; background-color: white; width: 95%" />
 						<div style="display: block" id="import-export">
+							<div class="ixport-wrapper">
+								<p class="ixport-description">Code</p>
+								<div class="ixport-buttons">
+									<div class="ixport-botton-section">
+										<button class="button ixport-button" onclick="removePeriod()">-</button>
+										<p class="ixport-text">Copy</p>
+									</div>
+                                    <div class="ixport-botton-section" style="margin-right: 1vh;">
+										<button class="button ixport-button" onclick="removePeriod()">-</button>
+										<p class="ixport-text">Emport</p>
+									</div>
+								</div>
+							</div>
+
 							<button class="period-button" onclick="exportCurrent()">Export Selected Schedule</button>
 							<button class="period-button" onclick="exportCode()">Copy Current Schedule Code</button>
 							<button class="period-button" onclick="exportURL()">Export URL</button>
@@ -118,5 +133,15 @@
 			<p style="font-size: 2vh" onclick="IdToggle('dev-settings', ['dev-settings'], 'change')">Made by Wolf Lieff</p>
 		</footer>
 		<script src="main.js"></script>
+		<script>
+			if ("serviceWorker" in navigator) {
+				window.addEventListener("load", () => {
+					navigator.serviceWorker
+						.register("/service-worker.js")
+						.then((reg) => console.log("[SW] Registered:", reg.scope))
+						.catch((err) => console.error("[SW] Failed:", err));
+				});
+			}
+		</script>
 	</body>
 </html>

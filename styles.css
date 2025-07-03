@@ -340,9 +340,8 @@ input[type="file"] {
 	border: none;
 	background: none;
 	position: absolute;
-	width:100%
+	width: 100%;
 }
-
 
 .options.change {
 	display: block;
@@ -369,4 +368,45 @@ input[type="file"] {
 .drag-ghost {
 	opacity: 0.5;
 	background-color: #444;
+}
+
+.ixport-wrapper {
+	width: 100%;
+	border: 0.25vh solid white;
+	margin-top: 2vh;
+	margin-left: 5%;
+	width: 90%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.ixport-description {
+	text-align: left;
+	line-height: 1vh;
+	margin: 0vh;
+	margin-bottom: 3vh;
+	margin-top: 2vh;
+	font-size: 4vh;
+	display: inline-block;
+}
+
+.ixport-buttons {
+	justify-content: right;
+	padding:0;
+	white-space:unset;
+}
+
+.ixport-botton-section {
+	display: inline-block;
+}
+
+.ixport-button {
+	/* margin-left: 0.5vh; */
+	/* margin-right: 0.5vh; */
+	display: inline-block;
+}
+
+.ixport-text {
+	font-size: 1vh;
+	margin: 0;
 }
