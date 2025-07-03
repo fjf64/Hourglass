@@ -376,9 +376,8 @@ input[type="file"] {
 	margin-top: 2vh;
 	margin-left: 5%;
 	width: 90%;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+	display: grid;
+	grid-template-columns: 33% 33% 33%;
 }
 .ixport-description {
 	text-align: left;
@@ -395,25 +394,26 @@ input[type="file"] {
 .ixport-buttons {
 	display: flex;
 	flex-wrap: wrap;  
-	  justify-content: center; /* Center horizontally */
+	  justify-content: center;
   align-items: center;   
 	padding: 0;
-	white-space: unset;
+	/* white-space: unset; */
 	/* width: 50%; */
 }
 
 .ixport-botton-section {
 	display: inline-flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content:start;
 	align-items: center;
 	margin-top: 1vh;
 	margin-right: 1vh;
+	margin-bottom: 1vh;
 	line-height: 1vh;
 }
 
 .ixport-button {
-	display: inline-block;
+	/* display: inline-block; */
 	filter: invert(1);
 	width: 1vh;
 	font-size: 2vh;
@@ -424,7 +424,18 @@ input[type="file"] {
 }
 
 .ixport-text {
-	font-size: 1.5vh;
+	font-size: calc(.35vh + .75vw);
+	/* font-size: 1.5vh; */
 	margin: 0;
-	line-height: 2vh;
+	margin-top: .5vh;
+	line-height: calc(.35vh + .75vw);
+	text-align: center;
+}
+
+.ixport-button img {
+  cursor: pointer;
+  width: 48px; /* Set your desired size */
+  height: 48px;
+  margin: 0;
+  /* margin-left: -.035vh; */
 }
