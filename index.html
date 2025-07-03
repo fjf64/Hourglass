@@ -79,24 +79,26 @@
 						<button class="period-button" style="margin-left: 2.5%; width: 95%" onclick="saveDraft()">Save Current Draft --></button>
 						<hr style="height: 0.1vw; border: none; background-color: white; width: 95%" />
 						<div style="display: block" id="import-export">
+                            <p style="font-size: 3vh;text-align: center;">Import/Export</p>
+
 							<div class="ixport-wrapper">
-								<p class="ixport-description">Code</p>
+								<p class="ixport-description">By Code</p>
 								<div class="ixport-buttons">
 									<div class="ixport-botton-section">
-										<button class="button ixport-button" onclick="removePeriod()">-</button>
-										<p class="ixport-text">Copy</p>
+                                        <input type="image" class="ixport-button" value="#ffffff" src="Icons/import.png" onclick="exportCode()"/>
+										<p class="ixport-text">Copy to Clipboard</p>
 									</div>
                                     <div class="ixport-botton-section" style="margin-right: 1vh;">
-										<button class="button ixport-button" onclick="removePeriod()">-</button>
-										<p class="ixport-text">Emport</p>
+										<input type="image" class=" ixport-button" value="#ffffff" src="Icons/export.png" onclick="importClipCode()"/>
+										<p class="ixport-text">Paste from Clipboard</p>
 									</div>
 								</div>
 							</div>
 
 							<button class="period-button" onclick="exportCurrent()">Export Selected Schedule</button>
-							<button class="period-button" onclick="exportCode()">Copy Current Schedule Code</button>
+							<!-- <button class="period-button" onclick="exportCode()">Copy Current Schedule Code</button> -->
 							<button class="period-button" onclick="exportURL()">Export URL</button>
-							<button class="custom-file-upload" style="width: 95%" onclick="importClipCode()">Paste Schedule Code</button>
+							<!-- <button class="custom-file-upload" style="width: 95%" onclick="importClipCode()">Paste Schedule Code</button> -->
 							<div class="middle-align" style="margin-top: 0.5vh">
 								<label for="fileInput" class="custom-file-upload">Import Schedule</label>
 								<input type="file" id="fileInput" accept=".txt" onchange="importSchedule()" />
