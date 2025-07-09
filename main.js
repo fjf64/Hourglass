@@ -65,17 +65,17 @@ function createElementFromHTML(htmlString) {
 }
 
 function IdToggle(itemId, Ids = [], toggle = "change") {
-		if (toggles[itemId] == undefined || toggles[itemId] == false) {
-			toggles[itemId] = true;
-		} else {
-			toggles[itemId] = false;
-		}
-		if (Ids != []) {
-			for (let x of Ids) {
-				document.getElementById(x).classList.toggle(toggle);
-			}
+	if (toggles[itemId] == undefined || toggles[itemId] == false) {
+		toggles[itemId] = true;
+	} else {
+		toggles[itemId] = false;
+	}
+	if (Ids != []) {
+		for (let x of Ids) {
+			document.getElementById(x).classList.toggle(toggle);
 		}
 	}
+}
 function ClockToEpoch(timeStr) {
 	const [hours, minutes] = timeStr.split(":").map(Number);
 	const now = new Date();
@@ -420,14 +420,81 @@ function addToSchedule(nameKey, items) {
 		delete schedules[nameKey];
 		if (scheduleValue == nameKey) {
 			var firstOption = document.querySelector("#schedule-specific .option");
-			document.getElementById("schedule-picker").setAttribute("data-value", firstOption.getAttribute("data-value"));
-			document.getElementById("schedule-picker").textContent = firstOption.querySelector(".schedule-text").textContent + " ▼";
-			scheduleValue = document.getElementById("schedule-picker").getAttribute("data-value");
+			console.log(firstOption);
+			if (firstOption !== null) {
+				document.getElementById("schedule-picker").setAttribute("data-value", firstOption.getAttribute("data-value"));
+				document.getElementById("schedule-picker").textContent = firstOption.querySelector(".schedule-text").textContent + " ▼";
+				scheduleValue = document.getElementById("schedule-picker").getAttribute("data-value");
+			} else {
+				document.getElementById("schedule-picker").setAttribute("data-value", "");
+				document.getElementById("schedule-picker").textContent = "No Schedules In System" + " ▼";
+				scheduleValue = "";
+			}
 		}
 	};
 	document.getElementById("schedule-specific").appendChild(selectElement);
 
 	flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);
+}
+
+function allInputs() {
+	var returnal = {
+		C1: {},
+		C2: {},
+		C3: {
+			scheduleFront: {},
+			scheduleBack: {},
+		},
+		C4: {
+			roundClock: true,
+		},
+	};
+	//Column 1
+	for (let x of document.getElementById("column-1").querySelectorAll(".selector")) {
+		inputBox = x.querySelector(".button");
+		returnal.C1[inputBox.id] = inputBox.value;
+	}
+
+	//Column 2
+
+	//column 3
+	// for (let x of document.getElementById('schedule-specific').children) {
+	// 	console.log(x)
+
+	// }
+	returnal.C3.scheduleFront = document.getElementById("schedule-specific").innerHTML;
+	returnal.C3.scheduleBack = schedules;
+
+	if (!document.getElementById("24h-box").checked) {
+		returnal.C4.roundClock = false;
+	}
+
+	return returnal;
+}
+
+function saveAll() {
+	localStorage["Hourglass"] = JSON.stringify(allInputs());
+	console.log(localStorage.Hourglass);
+}
+
+function cacheRecall() {
+	cacheBox = JSON.parse(localStorage["Hourglass"]);
+	console.log(cacheBox);
+
+	//C1
+	for (let x of Object.keys(cacheBox.C1)) {
+		var input = document.getElementById(x);
+		input.value = cacheBox.C1[x];
+		input.dispatchEvent(new Event("change", { bubbles: true }));
+		input.dispatchEvent(new Event("input", { bubbles: true }));
+	}
+	//C2
+
+	//C3
+	document.getElementById("schedule-specific").innerHTML = cacheBox.C3.scheduleFront;
+	schedules = cacheBox.C3.scheduleBack;
+
+	//C4
 }
 
 function Main() {
@@ -494,6 +561,13 @@ window.onload = () => {
 importCode("WWVsbG93IFNwcmluZ3MgSGlnaCBTY2hvb2wKCgoxCjg6MzAtOToxNwoKMgo5OjIxLTEwOjA2CgozCjEwOjEwLTEwOjU1Cgo0CjEwOjU5LTExOjQ0CgpsdW5jaAoxMTo0NC0xMjoxNAoKNQoxMjoxOC0xMzowNAoKNgoxMzowOC0xMzo1MwoKNwoxMzo1Ny0xNDo0MgoKOAoxNDo0Ni0xNTozMA==");
 importCode("WVNIUyBUd28gSG91ciBEZWxheQoKCjEKMTA6MzAtMTE6MDIKCjIKMTE6MDYtMTE6MzYKCmx1bmNoCjExOjM2LTEyOjA2CgozCjEyOjEwLTEyOjQwCgo0CjEyOjQ0LTEzOjE0Cgo1CjEzOjE4LTEzOjQ4Cgo2CjEzOjUyLTE0OjIyCgo3CjE0OjI2LTE0OjU2Cgo4CjE1OjAwLTE1OjMw");
 saveVariables.scheduleOrder = document.getElementById("schedule-specific").children;
+
+for (let x of document.getElementById("column-1").querySelectorAll(".selector")) {
+	let input = x.querySelector(".button");
+	input.dispatchEvent(new Event("change", { bubbles: true }));
+	input.dispatchEvent(new Event("input", { bubbles: true }));
+}
+cacheRecall()
 
 var initialOption = document.querySelector("#schedules .option");
 selectOption(document.getElementById("schedule-picker"), initialOption);

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!-- To-Do - toggle current period 1/2/lunch shower, cache saving, font selection, organize schedules ex/imports -->
+	<!-- To-Do - toggle current period 1/2/lunch shower, cache saving, font selection, organize schedules ex/imports, double click delete schedule button -->
 
 	<head>
 		<meta charset="UTF-8" />
@@ -35,7 +35,12 @@
 				<p style="text-wrap: nowrap" id="log"></p>
 			</div>
 
-			<div class="settings-grid" style="grid-column: 1; width: 100%; border-left: none">
+
+			<div class="settings-grid" style="grid-column: 1; width: 100%; border-left: none" id="column-1">
+                <button class="period-button" style="margin-left: 2.5%; width: 95%" onclick="saveAll()">Save to Cache --></button>
+                <button class="period-button" style="margin-left: 2.5%; width: 95%" onclick="cacheRecall()">pull from Cache --></button>
+                <button class="period-button" style="margin-left: 2.5%; width: 95%" onclick="localStorage.clear();">clear Cache --></button>
+
 				<p style="font-size: 3vh; margin-left: 1vh">Click the timer to toggle the UI</p>
 				<p class="selector">
 					<input type="image" class="reset-button" value="#000000" src="Icons/image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('background-picker'), ['value']);ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])" />
@@ -46,8 +51,8 @@
 					<input id="text-picker" type="color" value="#ffffff" class="button" onchange="ChangeElement(this, document.getElementById('mainTime'), ['style','color'])" /> : Text Color
 				</p>
 				<p class="selector">
-					<input type="image" class="reset-button" value="30vw" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
-					<input id="font-size-picker" type="text" value="30vw" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','font-size'],this.value+'vw')" /> : Clock Size
+					<input type="image" class="reset-button" value="30" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
+					<input id="font-size-picker" type="text" value="30" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','font-size'],this.value+'vw')" /> : Clock Size
 				</p>
 				<p class="selector">
 					<input type="image" class="reset-button" value="#ffffff" src="Icons/image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('menu-picker'), ['value']);ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" />
