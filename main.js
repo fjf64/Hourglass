@@ -23,9 +23,6 @@ var schedules = {
 	// 	["8", "15:00-15:30"],
 	// ],
 };
-saveVariables = {
-	scheduleOrder: {},
-};
 
 var saveBackground = "#0a190e";
 var badBackground = "maroon";
@@ -442,6 +439,7 @@ function allInputs() {
 		C1: {},
 		C2: {},
 		C3: {
+			scheduleCurrent: [],
 			scheduleFront: {},
 			scheduleBack: {},
 		},
@@ -462,6 +460,7 @@ function allInputs() {
 	// 	console.log(x)
 
 	// }
+	returnal.C3.scheduleCurrent = [document.getElementById("schedule-picker").getAttribute("data-value"), document.getElementById("schedule-picker").textContent.slice(0, -2)]
 	returnal.C3.scheduleFront = document.getElementById("schedule-specific").innerHTML;
 	returnal.C3.scheduleBack = schedules;
 
@@ -478,23 +477,35 @@ function saveAll() {
 }
 
 function cacheRecall() {
-	cacheBox = JSON.parse(localStorage["Hourglass"]);
-	console.log(cacheBox);
+	var cacheBox = localStorage["Hourglass"];
+	if (cacheBox !== undefined) {
+		console.log(cacheBox);
+		cacheBox = JSON.parse(cacheBox)
 
-	//C1
-	for (let x of Object.keys(cacheBox.C1)) {
-		var input = document.getElementById(x);
-		input.value = cacheBox.C1[x];
-		input.dispatchEvent(new Event("change", { bubbles: true }));
-		input.dispatchEvent(new Event("input", { bubbles: true }));
+		//C1
+		for (let x of Object.keys(cacheBox.C1)) {
+			var input = document.getElementById(x);
+			input.value = cacheBox.C1[x];
+			input.dispatchEvent(new Event("change", { bubbles: true }));
+			input.dispatchEvent(new Event("input", { bubbles: true }));
+		}
+		//C2
+
+		//C3
+		document.getElementById("schedule-picker").setAttribute("data-value", cacheBox.C3.scheduleCurrent[0]);
+		document.getElementById("schedule-picker").textContent = cacheBox.C3.scheduleCurrent[1] + " ▼";
+		scheduleValue = cacheBox.C3.scheduleCurrent[0];
+		document.getElementById("schedule-specific").innerHTML = cacheBox.C3.scheduleFront;
+		schedules = cacheBox.C3.scheduleBack;
+
+		//C4
+		if (!cacheBox.C4.roundClock) {
+			document.getElementById("24h-box").checked = false
+			document.getElementById("24h-box").dispatchEvent(new Event("change", { bubbles: true }));
+		}
+	} else {
+		// location.reload(true)
 	}
-	//C2
-
-	//C3
-	document.getElementById("schedule-specific").innerHTML = cacheBox.C3.scheduleFront;
-	schedules = cacheBox.C3.scheduleBack;
-
-	//C4
 }
 
 function Main() {
@@ -560,14 +571,15 @@ window.onload = () => {
 //YSHS
 importCode("WWVsbG93IFNwcmluZ3MgSGlnaCBTY2hvb2wKCgoxCjg6MzAtOToxNwoKMgo5OjIxLTEwOjA2CgozCjEwOjEwLTEwOjU1Cgo0CjEwOjU5LTExOjQ0CgpsdW5jaAoxMTo0NC0xMjoxNAoKNQoxMjoxOC0xMzowNAoKNgoxMzowOC0xMzo1MwoKNwoxMzo1Ny0xNDo0MgoKOAoxNDo0Ni0xNTozMA==");
 importCode("WVNIUyBUd28gSG91ciBEZWxheQoKCjEKMTA6MzAtMTE6MDIKCjIKMTE6MDYtMTE6MzYKCmx1bmNoCjExOjM2LTEyOjA2CgozCjEyOjEwLTEyOjQwCgo0CjEyOjQ0LTEzOjE0Cgo1CjEzOjE4LTEzOjQ4Cgo2CjEzOjUyLTE0OjIyCgo3CjE0OjI2LTE0OjU2Cgo4CjE1OjAwLTE1OjMw");
-saveVariables.scheduleOrder = document.getElementById("schedule-specific").children;
+// saveVariables.scheduleOrder = document.getElementById("schedule-specific").children;
 
 for (let x of document.getElementById("column-1").querySelectorAll(".selector")) {
 	let input = x.querySelector(".button");
 	input.dispatchEvent(new Event("change", { bubbles: true }));
 	input.dispatchEvent(new Event("input", { bubbles: true }));
 }
-cacheRecall()
+// console.log(allInputs())
+cacheRecall();
 
 var initialOption = document.querySelector("#schedules .option");
 selectOption(document.getElementById("schedule-picker"), initialOption);

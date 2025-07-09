@@ -435,8 +435,10 @@ input[type="file"] {
 
 .ixport-button img {
   cursor: pointer;
-  width: 48px; /* Set your desired size */
+  width: 48px; 
+  /* width: .1vw;  */
   height: 48px;
+  /* height: .1vw; */
   margin: 0;
   /* margin-left: -.035vh; */
 }

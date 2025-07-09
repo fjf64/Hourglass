@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!-- To-Do - toggle current period 1/2/lunch shower, cache saving, font selection, organize schedules ex/imports, double click delete schedule button -->
+	<!-- To-Do - toggle current period 1/2/lunch shower, cache saving, font selection, organize schedules ex/imports, double click delete schedule button  and for clear cache-->
 
 	<head>
 		<meta charset="UTF-8" />
@@ -37,9 +37,28 @@
 
 
 			<div class="settings-grid" style="grid-column: 1; width: 100%; border-left: none" id="column-1">
-                <button class="period-button" style="margin-left: 2.5%; width: 95%" onclick="saveAll()">Save to Cache --></button>
-                <button class="period-button" style="margin-left: 2.5%; width: 95%" onclick="cacheRecall()">pull from Cache --></button>
-                <button class="period-button" style="margin-left: 2.5%; width: 95%" onclick="localStorage.clear();">clear Cache --></button>
+
+                <div class="ixport-wrapper">
+								<div class="ixport-buttons">
+									<div class="ixport-botton-section">
+										<input type="image" class="ixport-button" value="#ffffff" src="Icons/export.png" onclick="saveAll()" />
+										<p class="ixport-text">Save All to Cache</p>
+									</div>
+								</div>
+								<div class="ixport-buttons">
+									<div class="ixport-botton-section">
+										<input type="image" class="ixport-button" value="#ffffff" src="Icons/import.png" onclick="cacheRecall()" />
+										<p class="ixport-text">Import from Cache</p> 
+                                        <!-- double click WIP -->
+									</div>
+								</div>
+								<div class="ixport-buttons">
+									<div class="ixport-botton-section" style="margin-right: 1vh;margin-top: 0vh;">
+										<input type="image" class="ixport-button" value="#ffffff" src="Icons/Reset.png" onclick="localStorage.clear();location.reload(true);" />
+										<p class="ixport-text">Full Reset</p>
+									</div>
+								</div>
+							</div>
 
 				<p style="font-size: 3vh; margin-left: 1vh">Click the timer to toggle the UI</p>
 				<p class="selector">
@@ -115,7 +134,7 @@
 									</div>
 								</div>
 								<div class="ixport-buttons">
-									<div class="ixport-botton-section" style="margin-right: 1vh">
+									<div class="ixport-botton-section" style="margin-right: 1vh; margin-top: 0vh;">
 										<label for="fileInput" ><img class="ixport-button" src="Icons/export.png" alt="Import Schedule" /></label>
 										<input type="file" accept=".txt" id="fileInput" class="ixport-button" value="#ffffff" src="Icons/export.png" onchange="importSchedule()" />
 										<!-- <input type="file" id="fileInput" accept=".txt" onchange="importSchedule()" /> -->
