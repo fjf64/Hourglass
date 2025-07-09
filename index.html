@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!-- To-Do - toggle current period 1/2/lunch shower, cache saving testing, font selection, double click delete schedule button and for clear cache-->
+	<!-- To-Do - toggle current period 1/2/lunch shower, font selection -->
 
 	<head>
 		<meta charset="UTF-8" />
@@ -47,14 +47,14 @@
 								</div>
 								<div class="ixport-buttons">
 									<div class="ixport-botton-section">
-										<input type="image" class="ixport-button" value="#ffffff" src="Icons/import.png" onclick="cacheRecall()" />
+										<input type="image" class="ixport-button danger-button-inverse" value="#ffffff" src="Icons/import.png" onclick="cacheRecall(this)" />
 										<p class="ixport-text">Import from Cache</p> 
                                         <!-- double click WIP -->
 									</div>
 								</div>
 								<div class="ixport-buttons">
 									<div class="ixport-botton-section" style="margin-right: 1vh;margin-top: 0vh;">
-										<input type="image" class="ixport-button" value="#ffffff" src="Icons/Reset.png" onclick="localStorage.clear();location.reload(true);" />
+										<input type="image" class="ixport-button danger-button-inverse" value="#ffffff" src="Icons/Reset.png" onclick="clearStorage(this)" />
 										<p class="ixport-text">Full Reset</p>
 									</div>
 								</div>

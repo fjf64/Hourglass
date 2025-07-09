@@ -442,3 +442,11 @@ input[type="file"] {
   margin: 0;
   /* margin-left: -.035vh; */
 }
+
+.danger-button-inverse {
+	background: #c7ffff;
+}
+.danger-button {
+	background: #380000;
+	color:white
+}
