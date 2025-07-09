@@ -413,21 +413,28 @@ function addToSchedule(nameKey, items) {
 
 	selectElement.querySelector(".remove-schedule").onclick = function (e) {
 		e.stopPropagation(); // prevent triggering parent onclick
-		selectElement.remove();
-		delete schedules[nameKey];
-		if (scheduleValue == nameKey) {
-			var firstOption = document.querySelector("#schedule-specific .option");
-			console.log(firstOption);
-			if (firstOption !== null) {
-				document.getElementById("schedule-picker").setAttribute("data-value", firstOption.getAttribute("data-value"));
-				document.getElementById("schedule-picker").textContent = firstOption.querySelector(".schedule-text").textContent + " ▼";
-				scheduleValue = document.getElementById("schedule-picker").getAttribute("data-value");
-			} else {
-				document.getElementById("schedule-picker").setAttribute("data-value", "");
-				document.getElementById("schedule-picker").textContent = "No Schedules In System" + " ▼";
-				scheduleValue = "";
+		if (!lastClickedElement || selectElement.querySelector(".remove-schedule") !== lastClickedElement) {
+			//click 1
+			editLog("Click again to delete schedule.", 3000);
+		} else {
+			//click 2
+			selectElement.remove();
+			delete schedules[nameKey];
+
+			if (scheduleValue == nameKey) {
+				var firstOption = document.querySelector("#schedule-specific .option");
+				if (firstOption !== null) {
+					document.getElementById("schedule-picker").setAttribute("data-value", firstOption.getAttribute("data-value"));
+					document.getElementById("schedule-picker").textContent = firstOption.querySelector(".schedule-text").textContent + " ▼";
+					scheduleValue = document.getElementById("schedule-picker").getAttribute("data-value");
+				} else {
+					document.getElementById("schedule-picker").setAttribute("data-value", "");
+					document.getElementById("schedule-picker").textContent = "No Schedules In System" + " ▼";
+					scheduleValue = "";
+				}
 			}
 		}
+		lastClickedElement = selectElement.querySelector(".remove-schedule");
 	};
 	document.getElementById("schedule-specific").appendChild(selectElement);
 
@@ -456,11 +463,7 @@ function allInputs() {
 	//Column 2
 
 	//column 3
-	// for (let x of document.getElementById('schedule-specific').children) {
-	// 	console.log(x)
-
-	// }
-	returnal.C3.scheduleCurrent = [document.getElementById("schedule-picker").getAttribute("data-value"), document.getElementById("schedule-picker").textContent.slice(0, -2)]
+	returnal.C3.scheduleCurrent = [document.getElementById("schedule-picker").getAttribute("data-value"), document.getElementById("schedule-picker").textContent.slice(0, -2)];
 	returnal.C3.scheduleFront = document.getElementById("schedule-specific").innerHTML;
 	returnal.C3.scheduleBack = schedules;
 
@@ -473,14 +476,12 @@ function allInputs() {
 
 function saveAll() {
 	localStorage["Hourglass"] = JSON.stringify(allInputs());
-	console.log(localStorage.Hourglass);
 }
 
 function cacheRecall() {
 	var cacheBox = localStorage["Hourglass"];
 	if (cacheBox !== undefined) {
-		console.log(cacheBox);
-		cacheBox = JSON.parse(cacheBox)
+		cacheBox = JSON.parse(cacheBox);
 
 		//C1
 		for (let x of Object.keys(cacheBox.C1)) {
@@ -500,7 +501,7 @@ function cacheRecall() {
 
 		//C4
 		if (!cacheBox.C4.roundClock) {
-			document.getElementById("24h-box").checked = false
+			document.getElementById("24h-box").checked = false;
 			document.getElementById("24h-box").dispatchEvent(new Event("change", { bubbles: true }));
 		}
 	} else {
@@ -540,7 +541,7 @@ function Main() {
 		clock.innerHTML = mainMinutes + ":" + mainSeconds;
 	}
 }
-
+var lastClickedElement;
 window.onload = () => {
 	// var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
 	const params = new URLSearchParams(window.location.search);
@@ -561,10 +562,15 @@ window.onload = () => {
 		// handle: '.schedule-text', // only allow dragging by text
 		ghostClass: "drag-ghost", // optional class to style dragged item
 		onEnd: function (evt) {
-			// console.log("New index:", evt.newIndex);
 			saveVariables.scheduleOrder = document.getElementById("schedule-specific").children;
 			// You can iterate over the children of #schedules here to get their new order
 		},
+	});
+
+	document.addEventListener("click", async function (e) {
+		await sleep(10);
+		lastClickedElement = e.target;
+		// }
 	});
 };
 
