@@ -450,3 +450,10 @@ input[type="file"] {
 	background: #380000;
 	color:white
 }
+
+#period-display {
+	position: absolute;
+	color: white;
+	user-select: none;
+	margin: 0;
+}

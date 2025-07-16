@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!-- To-Do - toggle current period 1/2/lunch shower, font selection -->
+	<!-- To-Do - font selection, import export whole environment -->
 
 	<head>
 		<meta charset="UTF-8" />
@@ -26,6 +26,7 @@
 			<div class="bar2" id="menu-2"></div>
 			<div class="bar3" id="menu-3"></div>
 		</div>
+		<h3 id="period-display"></h3>
 		<div id="mainContainer">
 			<h1 id="mainTime" onclick="IdToggle('settings', ['menu-button', 'footer'], 'change1')">00:00</h1>
 		</div>
@@ -35,30 +36,28 @@
 				<p style="text-wrap: nowrap" id="log"></p>
 			</div>
 
-
 			<div class="settings-grid" style="grid-column: 1; width: 100%; border-left: none" id="column-1">
-
-                <div class="ixport-wrapper">
-								<div class="ixport-buttons">
-									<div class="ixport-botton-section">
-										<input type="image" class="ixport-button" value="#ffffff" src="Icons/export.png" onclick="saveAll()" />
-										<p class="ixport-text">Save All to Cache</p>
-									</div>
-								</div>
-								<div class="ixport-buttons">
-									<div class="ixport-botton-section">
-										<input type="image" class="ixport-button danger-button-inverse" value="#ffffff" src="Icons/import.png" onclick="cacheRecall(this)" />
-										<p class="ixport-text">Import from Cache</p> 
-                                        <!-- double click WIP -->
-									</div>
-								</div>
-								<div class="ixport-buttons">
-									<div class="ixport-botton-section" style="margin-right: 1vh;margin-top: 0vh;">
-										<input type="image" class="ixport-button danger-button-inverse" value="#ffffff" src="Icons/Reset.png" onclick="clearStorage(this)" />
-										<p class="ixport-text">Full Reset</p>
-									</div>
-								</div>
-							</div>
+				<div class="ixport-wrapper">
+					<div class="ixport-buttons">
+						<div class="ixport-botton-section">
+							<input type="image" class="ixport-button" value="#ffffff" src="Icons/export.png" onclick="saveAll()" />
+							<p class="ixport-text">Save All to Cache</p>
+						</div>
+					</div>
+					<div class="ixport-buttons">
+						<div class="ixport-botton-section">
+							<input type="image" class="ixport-button danger-button-inverse" value="#ffffff" src="Icons/import.png" onclick="cacheRecall(this)" />
+							<p class="ixport-text">Import from Cache</p>
+							<!-- double click WIP -->
+						</div>
+					</div>
+					<div class="ixport-buttons">
+						<div class="ixport-botton-section" style="margin-right: 1vh; margin-top: 0vh">
+							<input type="image" class="ixport-button danger-button-inverse" value="#ffffff" src="Icons/Reset.png" onclick="clearStorage(this)" />
+							<p class="ixport-text">Full Reset</p>
+						</div>
+					</div>
+				</div>
 
 				<p style="font-size: 3vh; margin-left: 1vh">Click the timer to toggle the UI</p>
 				<p class="selector">
@@ -70,8 +69,12 @@
 					<input id="text-picker" type="color" value="#ffffff" class="button" onchange="ChangeElement(this, document.getElementById('mainTime'), ['style','color'])" /> : Text Color
 				</p>
 				<p class="selector">
-					<input type="image" class="reset-button" value="30" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
+					<input type="image" class="reset-button" value="30vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
 					<input id="font-size-picker" type="text" value="30" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','font-size'],this.value+'vw')" /> : Clock Size
+				</p>
+				<p class="selector">
+					<input type="image" class="reset-button" value="5vw" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker2'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('period-display'), ['style','font-size'])" />
+					<input id="font-size-picker2" type="text" value="5" class="button" size="1" oninput="ChangeElement('', document.getElementById('period-display'), ['style','font-size'],this.value+'vh')" /> : Period Display Size
 				</p>
 				<p class="selector">
 					<input type="image" class="reset-button" value="#ffffff" src="Icons/image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('menu-picker'), ['value']);ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" />
@@ -79,10 +82,13 @@
 				</p>
 			</div>
 
-			<div class="settings-grid" style="grid-column: 2; width: 100%"></div>
+			<div class="settings-grid" style="grid-column: 2; width: 100%; padding: 0">
+				<div class="current-period-position-container" id="current-period-position-container">
+					<div id="drag-box"></div>
+				</div>
+			</div>
 
 			<div class="settings-grid" style="grid-column: 3; border-right-style: dashed">
-
 				<div class="custom-select">
 					<div data-value="Yellow Springs High School" class="select-box" id="schedule-picker" onclick="removeFixedDisplay('schedules');IdToggle('schedules', ['schedules']);">Yellow Springs High School ▼</div>
 					<div class="options" id="schedules">
@@ -135,8 +141,8 @@
 									</div>
 								</div>
 								<div class="ixport-buttons">
-									<div class="ixport-botton-section" style="margin-right: 1vh; margin-top: 0vh;">
-										<label for="fileInput" ><img class="ixport-button" src="Icons/export.png" alt="Import Schedule" /></label>
+									<div class="ixport-botton-section" style="margin-right: 1vh; margin-top: 0vh">
+										<label for="fileInput"><img class="ixport-button" src="Icons/export.png" alt="Import Schedule" /></label>
 										<input type="file" accept=".txt" id="fileInput" class="ixport-button" value="#ffffff" src="Icons/export.png" onchange="importSchedule()" />
 										<!-- <input type="file" id="fileInput" accept=".txt" onchange="importSchedule()" /> -->
 										<p class="ixport-text">Import File</p>
@@ -144,7 +150,7 @@
 								</div>
 							</div>
 
-							<div class="ixport-wrapper" style="margin-bottom: 1vh;">
+							<div class="ixport-wrapper" style="margin-bottom: 1vh">
 								<div class="ixport-buttons">
 									<p class="ixport-description">By Url</p>
 								</div>
@@ -161,8 +167,8 @@
 							<!-- <button class="period-button" onclick="exportURL()">Export URL</button> -->
 							<!-- <button class="custom-file-upload" style="width: 95%" onclick="importClipCode()">Paste Schedule Code</button> -->
 							<!-- <div class="middle-align" style="margin-top: 0.5vh"> -->
-								<!-- <label for="fileInput" class="custom-file-upload">Import Schedule</label> -->
-								<!-- <input type="file" id="fileInput" accept=".txt" onchange="importSchedule()" /> -->
+							<!-- <label for="fileInput" class="custom-file-upload">Import Schedule</label> -->
+							<!-- <input type="file" id="fileInput" accept=".txt" onchange="importSchedule()" /> -->
 							<!-- </div> -->
 							<!-- <span class="file-name" id="fileName"></span> -->
 						</div>
