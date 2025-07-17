@@ -346,6 +346,13 @@ async function importClipCode() {
 function removeFixedDisplay(id) {
 	document.getElementById(id).style.removeProperty("display");
 }
+function lockDisplay(thisItem) {
+	if (dragLock) {
+		dragLock = false;
+	} else {
+		dragLock = true;
+	}
+}
 
 async function flashElement(element, effect, ogColor, newColor, time = 500, count = 1) {
 	//effect in path list
@@ -446,7 +453,9 @@ function addToSchedule(nameKey, items) {
 function allInputs() {
 	var returnal = {
 		C1: {},
-		C2: {},
+		C2: {
+			dragLock:false
+		},
 		C3: {
 			scheduleCurrent: [],
 			scheduleFront: {},
@@ -456,8 +465,8 @@ function allInputs() {
 			roundClock: true,
 		},
 		misc: {
-			periodDisplayPos:[0,0]
-		}
+			periodDisplayPos: [0, 0],
+		},
 	};
 	//Column 1
 	for (let x of document.getElementById("column-1").querySelectorAll(".selector")) {
@@ -466,6 +475,7 @@ function allInputs() {
 	}
 
 	//Column 2
+	returnal.C2.dragLock = dragLock
 
 	//column 3
 	returnal.C3.scheduleCurrent = [document.getElementById("schedule-picker").getAttribute("data-value"), document.getElementById("schedule-picker").textContent.slice(0, -2)];
@@ -475,7 +485,7 @@ function allInputs() {
 	if (!document.getElementById("24h-box").checked) {
 		returnal.C4.roundClock = false;
 	}
-	returnal.misc.periodDisplayPos = [document.getElementById('period-display').style.left,document.getElementById('period-display').style.top]
+	returnal.misc.periodDisplayPos = [document.getElementById("period-display").style.left, document.getElementById("period-display").style.top];
 
 	return returnal;
 }
@@ -501,6 +511,15 @@ function cacheRecall(selfItem, startup = false) {
 				input.dispatchEvent(new Event("input", { bubbles: true }));
 			}
 			//C2
+			dragLock = cacheBox.C2.dragLock
+			if (dragLock) {
+				document.getElementById("display-lock-box").checked = true;
+				document.getElementById("display-lock-box").dispatchEvent(new Event("change", { bubbles: true }));
+			} else {
+				document.getElementById("display-lock-box").checked = false;
+				document.getElementById("display-lock-box").dispatchEvent(new Event("change", { bubbles: true }));
+			}
+			console.log(cacheBox)
 
 			//C3
 			document.getElementById("schedule-picker").setAttribute("data-value", cacheBox.C3.scheduleCurrent[0]);
@@ -513,11 +532,13 @@ function cacheRecall(selfItem, startup = false) {
 			if (!cacheBox.C4.roundClock) {
 				document.getElementById("24h-box").checked = false;
 				document.getElementById("24h-box").dispatchEvent(new Event("change", { bubbles: true }));
+			} else {
+				document.getElementById("24h-box").checked = true;
+				document.getElementById("24h-box").dispatchEvent(new Event("change", { bubbles: true }));
 			}
 			//MISC
-			document.getElementById('period-display').style.left = cacheBox.misc.periodDisplayPos[0]
-			document.getElementById('period-display').style.top = cacheBox.misc.periodDisplayPos[1]
-
+			document.getElementById("period-display").style.left = cacheBox.misc.periodDisplayPos[0];
+			document.getElementById("period-display").style.top = cacheBox.misc.periodDisplayPos[1];
 		} else {
 			// location.reload(true)
 		}
@@ -608,88 +629,87 @@ window.addEventListener("beforeunload", (e) => {
 	}
 });
 
-const box = document.getElementById('period-display');
-const container = document.querySelector('body');
+const box = document.getElementById("period-display");
+const container = document.querySelector("body");
 
 let offsetX = 0;
 let offsetY = 0;
 let isDragging = false;
 let lastTapTime = 0;
+var dragLock = false;
 
 function snapToStep(valuePercent, step = 1) {
-    return Math.round(valuePercent / step) * step;
+	return Math.round(valuePercent / step) * step;
 }
 
 function setBoxPosition(xPercent, yPercent) {
-    box.style.left = `${xPercent}%`;
-    box.style.top = `${yPercent}%`;
+	box.style.left = `${xPercent}%`;
+	box.style.top = `${yPercent}%`;
 }
 
 function startDrag(e) {
-    const now = Date.now();
-    if (now - lastTapTime < 300) {
-        // Double-tap detected
-        setBoxPosition(0, 0);
-        lastTapTime = 0;
-        return;
-    }
-    lastTapTime = now;
+	const now = Date.now();
+	if (now - lastTapTime < 300) {
+		// Double-tap detected
+		setBoxPosition(0, 0);
+		lastTapTime = 0;
+		return;
+	}
+	lastTapTime = now;
 
-    isDragging = true;
-    const evt = e.touches ? e.touches[0] : e;
+	isDragging = true;
+	const evt = e.touches ? e.touches[0] : e;
 
-    const containerRect = container.getBoundingClientRect();
-    const boxRect = box.getBoundingClientRect();
+	const containerRect = container.getBoundingClientRect();
+	const boxRect = box.getBoundingClientRect();
 
-    offsetX = evt.clientX - boxRect.left;
-    offsetY = evt.clientY - boxRect.top;
+	offsetX = evt.clientX - boxRect.left;
+	offsetY = evt.clientY - boxRect.top;
 
-    box.style.cursor = 'grabbing';
+	box.style.cursor = "grabbing";
 }
 
 function duringDrag(e) {
-    if (!isDragging) return;
+	if (!isDragging || dragLock) return;
 
-    const evt = e.touches ? e.touches[0] : e;
+	const evt = e.touches ? e.touches[0] : e;
 
-    const containerRect = container.getBoundingClientRect();
+	const containerRect = container.getBoundingClientRect();
 
-    let x = evt.clientX - containerRect.left - offsetX;
-    let y = evt.clientY - containerRect.top - offsetY;
+	let x = evt.clientX - containerRect.left - offsetX;
+	let y = evt.clientY - containerRect.top - offsetY;
 
-    const minX = 0;
-    const minY = 0;
-    const maxX = container.clientWidth - box.offsetWidth;
-    const maxY = container.clientHeight - box.offsetHeight;
+	const minX = 0;
+	const minY = 0;
+	const maxX = container.clientWidth - box.offsetWidth;
+	const maxY = container.clientHeight - box.offsetHeight;
 
-    x = Math.max(minX, Math.min(x, maxX));
-    y = Math.max(minY, Math.min(y, maxY));
+	x = Math.max(minX, Math.min(x, maxX));
+	y = Math.max(minY, Math.min(y, maxY));
 
-    const xPercent = snapToStep((x / container.clientWidth) * 100, 1);
-    const yPercent = snapToStep((y / container.clientHeight) * 100, 1);
+	const xPercent = snapToStep((x / container.clientWidth) * 100, 1);
+	const yPercent = snapToStep((y / container.clientHeight) * 100, 1);
 
-    setBoxPosition(xPercent, yPercent);
+	setBoxPosition(xPercent, yPercent);
 }
 
 function endDrag() {
-    isDragging = false;
-    box.style.cursor = 'grab';
+	isDragging = false;
+	box.style.cursor = "grab";
 }
 
 // Mouse events
-box.addEventListener('mousedown', startDrag);
-document.addEventListener('mousemove', duringDrag);
-document.addEventListener('mouseup', endDrag);
+box.addEventListener("mousedown", startDrag);
+document.addEventListener("mousemove", duringDrag);
+document.addEventListener("mouseup", endDrag);
 
 // Touch events
-box.addEventListener('touchstart', startDrag);
-document.addEventListener('touchmove', duringDrag, { passive: false });
-document.addEventListener('touchend', endDrag);
+box.addEventListener("touchstart", startDrag);
+document.addEventListener("touchmove", duringDrag, { passive: false });
+document.addEventListener("touchend", endDrag);
 
 // Initialize position
 setBoxPosition(10, 0);
-
-
 
 //YSHS
 importCode("WWVsbG93IFNwcmluZ3MgSGlnaCBTY2hvb2wKCgoxCjg6MzAtOToxNwoKMgo5OjIxLTEwOjA2CgozCjEwOjEwLTEwOjU1Cgo0CjEwOjU5LTExOjQ0CgpsdW5jaAoxMTo0NC0xMjoxNAoKNQoxMjoxOC0xMzowNAoKNgoxMzowOC0xMzo1MwoKNwoxMzo1Ny0xNDo0MgoKOAoxNDo0Ni0xNTozMA==");
