@@ -519,7 +519,6 @@ function cacheRecall(selfItem, startup = false) {
 				document.getElementById("display-lock-box").checked = false;
 				document.getElementById("display-lock-box").dispatchEvent(new Event("change", { bubbles: true }));
 			}
-			console.log(cacheBox)
 
 			//C3
 			document.getElementById("schedule-picker").setAttribute("data-value", cacheBox.C3.scheduleCurrent[0]);
