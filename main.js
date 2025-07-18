@@ -485,9 +485,8 @@ function allInputs() {
 		inputBox = x.querySelector(".button");
 		returnal.C1[inputBox.id] = inputBox.value;
 	}
-
-	//Column 2
 	returnal.C2.dragLock = dragLock;
+	//Column 2
 
 	//column 3
 	returnal.C3.scheduleCurrent = [document.getElementById("schedule-picker").getAttribute("data-value"), document.getElementById("schedule-picker").textContent.slice(0, -2)];
@@ -564,13 +563,11 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 		if (source == "clipboard") {
 			cacheBox = await getClipboard(); //atob
 			cacheBox = decodeBase64Url(cacheBox);
-			console.log(cacheBox);
 		} else {
 			cacheBox = localStorage["Hourglass"];
 		}
 		if (cacheBox !== undefined) {
 			cacheBox = JSON.parse(cacheBox);
-			console.log(cacheBox);
 			//C1
 			for (let x of Object.keys(cacheBox.C1)) {
 				var input = document.getElementById(x);
@@ -578,8 +575,7 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 				input.dispatchEvent(new Event("change", { bubbles: true }));
 				input.dispatchEvent(new Event("input", { bubbles: true }));
 			}
-			//C2
-			dragLock = cacheBox.C2.dragLock;
+			dragLock = cacheBox.C2.dragLock; //Draglock
 			if (dragLock) {
 				document.getElementById("display-lock-box").checked = true;
 				document.getElementById("display-lock-box").dispatchEvent(new Event("change", { bubbles: true }));
@@ -587,7 +583,7 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 				document.getElementById("display-lock-box").checked = false;
 				document.getElementById("display-lock-box").dispatchEvent(new Event("change", { bubbles: true }));
 			}
-
+			//C2
 			//C3
 			document.getElementById("schedule-picker").setAttribute("data-value", cacheBox.C3.scheduleCurrent[0]);
 			document.getElementById("schedule-picker").textContent = cacheBox.C3.scheduleCurrent[1] + " ▼";

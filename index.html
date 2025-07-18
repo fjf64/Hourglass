@@ -59,8 +59,9 @@
 					</div>
 				</div>
 
-				<p style="font-size: 2.5vh; margin-left: 1vh">Click the timer to toggle the UI</p>
+				<p style="font-size: 2.5vh; margin-left: 0; text-align: center">Click the timer to toggle the UI</p>
 				<hr class="options-seperator" />
+				<p style="font-size: 2.5vh; margin-left: 0; text-align: center">Colors</p>
 				<div>
 					<p class="selector">
 						<input type="image" class="reset-button" value="#000000" src="Icons/image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('background-picker'), ['value']);ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])" />
@@ -70,20 +71,20 @@
 						<input type="image" class="reset-button" value="#ffffff" src="Icons/image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('text-picker'), ['value']);ChangeElement(this, document.getElementById('mainContainer'), ['style','color'])" />
 						<input id="text-picker" type="color" value="#ffffff" class="button" onchange="ChangeElement(this, document.getElementById('mainContainer'), ['style','color'])" /> : Text Color
 					</p>
-					<p class="selector">
-						<input type="image" class="reset-button" value="30vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
-						<input id="font-size-picker" type="text" value="30" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','font-size'],this.value+'vw')" /> : Clock Size
-					</p>
-					<p class="selector">
-						<input type="image" class="reset-button" value="5vw" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker2'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('period-display'), ['style','font-size'])" />
-						<input id="font-size-picker2" type="text" value="5" class="button" size="1" oninput="ChangeElement('', document.getElementById('period-display'), ['style','font-size'],this.value+'vh')" /> : Period Display Size
-					</p>
+
 					<p class="selector">
 						<input type="image" class="reset-button" value="#ffffff" src="Icons/image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('menu-picker'), ['value']);ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" />
 						<input id="menu-picker" type="color" value="#ffffff" class="button" onchange="ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" /> : Menu Color
 					</p>
 				</div>
-				<p class="selector">
+				<hr class="options-seperator" />
+				<p style="font-size: 2.5vh; margin-left: 0; text-align: center">Clock</p>
+				<div>
+					<p class="selector">
+						<input type="image" class="reset-button" value="30vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
+						<input id="font-size-picker" type="text" value="30" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','font-size'],this.value+'vw')" /> : Clock Size
+					</p>
+					<p class="selector">
 						<input type="image" class="reset-button" value="Break" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('break-picker'), ['value'], this.value.slice(0, -2));breaks = this.value" />
 						<input id="break-picker" type="text" value="Break" class="button" size="4" oninput="breaks = this.value" /> : In-Between Periods Text
 					</p>
@@ -95,6 +96,21 @@
 						<input type="image" class="reset-button" value="After" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('after-picker'), ['value'], this.value);afters = this.value" />
 						<input id="after-picker" type="text" value="After" class="button" size="4" oninput="afters = this.value" /> : After Schedule Text
 					</p>
+				</div>
+				<hr class="options-seperator" />
+				<p style="font-size: 2.5vh; margin-left: 0; text-align: center">Period Display</p>
+				<div>
+					<div class="middle-align">
+						<label class="switch" style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 0; width: 50%; text-align: center;"
+							><input id="display-lock-box" type="checkbox" onclick="lockDisplay(this)" /><span class="slider" style="width: 100%">
+								<p style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh; color: black">Lock Display</p>
+							</span>
+						</label>
+					</div>
+					<p class="selector">
+						<input type="image" class="reset-button" value="5vw" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker2'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('period-display'), ['style','font-size'])" />
+						<input id="font-size-picker2" type="text" value="5" class="button" size="1" oninput="ChangeElement('', document.getElementById('period-display'), ['style','font-size'],this.value+'vh')" /> : Period Display Size
+					</p>
 					<p class="selector">
 						<input type="image" class="reset-button" value="Current Period: " src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('display-picker'), ['value'], this.value);CurrentPeriods = this.value" />
 						<input id="display-picker" type="text" value="Current Period: " class="button" size="6" oninput="currentPeriods = this.value;" /> : Period Display Prefix Text
@@ -103,17 +119,12 @@
 						<input type="image" class="reset-button" value="Next Period: " src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('betweens-display-picker'), ['value'], this.value);betweenCurrentPeriods = this.value" />
 						<input id="betweens-display-picker" type="text" value="Next Period: " class="button" size="6" oninput="betweenCurrentPeriods = this.value" /> : In-Between Periods Display Prefix Text
 					</p>
+				</div>
 			</div>
 
 			<div class="settings-grid" style="grid-column: 2; width: 100%; padding: 0">
 				<!-- <button style="min-width: 0; padding: 0; display: inline-block; margin-left: 0.5vh; margin-right: 1vh;width: 90%;"> -->
-				<div class="middle-align">
-					<label class="switch" style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 2vh; width: 50%; text-align: center"
-						><input id="display-lock-box" type="checkbox" onclick="lockDisplay(this)" /><span class="slider" style="width: 100%">
-							<p style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh; color: black">Lock Display</p>
-						</span></label
-					>
-				</div>
+
 				<!-- </button> -->
 			</div>
 

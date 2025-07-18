@@ -30,7 +30,7 @@ body {
 	border-right: none;
 	border-radius: 0.2vh;
 	z-index: 1;
-	transition: transform 0.4s ease, opacity 0.5s cubic-bezier(0, 1.02, 0.48, 1);
+	transition: transform 0.2s ease, opacity 0.2s cubic-bezier(0, 1.02, 0.48, 1);
 	opacity: 0;
 	transform: translate(0, -100%);
 	display: grid;
@@ -109,7 +109,7 @@ footer {
 	margin-bottom: 1vh;
 	margin-left: 0.5vh;
 	margin-top: 0.5vh;
-	transition: 0.4s;
+	transition: 0.3s;
 }
 
 .change .bar1 {
