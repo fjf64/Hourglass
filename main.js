@@ -28,6 +28,11 @@ var saveBackground = "#0a190e";
 var badBackground = "maroon";
 var goodBackground = "greenyellow";
 var unsaveEscape = false;
+var befores = "Before";
+var afters = "After";
+var breaks = "Break";
+var currentPeriods = "Current Period: ";
+var betweenCurrentPeriods = "Next Period: ";
 
 var scheduleValue = document.getElementById("schedule-picker").getAttribute("data-value");
 
@@ -558,8 +563,8 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 		editLog("", 30);
 		if (source == "clipboard") {
 			cacheBox = await getClipboard(); //atob
-			cacheBox = decodeBase64Url(cacheBox)
-			console.log(cacheBox)
+			cacheBox = decodeBase64Url(cacheBox);
+			console.log(cacheBox);
 		} else {
 			cacheBox = localStorage["Hourglass"];
 		}
@@ -659,19 +664,24 @@ function Main() {
 	}
 	// var currentDate = ClockToEpoch('15:40') //TEST
 	var currrentPassedPeriods = PassedPeriods(currentSchedule, currentDate);
+	var lastPastPeriod = usedSchedule[currrentPassedPeriods[0][currrentPassedPeriods[0].length - 1]];
+	var nextPeriod = usedSchedule[parseInt(usedSchedule.indexOf(lastPastPeriod)) + 1] ? usedSchedule[parseInt(usedSchedule.indexOf(lastPastPeriod)) + 1][0] : "End";
 	if (currrentPassedPeriods[0].length == 0) {
 		// before
-		clock.innerHTML = "Before";
+		clock.innerHTML = befores;
+		document.getElementById("period-display").textContent = '';
 	} else if (currrentPassedPeriods[1].length == usedSchedule.length) {
 		// after
-		clock.innerHTML = "After";
+		clock.innerHTML = afters;
+		document.getElementById("period-display").textContent = '';
 	} else if (currrentPassedPeriods[0].length == currrentPassedPeriods[1].length) {
 		// break
-		clock.innerHTML = "Break";
+		clock.innerHTML = breaks;
+		document.getElementById("period-display").textContent = betweenCurrentPeriods + nextPeriod;
 	} else if (currrentPassedPeriods[0].length > currrentPassedPeriods[1].length) {
 		// period x
 		var scheduleChunk = usedSchedule[currrentPassedPeriods[0][currrentPassedPeriods[0].length - 1]];
-		document.getElementById("period-display").textContent = "Current Period: " + usedSchedule[currrentPassedPeriods[0][currrentPassedPeriods[0].length - 1]][0];
+		document.getElementById("period-display").textContent = currentPeriods + lastPastPeriod[0];
 		var timeDiff = ClockToEpoch(scheduleChunk[1].split("-")[1]) - currentDate;
 		var mainMinutes = Math.floor(timeDiff / 60000);
 		var mainSeconds = Math.floor((timeDiff % 60000) / 1000);

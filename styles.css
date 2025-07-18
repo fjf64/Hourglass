@@ -48,8 +48,11 @@ input {
 	border-width: 0.5vh;
 	border-color: grey;
 } */
-#draft-name, #append-period, #remove-period, .remove-schedule {
-		font-size: 2vh;
+#draft-name,
+#append-period,
+#remove-period,
+.remove-schedule {
+	font-size: 2vh;
 	min-width: 3.5vh;
 	border-style: solid;
 	border-width: 0.5vh;
@@ -401,9 +404,9 @@ input[type="file"] {
 
 .ixport-buttons {
 	display: flex;
-	flex-wrap: wrap;  
-	  justify-content: center;
-  align-items: center;   
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
 	padding: 0;
 	/* white-space: unset; */
 	/* width: 50%; */
@@ -412,7 +415,7 @@ input[type="file"] {
 .ixport-botton-section {
 	display: inline-flex;
 	flex-direction: column;
-	justify-content:start;
+	justify-content: start;
 	align-items: center;
 	margin-top: 1vh;
 	margin-right: 1vh;
@@ -432,22 +435,22 @@ input[type="file"] {
 }
 
 .ixport-text {
-	font-size: calc(.35vh + .75vw);
+	font-size: calc(0.35vh + 0.75vw);
 	/* font-size: 1.5vh; */
 	margin: 0;
-	margin-top: .5vh;
-	line-height: calc(.35vh + .75vw);
+	margin-top: 0.5vh;
+	line-height: calc(0.35vh + 0.75vw);
 	text-align: center;
 }
 
 .ixport-button img {
-  cursor: pointer;
-  width: 48px; 
-  /* width: .1vw;  */
-  height: 48px;
-  /* height: .1vw; */
-  margin: 0;
-  /* margin-left: -.035vh; */
+	cursor: pointer;
+	width: 48px;
+	/* width: .1vw;  */
+	height: 48px;
+	/* height: .1vw; */
+	margin: 0;
+	/* margin-left: -.035vh; */
 }
 
 .danger-button-inverse {
@@ -455,7 +458,7 @@ input[type="file"] {
 }
 .danger-button {
 	background: #380000;
-	color:white
+	color: white;
 }
 
 #period-display {
@@ -463,4 +466,11 @@ input[type="file"] {
 	/* color: white; */
 	user-select: none;
 	margin: 0;
+}
+
+.options-seperator {
+	height: 0.1vw;
+	border: none;
+	background-color: white;
+	width: 95%;
 }
