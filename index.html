@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!-- To-Do - font selection, import export whole environment  -->
+	<!-- To-Do - font selection, import export whole environment -->
 
 	<head>
 		<meta charset="UTF-8" />
@@ -115,7 +115,7 @@
 						<button class="period-button" style="margin-left: 2.5%; width: 95%" onclick="saveDraft()">Save Current Draft --></button>
 						<hr style="height: 0.1vw; border: none; background-color: white; width: 95%" />
 						<div style="display: block" id="import-export">
-							<p style="font-size: 3vh; text-align: center">Import/Export</p>
+							<p style="font-size: 2.5vh; text-align: center">Import/Export Schedules</p>
 
 							<div class="ixport-wrapper">
 								<div class="ixport-buttons">
@@ -166,6 +166,27 @@
 									</div>
 								</div>
 							</div>
+							<hr style="height: 0.1vw; border: none; background-color: white; width: 95%" />
+							<p style="font-size: 2.5vh; text-align: center">Import/Export Everything</p>
+
+							<div class="ixport-wrapper">
+								<div class="ixport-buttons">
+									<p class="ixport-description">By Code</p>
+								</div>
+								<div class="ixport-buttons">
+									<div class="ixport-botton-section">
+										<input type="image" class="ixport-button" value="#ffffff" src="Icons/import.png" onclick="exportEnv()" />
+										<p class="ixport-text">Copy to Clipboard</p>
+									</div>
+								</div>
+								<div class="ixport-buttons">
+									<div class="ixport-botton-section" style="margin-right: 1vh">
+										<input type="image" class="ixport-button" value="#ffffff" src="Icons/export.png" onclick="importEnv()" />
+										<p class="ixport-text">Paste from Clipboard</p>
+									</div>
+								</div>
+							</div>
+
 						</div>
 					</div>
 				</div>

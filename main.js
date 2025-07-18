@@ -34,6 +34,13 @@ var scheduleValue = document.getElementById("schedule-picker").getAttribute("dat
 function sleep(ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
+function decodeBase64Url(str) {
+	str = str.replace(/-/g, "+").replace(/_/g, "/");
+	while (str.length % 4 !== 0) {
+		str += "=";
+	}
+	return atob(str);
+}
 function deepEqual(a, b) {
 	if (a === b) return true;
 
@@ -454,7 +461,7 @@ function allInputs() {
 	var returnal = {
 		C1: {},
 		C2: {
-			dragLock:false
+			dragLock: false,
 		},
 		C3: {
 			scheduleCurrent: [],
@@ -475,7 +482,7 @@ function allInputs() {
 	}
 
 	//Column 2
-	returnal.C2.dragLock = dragLock
+	returnal.C2.dragLock = dragLock;
 
 	//column 3
 	returnal.C3.scheduleCurrent = [document.getElementById("schedule-picker").getAttribute("data-value"), document.getElementById("schedule-picker").textContent.slice(0, -2)];
@@ -493,16 +500,72 @@ function allInputs() {
 function saveAll() {
 	localStorage["Hourglass"] = JSON.stringify(allInputs());
 }
+async function exportEnv() {
+	copyText = btoa(JSON.stringify(allInputs()));
+	navigator.clipboard.writeText(copyText);
+	alert("Copied the text: " + copyText);
+}
+async function importEnv() {
+	cacheRecall("", true, "clipboard");
+}
 
-function cacheRecall(selfItem, startup = false) {
+async function getClipboard() {
+	var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
+	try {
+		const clipboardContents = await navigator.clipboard.read();
+		for (const item of clipboardContents) {
+			for (const mimeType of item.types) {
+				if (mimeType === "text/plain") {
+					const blob = await item.getType("text/plain");
+					const blobText = await blob.text();
+					if (!base64regex.test(blobText)) {
+						editLog("Bad Code.", 4000);
+						flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 1);
+						return;
+					}
+					code = blobText;
+				} else if (mimeType === "text/html") {
+					const blob = await item.getType("text/html");
+					var blobText = await blob.text();
+					const parser = new DOMParser();
+					const doc = parser.parseFromString(blobText, "text/html");
+					// const text = doc.body.textContent.trim();
+					blobText = doc.body.textContent.trim();
+					if (!base64regex.test(blobText)) {
+						editLog("Bad Code.", 4000);
+						flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 1);
+						return;
+					}
+					code = blobText;
+				} else {
+					flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 1);
+					throw new Error(`${mimeType} not supported.`);
+				}
+			}
+		}
+	} catch (error) {
+		console.log(error.message);
+		return;
+	}
+	return code;
+}
+
+async function cacheRecall(selfItem, startup = false, source = "") {
+	var cacheBox;
 	if ((!lastClickedElement || selfItem !== lastClickedElement) && !startup) {
 		editLog("Click again to import settings from cache.", 3000);
 	} else {
 		editLog("", 30);
-		var cacheBox = localStorage["Hourglass"];
+		if (source == "clipboard") {
+			cacheBox = await getClipboard(); //atob
+			cacheBox = decodeBase64Url(cacheBox)
+			console.log(cacheBox)
+		} else {
+			cacheBox = localStorage["Hourglass"];
+		}
 		if (cacheBox !== undefined) {
 			cacheBox = JSON.parse(cacheBox);
-
+			console.log(cacheBox);
 			//C1
 			for (let x of Object.keys(cacheBox.C1)) {
 				var input = document.getElementById(x);
@@ -511,7 +574,7 @@ function cacheRecall(selfItem, startup = false) {
 				input.dispatchEvent(new Event("input", { bubbles: true }));
 			}
 			//C2
-			dragLock = cacheBox.C2.dragLock
+			dragLock = cacheBox.C2.dragLock;
 			if (dragLock) {
 				document.getElementById("display-lock-box").checked = true;
 				document.getElementById("display-lock-box").dispatchEvent(new Event("change", { bubbles: true }));
@@ -525,6 +588,35 @@ function cacheRecall(selfItem, startup = false) {
 			document.getElementById("schedule-picker").textContent = cacheBox.C3.scheduleCurrent[1] + " ▼";
 			scheduleValue = cacheBox.C3.scheduleCurrent[0];
 			document.getElementById("schedule-specific").innerHTML = cacheBox.C3.scheduleFront;
+			for (let x of document.getElementById("schedule-specific").children) {
+				x.querySelector(".remove-schedule").onclick = function (e) {
+					var nameKey = x.getAttribute("data-value");
+					e.stopPropagation(); // prevent triggering parent onclick
+					if (!lastClickedElement || x.querySelector(".remove-schedule") !== lastClickedElement) {
+						//click 1
+						editLog("Click again to delete schedule.", 3000);
+					} else {
+						//click 2
+						editLog("", 30);
+						x.remove();
+						delete schedules[nameKey];
+
+						if (scheduleValue == nameKey) {
+							var firstOption = document.querySelector("#schedule-specific .option");
+							if (firstOption !== null) {
+								document.getElementById("schedule-picker").setAttribute("data-value", firstOption.getAttribute("data-value"));
+								document.getElementById("schedule-picker").textContent = firstOption.querySelector(".schedule-text").textContent + " ▼";
+								scheduleValue = document.getElementById("schedule-picker").getAttribute("data-value");
+							} else {
+								document.getElementById("schedule-picker").setAttribute("data-value", "");
+								document.getElementById("schedule-picker").textContent = "No Schedules In System" + " ▼";
+								scheduleValue = "";
+							}
+						}
+					}
+					lastClickedElement = x.querySelector(".remove-schedule");
+				};
+			}
 			schedules = cacheBox.C3.scheduleBack;
 
 			//C4
@@ -610,7 +702,7 @@ window.onload = () => {
 		// handle: '.schedule-text', // only allow dragging by text
 		ghostClass: "drag-ghost", // optional class to style dragged item
 		onEnd: function (evt) {
-			saveVariables.scheduleOrder = document.getElementById("schedule-specific").children;
+			// saveVariables.scheduleOrder = document.getElementById("schedule-specific").children;
 			// You can iterate over the children of #schedules here to get their new order
 		},
 	});

@@ -48,7 +48,7 @@ input {
 	border-width: 0.5vh;
 	border-color: grey;
 } */
-#draft-name, #append-period, #remove-period {
+#draft-name, #append-period, #remove-period, .remove-schedule {
 		font-size: 2vh;
 	min-width: 3.5vh;
 	border-style: solid;
