@@ -61,7 +61,10 @@
 
 				<p style="font-size: 2.5vh; margin-left: 0; text-align: center">Click the timer to toggle the UI</p>
 				<hr class="options-seperator" />
+				<div class="organizer-button-grid">
 				<p style="font-size: 2.5vh; margin-left: 0; text-align: center">Colors</p>
+				<img src="icons/down.png">
+				</div>
 				<div>
 					<p class="selector">
 						<input type="image" class="reset-button" value="#000000" src="Icons/image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('background-picker'), ['value']);ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])" />
@@ -90,11 +93,11 @@
 					</p>
 					<p class="selector">
 						<input type="image" class="reset-button" value="Before" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('before-picker'), ['value'], this.value);befores = this.value" />
-						<input id="before-picker" type="text" value="Before" class="button" size="4" oninput="befores = this.value" /> : Before Schedule Text
+						<input id="before-picker" type="text" value="Before" class="button" size="4" oninput="befores = this.value" /> : Before-Schedule Text
 					</p>
 					<p class="selector">
 						<input type="image" class="reset-button" value="After" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('after-picker'), ['value'], this.value);afters = this.value" />
-						<input id="after-picker" type="text" value="After" class="button" size="4" oninput="afters = this.value" /> : After Schedule Text
+						<input id="after-picker" type="text" value="After" class="button" size="4" oninput="afters = this.value" /> : After-Schedule Text
 					</p>
 				</div>
 				<hr class="options-seperator" />

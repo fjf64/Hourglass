@@ -419,8 +419,8 @@ function selectOption(element, option) {
 
 function addToSchedule(nameKey, items) {
 	if (Object.keys(schedules).includes(nameKey)) {
-		editLog("Schedule already named: " + nameKey, 4000);
-		flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, "#808080", 500, 1);
+		editLog("Schedule already named: " + nameKey, 2000);
+		flashElement(document.getElementById("settings"), ["style", "background"], saveBackground, "#808080", 300, 1);
 		return;
 	}
 	schedules[nameKey] = items;
@@ -524,7 +524,7 @@ async function getClipboard() {
 					const blobText = await blob.text();
 					if (!base64regex.test(blobText)) {
 						editLog("Bad Code.", 4000);
-						flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 1);
+						flashElement(document.getElementById("settings"), ["style", "background"], saveBackground, badBackground, 500, 1);
 						return;
 					}
 					code = blobText;
@@ -537,12 +537,12 @@ async function getClipboard() {
 					blobText = doc.body.textContent.trim();
 					if (!base64regex.test(blobText)) {
 						editLog("Bad Code.", 4000);
-						flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 1);
+						flashElement(document.getElementById("settings"), ["style", "background"], saveBackground, badBackground, 500, 1);
 						return;
 					}
 					code = blobText;
 				} else {
-					flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 1);
+					flashElement(document.getElementById("settings"), ["style", "background"], saveBackground, badBackground, 500, 1);
 					throw new Error(`${mimeType} not supported.`);
 				}
 			}
