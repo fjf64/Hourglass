@@ -34,7 +34,7 @@ body {
 	opacity: 0;
 	transform: translate(0, -100%);
 	display: grid;
-	grid-template-columns: 25% 25% 25% 25%;
+	grid-template-columns: 33% 33% 33%;
 	/* grid-template-rows: repeat(3, 1fr); */
 	/* height: 100vh; */
 	line-height: 3vh;
@@ -54,6 +54,9 @@ input {
 .remove-schedule {
 	font-size: 2vh;
 	min-width: 3.5vh;
+	height: 4vh;
+	line-height: 1vh;
+	margin: 0;
 	border-style: solid;
 	border-width: 0.5vh;
 	border-color: grey;
@@ -469,12 +472,47 @@ input[type="file"] {
 }
 
 .options-seperator {
-	height: 0.1vw;
+	height: 0.2vh;
 	border: none;
 	background-color: white;
-	width: 95%;
+	width: 100%;
+}
+.options-seperator-mini {
+	height: 0.2vh;
+	border: none;
+	background-color: white;
+	opacity: .3;
+	width: 90%;
 }
 
 .organizer-button-grid {
+	display:grid;
+	grid-template-columns: auto 7vw;
+	grid-auto-flow: column;
+	cursor: pointer;
+	/* overflow-x: hidden; */
+}
+.down-img {
+	/* margin-top: 1.5vh; */
+	margin-top: -.5vh;
+	width: calc(1vh + 2vw);
+	height: calc(1vh + 2vw);
+	filter: invert(1);
+}
+
+.organizer-text {
+	font-size: 2.5vh;
+	margin-left: 0;
+	text-align: center;
+	line-height: 2.25vh;
+	margin: 0;
+	user-select: none;
 	
+}
+
+.organizer-box {
+	display: none;
+}
+.organizer-box.change {
+	display:block
 }

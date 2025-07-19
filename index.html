@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!-- To-Do - font selection -->
+	<!-- To-Do - font selection, about section -->
 
 	<head>
 		<meta charset="UTF-8" />
@@ -36,7 +36,7 @@
 				<p style="text-wrap: nowrap" id="log"></p>
 			</div>
 
-			<div class="settings-grid" style="grid-column: 1; width: 100%; border-left: none" id="column-1">
+			<div class="settings-grid" style="grid-column: 1; width: 100%; border-left: none; border-right: none" id="column-1">
 				<div class="ixport-wrapper">
 					<div class="ixport-buttons">
 						<div class="ixport-botton-section">
@@ -61,11 +61,16 @@
 
 				<p style="font-size: 2.5vh; margin-left: 0; text-align: center">Click the timer to toggle the UI</p>
 				<hr class="options-seperator" />
-				<div class="organizer-button-grid">
-				<p style="font-size: 2.5vh; margin-left: 0; text-align: center">Colors</p>
-				<img src="icons/down.png">
+				<div class="organizer-button-grid" onclick="IdToggle('color-organizer', ['color-organizer'], 'change')">
+					<div class="middle-align">
+						<p class="organizer-text">Colors</p>
+					</div>
+					<div class="middle-align">
+						<img src="Icons/down.png" class="down-img" />
+					</div>
 				</div>
-				<div>
+				<div class="organizer-box" id="color-organizer">
+					<hr class="options-seperator-mini" />
 					<p class="selector">
 						<input type="image" class="reset-button" value="#000000" src="Icons/image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('background-picker'), ['value']);ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])" />
 						<input id="background-picker" type="color" value="#000000" class="button" onchange="ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])" /> : Background Color
@@ -81,8 +86,16 @@
 					</p>
 				</div>
 				<hr class="options-seperator" />
-				<p style="font-size: 2.5vh; margin-left: 0; text-align: center">Clock</p>
-				<div>
+				<div class="organizer-button-grid" onclick="IdToggle('clock-organizer', ['clock-organizer'], 'change')">
+					<div class="middle-align">
+						<p class="organizer-text">Clock</p>
+					</div>
+					<div class="middle-align">
+						<img src="Icons/down.png" class="down-img" />
+					</div>
+				</div>
+				<div class="organizer-box" id="clock-organizer">
+					<hr class="options-seperator-mini" />
 					<p class="selector">
 						<input type="image" class="reset-button" value="30vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
 						<input id="font-size-picker" type="text" value="30" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','font-size'],this.value+'vw')" /> : Clock Size
@@ -101,10 +114,18 @@
 					</p>
 				</div>
 				<hr class="options-seperator" />
-				<p style="font-size: 2.5vh; margin-left: 0; text-align: center">Period Display</p>
-				<div>
+				<div class="organizer-button-grid" onclick="IdToggle('period-organizer', ['period-organizer'], 'change')">
 					<div class="middle-align">
-						<label class="switch" style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 0; width: 50%; text-align: center;"
+						<p class="organizer-text">Period Display</p>
+					</div>
+					<div class="middle-align">
+						<img src="Icons/down.png" class="down-img" />
+					</div>
+				</div>
+				<div class="organizer-box" id="period-organizer">
+					<hr class="options-seperator-mini" />
+					<div class="middle-align">
+						<label class="switch" style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 0; width: 50%; text-align: center"
 							><input id="display-lock-box" type="checkbox" onclick="lockDisplay(this)" /><span class="slider" style="width: 100%">
 								<p style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh; color: black">Lock Display</p>
 							</span>
@@ -123,15 +144,16 @@
 						<input id="betweens-display-picker" type="text" value="Next Period: " class="button" size="6" oninput="betweenCurrentPeriods = this.value" /> : In-Between Periods Display Prefix Text
 					</p>
 				</div>
+				<hr class="options-seperator" />
 			</div>
 
-			<div class="settings-grid" style="grid-column: 2; width: 100%; padding: 0">
-				<!-- <button style="min-width: 0; padding: 0; display: inline-block; margin-left: 0.5vh; margin-right: 1vh;width: 90%;"> -->
+			<!-- <div class="settings-grid" style="grid-column: 2; width: 100%; padding: 0">
+				 <button style="min-width: 0; padding: 0; display: inline-block; margin-left: 0.5vh; margin-right: 1vh;width: 90%;"> -->
 
-				<!-- </button> -->
-			</div>
+			<!-- </button> 
+			</div> -->
 
-			<div class="settings-grid" style="grid-column: 3; border-right-style: dashed">
+			<div class="settings-grid" style="grid-column: 2; border-width: 0.5vh">
 				<div class="custom-select">
 					<div data-value="Yellow Springs High School" class="select-box" id="schedule-picker" onclick="removeFixedDisplay('schedules');IdToggle('schedules', ['schedules']);">Yellow Springs High School ▼</div>
 					<div class="options" id="schedules">
@@ -143,17 +165,22 @@
 						</div>
 					</div>
 				</div>
-
 				<div style="display: flex; justify-content: center; flex-direction: column; align-items: center">
-					<hr style="height: 0.1vw; border: none; background-color: white; width: 95%" />
+					<hr class="options-seperator" />
 					<div id="period-selectors" style="display: block; justify-content: center; align-items: center; width: 100%">
-						<div class="middle-align">
-							<input type="text" value="" style="margin-right: 2.5%; margin-left: 2.5%; min-width: 0; width: 90%; text-align: center" class="button" id="draft-name" placeholder="Draft Name" />
+						<!-- <hr class="options-seperator" /> -->
+						<div class="organizer-button-grid" onclick="IdToggle('Current-schedule-organizer', ['Current-schedule-organizer'], 'change')">
+							<div class="middle-align">
+								<p class="organizer-text">Import/Export Current Schedule</p>
+							</div>
+							<div class="middle-align">
+								<img src="Icons/down.png" class="down-img" />
+							</div>
 						</div>
-						<button class="period-button" style="margin-left: 2.5%; width: 95%" onclick="saveDraft()">Save Current Draft --></button>
-						<hr style="height: 0.1vw; border: none; background-color: white; width: 95%" />
-						<div style="display: block" id="import-export">
-							<p style="font-size: 2.5vh; text-align: center">Import/Export Schedules</p>
+						<div class="organizer-box" id="Current-schedule-organizer">
+							<hr class="options-seperator-mini" />
+							<!-- <div style="display: block" id="import-export"> -->
+							<!-- <p style="font-size: 2.5vh; text-align: center">Import/Export Schedules</p> -->
 
 							<div class="ixport-wrapper">
 								<div class="ixport-buttons">
@@ -192,7 +219,18 @@
 									</div>
 								</div>
 							</div>
-
+						</div>
+						<hr class="options-seperator" />
+						<div class="organizer-button-grid" onclick="IdToggle('url-schedule-organizer', ['url-schedule-organizer'], 'change')">
+							<div class="middle-align">
+								<p class="organizer-text">Import/Export All Schedules</p>
+							</div>
+							<div class="middle-align">
+								<img src="Icons/down.png" class="down-img" />
+							</div>
+						</div>
+						<div class="organizer-box" id="url-schedule-organizer">
+							<hr class="options-seperator-mini" />
 							<div class="ixport-wrapper" style="margin-bottom: 1vh">
 								<div class="ixport-buttons">
 									<p class="ixport-description">By Url</p>
@@ -204,7 +242,18 @@
 									</div>
 								</div>
 							</div>
-							<hr style="height: 0.1vw; border: none; background-color: white; width: 95%" />
+						</div>
+						<hr class="options-seperator" />
+						<div class="organizer-button-grid" onclick="IdToggle('everything-schedule-organizer', ['everything-schedule-organizer'], 'change')">
+							<div class="middle-align">
+								<p class="organizer-text">Import/Export Everything</p>
+							</div>
+							<div class="middle-align">
+								<img src="Icons/down.png" class="down-img" />
+							</div>
+						</div>
+						<div class="organizer-box" id="everything-schedule-organizer">
+							<hr class="options-seperator-mini" />
 							<p style="font-size: 2.5vh; text-align: center">Import/Export Everything</p>
 
 							<div class="ixport-wrapper">
@@ -225,21 +274,39 @@
 								</div>
 							</div>
 						</div>
+						<hr class="options-seperator" />
+						<div class="organizer-button-grid" onclick="IdToggle('new-schedule-organizer', ['new-schedule-organizer'], 'change')">
+							<div class="middle-align">
+								<p class="organizer-text">Create new schedule</p>
+							</div>
+							<div class="middle-align">
+								<img src="Icons/down.png" class="down-img" />
+							</div>
+						</div>
+						<div class="organizer-box" id="new-schedule-organizer">
+							<hr class="options-seperator-mini" />
+							<p class="organizer-text" style="margin-bottom: 1.5vh;">Use rightmost column to create a new schedule.</p>
+							<div class="middle-align">
+								<input type="text" value="" style="margin-right: 2.5%; margin-left: 2.5%; min-width: 0; width: 90%; text-align: center" class="button" id="draft-name" placeholder="Draft Name" />
+							</div>
+							<button class="period-button" style="margin-left: 2.5%; width: 95%" onclick="saveDraft()">Save Current Draft →</button>
+						</div>
+						<hr class="options-seperator" />
 					</div>
 				</div>
 			</div>
 
-			<div id="settings-column-4" class="settings-grid" style="grid-column: 4; border-right: none; border-left: none">
+			<div id="settings-column-4" class="settings-grid" style="grid-column: 3; border-right: none; border-left: none">
 				<div id="period-count" style="display: flex; flex-wrap: wrap; justify-content: center; width: 100%; margin-top: 1vh; margin-bottom: 1vh">
-					<button class="button" style="margin-left: 2.5%; margin-left: 1vh; margin-right: 0.5vh" id="append-period" onclick="appendPeriod()">+</button>
 					<button class="button" id="remove-period" style="margin-left: 0.5vh; margin-right: 0.5vh" onclick="removePeriod()">-</button>
-					<button style="min-width: 0; padding: 0; display: inline-block; margin-left: 0.5vh; margin-right: 1vh">
+					<button style="min-width: 0; padding: 0; display: inline-block; margin-left: 0.5vh; margin-right: 0.5vh; border: none">
 						<label class="switch"
 							><input id="24h-box" type="checkbox" onclick="amPmSwitch(this)" checked /><span class="slider">
 								<p style="font-size: 2vh; line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">24H</p>
-							</span></label
-						>
+							</span>
+						</label>
 					</button>
+					<button class="button" style="margin-left: .5vh; margin-right: 0.5vh" id="append-period" onclick="appendPeriod()">+</button>
 				</div>
 				<div style="display: flex; justify-content: center; flex-direction: column; align-items: center">
 					<div id="added-periods"></div>

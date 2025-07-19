@@ -162,8 +162,10 @@ function removePeriod() {
 	}
 }
 function amPmSwitch(thisItem) {
-	if (true) {
-		for (let x of document.getElementsByClassName("am-pm")) {
+	for (let x of document.getElementsByClassName("am-pm")) {
+		if (x.classList.contains("change") && thisItem.checked) {
+			x.classList.toggle("change");
+		} else if (!x.classList.contains("change") && !thisItem.checked) {
 			x.classList.toggle("change");
 		}
 	}
@@ -555,6 +557,7 @@ async function getClipboard() {
 }
 
 async function cacheRecall(selfItem, startup = false, source = "") {
+	//There is no column two in Ba Sing Se
 	var cacheBox;
 	if ((!lastClickedElement || selfItem !== lastClickedElement) && !startup) {
 		editLog("Click again to import settings from cache.", 3000);
@@ -583,7 +586,6 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 				document.getElementById("display-lock-box").checked = false;
 				document.getElementById("display-lock-box").dispatchEvent(new Event("change", { bubbles: true }));
 			}
-			//C2
 			//C3
 			document.getElementById("schedule-picker").setAttribute("data-value", cacheBox.C3.scheduleCurrent[0]);
 			document.getElementById("schedule-picker").textContent = cacheBox.C3.scheduleCurrent[1] + " ▼";
@@ -628,6 +630,7 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 				document.getElementById("24h-box").checked = true;
 				document.getElementById("24h-box").dispatchEvent(new Event("change", { bubbles: true }));
 			}
+			amPmSwitch(document.getElementById("24h-box"));
 			//MISC
 			document.getElementById("period-display").style.left = cacheBox.misc.periodDisplayPos[0];
 			document.getElementById("period-display").style.top = cacheBox.misc.periodDisplayPos[1];
@@ -665,11 +668,11 @@ function Main() {
 	if (currrentPassedPeriods[0].length == 0) {
 		// before
 		clock.innerHTML = befores;
-		document.getElementById("period-display").textContent = '';
+		document.getElementById("period-display").textContent = "";
 	} else if (currrentPassedPeriods[1].length == usedSchedule.length) {
 		// after
 		clock.innerHTML = afters;
-		document.getElementById("period-display").textContent = '';
+		document.getElementById("period-display").textContent = "";
 	} else if (currrentPassedPeriods[0].length == currrentPassedPeriods[1].length) {
 		// break
 		clock.innerHTML = breaks;
