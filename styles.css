@@ -481,12 +481,12 @@ input[type="file"] {
 	height: 0.2vh;
 	border: none;
 	background-color: white;
-	opacity: .3;
+	opacity: 0.3;
 	width: 90%;
 }
 
 .organizer-button-grid {
-	display:grid;
+	display: grid;
 	grid-template-columns: auto 7vw;
 	grid-auto-flow: column;
 	cursor: pointer;
@@ -494,7 +494,7 @@ input[type="file"] {
 }
 .down-img {
 	/* margin-top: 1.5vh; */
-	margin-top: -.5vh;
+	margin-top: -0.5vh;
 	width: calc(1vh + 2vw);
 	height: calc(1vh + 2vw);
 	filter: invert(1);
@@ -507,12 +507,27 @@ input[type="file"] {
 	line-height: 2.25vh;
 	margin: 0;
 	user-select: none;
-	
 }
 
 .organizer-box {
 	display: none;
 }
 .organizer-box.change {
-	display:block
+	display: block;
+}
+#draft-name {
+	margin-right: 2.5%;
+	margin-left: 2.5%;
+	min-width: 0;
+	width: 90%;
+	text-align: center;
+	border-color: white;
+	background-color: #101010;
+	border-radius: .5vh;
+	color:white;
+	caret-color: white;
+	border-width: .25vh;
+}
+#draft-name::placeholder {
+	color: lightgrey;
 }
