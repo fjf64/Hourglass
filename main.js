@@ -413,7 +413,7 @@ function optionHover(selfItem, toggle) {
 function selectOption(element, option) {
 	ChangeElement("", document.getElementById("schedules"), ["style", "display"], "none");
 	element.setAttribute("data-value", option.getAttribute("data-value"));
-	element.textContent = option.querySelector(".schedule-text").textContent + " ▼";
+	element.textContent = option.querySelector(".schedule-text").textContent;
 	scheduleValue = option.getAttribute("data-value");
 	document.getElementById("schedule-tooltip").textContent = schedules[scheduleValue].map(([period, time]) => `${period}: ${time}`).join("\n\n");
 	// console.log(schedules[scheduleValue].map(([period, time]) => `${period}: ${time}`).join("\n\n"));
@@ -448,11 +448,11 @@ function addToSchedule(nameKey, items) {
 				var firstOption = document.querySelector("#schedule-specific .option");
 				if (firstOption !== null) {
 					document.getElementById("schedule-picker").setAttribute("data-value", firstOption.getAttribute("data-value"));
-					document.getElementById("schedule-picker").textContent = firstOption.querySelector(".schedule-text").textContent + " ▼";
+					document.getElementById("schedule-picker").textContent = firstOption.querySelector(".schedule-text").textContent;
 					scheduleValue = document.getElementById("schedule-picker").getAttribute("data-value");
 				} else {
 					document.getElementById("schedule-picker").setAttribute("data-value", "");
-					document.getElementById("schedule-picker").textContent = "No Schedules In System" + " ▼";
+					document.getElementById("schedule-picker").textContent = "No Schedules In System";
 					scheduleValue = "";
 				}
 			}
@@ -491,7 +491,7 @@ function allInputs() {
 	//Column 2
 
 	//column 3
-	returnal.C3.scheduleCurrent = [document.getElementById("schedule-picker").getAttribute("data-value"), document.getElementById("schedule-picker").textContent.slice(0, -2)];
+	returnal.C3.scheduleCurrent = [document.getElementById("schedule-picker").getAttribute("data-value"), document.getElementById("schedule-picker").textContent];
 	returnal.C3.scheduleFront = document.getElementById("schedule-specific").innerHTML;
 	returnal.C3.scheduleBack = schedules;
 
@@ -588,7 +588,7 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 			}
 			//C3
 			document.getElementById("schedule-picker").setAttribute("data-value", cacheBox.C3.scheduleCurrent[0]);
-			document.getElementById("schedule-picker").textContent = cacheBox.C3.scheduleCurrent[1] + " ▼";
+			document.getElementById("schedule-picker").textContent = cacheBox.C3.scheduleCurrent[1];
 			scheduleValue = cacheBox.C3.scheduleCurrent[0];
 			document.getElementById("schedule-specific").innerHTML = cacheBox.C3.scheduleFront;
 			for (let x of document.getElementById("schedule-specific").children) {
@@ -608,11 +608,11 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 							var firstOption = document.querySelector("#schedule-specific .option");
 							if (firstOption !== null) {
 								document.getElementById("schedule-picker").setAttribute("data-value", firstOption.getAttribute("data-value"));
-								document.getElementById("schedule-picker").textContent = firstOption.querySelector(".schedule-text").textContent + " ▼";
+								document.getElementById("schedule-picker").textContent = firstOption.querySelector(".schedule-text").textContent;
 								scheduleValue = document.getElementById("schedule-picker").getAttribute("data-value");
 							} else {
 								document.getElementById("schedule-picker").setAttribute("data-value", "");
-								document.getElementById("schedule-picker").textContent = "No Schedules In System" + " ▼";
+								document.getElementById("schedule-picker").textContent = "No Schedules In System";
 								scheduleValue = "";
 							}
 						}
@@ -821,10 +821,11 @@ for (let x of document.getElementById("column-1").querySelectorAll(".selector"))
 	input.dispatchEvent(new Event("change", { bubbles: true }));
 	input.dispatchEvent(new Event("input", { bubbles: true }));
 }
-cacheRecall("", true);
 
 var initialOption = document.querySelector("#schedules .option");
 selectOption(document.getElementById("schedule-picker"), initialOption);
+
+cacheRecall("", true);
 
 setInterval(Main, 1000);
 Main();

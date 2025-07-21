@@ -154,13 +154,20 @@
 			</div> -->
 
 			<div class="settings-grid" style="grid-column: 2; border-width: 0.5vh">
-				<div class="custom-select">
-					<div data-value="Yellow Springs High School" class="select-box" id="schedule-picker" onclick="removeFixedDisplay('schedules');IdToggle('schedules', ['schedules']);">Yellow Springs High School ▼</div>
-					<div class="options" id="schedules">
-						<div class="schedules-grouper">
-							<div class="options" style="display: block; border-top: none" id="schedule-specific"></div>
-							<div style="width: 50%; padding: 0; padding-left: 1vh; margin-left: -0.5vh" class="select-box" style="cursor: default">
-								<p id="schedule-tooltip"></p>
+				<div class="middle-align">
+					<div class="custom-select">
+						<div class="current-chedule-wrapper" onclick="removeFixedDisplay('schedules');IdToggle('schedules', ['schedules']);">
+							<div data-value="Yellow Springs High School" style="border: none; background-color: transparent; color: white;display: flex;align-items: center;" class="select-box" id="schedule-picker" ><p>Yellow Springs High School</p></div>
+							<div class="middle-align">
+								<img src="Icons/down.png" style="margin-top: 0.5vh" class="down-img" />
+							</div>
+						</div>
+						<div class="options" id="schedules">
+							<div class="schedules-grouper hide-on-mobile">
+								<div class="options" style="display: block; border-top: none" id="schedule-specific"></div>
+								<div class="schedule-tooltip-container" style="cursor: default">
+									<p id="schedule-tooltip"></p>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -285,11 +292,11 @@
 						</div>
 						<div class="organizer-box" id="new-schedule-organizer">
 							<hr class="options-seperator-mini" />
-							<p class="organizer-text" style="margin-bottom: 1.5vh;">Use rightmost column to create a new schedule.</p>
+							<p class="organizer-text" style="margin-bottom: 1.5vh">Use rightmost column to create a new schedule.</p>
 							<div class="middle-align">
 								<input type="text" value="" class="button" id="draft-name" placeholder="Draft Name" />
 							</div>
-							<button class="period-button" style="margin-left: 2.5%; width: 95%;color: white;background-color: #101010;border-color: white;border-width: .25vh;" onclick="saveDraft()">Save Current Draft →</button>
+							<button class="period-button" style="margin-left: 2.5%; width: 95%; color: white; background-color: #101010; border-color: white; border-width: 0.25vh" onclick="saveDraft()">Save Current Draft →</button>
 						</div>
 						<hr class="options-seperator" />
 					</div>
@@ -306,7 +313,7 @@
 							</span>
 						</label>
 					</button>
-					<button class="button" style="margin-left: .5vh; margin-right: 0.5vh" id="append-period" onclick="appendPeriod()">+</button>
+					<button class="button" style="margin-left: 0.5vh; margin-right: 0.5vh" id="append-period" onclick="appendPeriod()">+</button>
 				</div>
 				<div style="display: flex; justify-content: center; flex-direction: column; align-items: center">
 					<div id="added-periods"></div>
