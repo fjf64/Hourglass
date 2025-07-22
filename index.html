@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!-- To-Do - css input boxes, about section, setting menu transparency on input -->
+	<!-- To-Do - about section, setting menu transparency on input -->
 
 	<head>
 		<meta charset="UTF-8" />
@@ -165,7 +165,7 @@
 					<p class="selector">
 						Clock Top Offset<br />
 						<input type="image" class="reset-button" value="0vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('clock-top-offset-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','margin-top'])" />
-						<input id="clock-top-offset-picker" type="text" value="0f" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','margin-top'],this.value+'vh')" />
+						<input id="clock-top-offset-picker" type="text" value="0" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','margin-top'],this.value+'vh')" />
 					</p>
 					<p class="selector">
 						In-Between Periods Text<br />
@@ -194,7 +194,7 @@
 				</div>
 				<div class="organizer-box" id="period-organizer">
 					<hr class="options-seperator-mini" />
-					<div class="middle-align">
+					<div class="middle-align" style="margin-top: 1vh;">
 						<label class="switch" style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 0; width: 50%; text-align: center"
 							><input id="display-lock-box" type="checkbox" onclick="lockDisplay(this)" /><span class="slider" style="width: 100%">
 								<p style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">Lock Display</p>
@@ -323,7 +323,7 @@
 						</div>
 						<div class="organizer-box" id="everything-schedule-organizer">
 							<hr class="options-seperator-mini" />
-							<p style="font-size: 2.5vh; text-align: center">Import/Export Everything</p>
+							<!-- <p style="font-size: 2.5vh; text-align: center">Import/Export Everything</p> -->
 
 							<div class="ixport-wrapper">
 								<div class="ixport-buttons">
@@ -354,9 +354,9 @@
 						</div>
 						<div class="organizer-box" id="new-schedule-organizer">
 							<hr class="options-seperator-mini" />
-							<p class="organizer-text" style="margin-bottom: 1.5vh">Use rightmost column to create a new schedule.</p>
+							<p class="organizer-text" style="margin-bottom: 2vh;margin-top: 2vh;">Use rightmost column to create a new schedule.</p>
 							<div class="middle-align">
-								<input type="text" value="" class="button" id="draft-name" placeholder="Draft Name" />
+								<input type="text" value="" class="button-draft" id="draft-name" placeholder="Draft Name" />
 							</div>
 							<button class="period-button" style="margin-left: 2.5%; width: 95%; color: white; background-color: #101010; border-color: white; border-width: 0.25vh" onclick="saveDraft()">Save Current Draft →</button>
 						</div>
@@ -367,7 +367,7 @@
 
 			<div id="settings-column-4" class="settings-grid" style="grid-column: 3; border-right: none; border-left: none">
 				<div id="period-count" style="display: flex; flex-wrap: wrap; justify-content: center; width: 100%; margin-top: 1vh; margin-bottom: 1vh">
-					<button class="button" id="remove-period" style="margin-left: 0.5vh; margin-right: 0.5vh" onclick="removePeriod()">-</button>
+					<button class="button-remove" id="remove-period" style="margin-left: 0.5vh; margin-right: 0.5vh" onclick="removePeriod()">-</button>
 					<button style="min-width: 0; padding: 0; display: inline-block; margin-left: 0.5vh; margin-right: 0.5vh; border: none">
 						<label class="switch"
 							><input id="24h-box" type="checkbox" onclick="amPmSwitch(this)" checked /><span class="slider">
@@ -375,7 +375,7 @@
 							</span>
 						</label>
 					</button>
-					<button class="button" style="margin-left: 0.5vh; margin-right: 0.5vh" id="append-period" onclick="appendPeriod()">+</button>
+					<button class="button-append" style="margin-left: 0.5vh; margin-right: 0.5vh" id="append-period" onclick="appendPeriod()">+</button>
 				</div>
 				<div style="display: flex; justify-content: center; flex-direction: column; align-items: center">
 					<div id="added-periods"></div>

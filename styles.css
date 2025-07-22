@@ -2,6 +2,7 @@ body {
 	background: black;
 	color: whitesmoke;
 	overflow-x: hidden;
+	margin: 0;
 }
 /* @media only screen and (max-width: 767px) {
   .hide-on-mobile {
@@ -313,10 +314,45 @@ input {
 	font-size: 2.5vh;
 	border-style: solid;
 	border-width: 0.25vh;
-	border-color: #a0a0a02D;
+	border-color: #a0a0a0B0;
+	margin: 0vh;
 	margin-left: 5%;
 	margin-right: 5%;
+	/* max-width: 80%; */
 	background-color: #101010;
+	text-align: center;
+	padding-bottom: 1vh;
+	line-height: 4vh;
+	/* display: flex; */
+
+}
+
+.selector + .selector {
+	/* margin:0; */
+	border-top: none;
+}
+
+.selector input {
+	background-color: black;
+	color: white;
+	font-size: calc(.5vh + 1vw);
+	/* top: 0.75vh; */
+}
+.reset-button {
+	min-width: 0;
+	width: 1.5vh;
+	height: auto;
+	margin: 0;
+	position: relative;
+	/* top: 0.75vh; */
+	font-size: 2vh;
+	border-style: solid;
+	border-width: 0.25vh;
+	border-color: grey;
+}
+.selector .button {
+	width: 90%;
+	height: 3vh;
 }
 
 .hour-switch {
@@ -439,18 +475,6 @@ input[type="file"] {
 	border-color: grey;
 }
 
-.reset-button {
-	min-width: 0;
-	width: 1.5vh;
-	height: auto;
-	margin: 0;
-	position: relative;
-	top: 0.75vh;
-	font-size: 2vh;
-	border-style: solid;
-	border-width: 0.25vh;
-	border-color: grey;
-}
 
 #log-container {
 	display: inline-block;
@@ -687,6 +711,8 @@ input[type="file"] {
 	background-color: white;
 	opacity: 0.3;
 	width: 90%;
+	margin-bottom: 1vh;
+	margin-top: 1vh;
 }
 
 .organizer-button-grid {
@@ -710,7 +736,7 @@ input[type="file"] {
 	font-size: 2.5vh;
 	margin-left: 0;
 	text-align: center;
-	line-height: 2.25vh;
+	line-height: 2.75vh;
 	margin: 0;
 	user-select: none;
 }

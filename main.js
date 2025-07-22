@@ -451,7 +451,7 @@ function addToSchedule(nameKey, items) {
 		return;
 	}
 	schedules[nameKey] = items;
-	var selectElement = createElementFromHTML('<div data-value="YSHS Two Hour Delay" class="option"><p class="schedule-text"></p><button class="button remove-schedule danger-button">-</button></div>');
+	var selectElement = createElementFromHTML('<div data-value="YSHS Two Hour Delay" class="option"><p class="schedule-text"></p><button class="button-remove remove-schedule danger-button">-</button></div>');
 	selectElement.setAttribute("onclick", 'selectOption(document.getElementById("schedule-picker"), this);IdToggle("schedules", ["schedules"])');
 	selectElement.setAttribute("onmouseover", "optionHover(this, true)");
 	selectElement.setAttribute("onmouseout", "optionHover(this, false)");
