@@ -132,34 +132,29 @@ body {
 	font-variation-settings: "wdth" 75.8;
 }
 
-
 .alumni-sans-pinstripe-regular {
-  font-family: "Alumni Sans Pinstripe", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+	font-family: "Alumni Sans Pinstripe", sans-serif;
+	font-weight: 400;
+	font-style: normal;
 }
 
 .zain-light {
-  font-family: "Zain", sans-serif;
-  font-weight: 300;
-  font-style: normal;
+	font-family: "Zain", sans-serif;
+	font-weight: 300;
+	font-style: normal;
 }
 
 .montserrat-alternates-regular {
-  font-family: "Montserrat Alternates", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+	font-family: "Montserrat Alternates", sans-serif;
+	font-weight: 400;
+	font-style: normal;
 }
 
 .nanum-myeongjo-regular {
-  font-family: "Nanum Myeongjo", serif;
-  font-weight: 400;
-  font-style: normal;
+	font-family: "Nanum Myeongjo", serif;
+	font-weight: 400;
+	font-style: normal;
 }
-
-
-
-
 
 #mainContainer {
 	top: 1vh;
@@ -172,6 +167,9 @@ body {
 #mainTime {
 	font-size: 30vw;
 	cursor: pointer;
+	margin: 0;
+	margin-top: 0;
+	margin-bottom: 0;
 }
 
 #settings {
@@ -313,6 +311,12 @@ input {
 .selector {
 	color: white;
 	font-size: 2.5vh;
+	border-style: solid;
+	border-width: 0.25vh;
+	border-color: #a0a0a02D;
+	margin-left: 5%;
+	margin-right: 5%;
+	background-color: #101010;
 }
 
 .hour-switch {
