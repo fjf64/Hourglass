@@ -394,7 +394,7 @@ input[type="file"] {
 	/* font-size: 2vh; */
 	font-size: calc(0.6vh + 0.8vw);
 	padding-left: .5vh;
-	line-height: 1.5vh;
+	line-height: 1.75vh;
 	display: flex;
 	/* margin-right: .5vh; */
 	justify-content: space-between;

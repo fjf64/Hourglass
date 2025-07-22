@@ -696,10 +696,6 @@ window.onload = () => {
 	const params = new URLSearchParams(window.location.search);
 	const action = params.get("code");
 
-	// if (!base64regex.test(action)) {
-	// flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, badBackground, 500, 1);
-	// return;
-	// }
 	if (action) {
 		for (let x of action.split("_")) {
 			importCode(x);
@@ -708,11 +704,8 @@ window.onload = () => {
 
 	new Sortable(document.getElementById("schedule-specific"), {
 		animation: 150,
-		// handle: '.schedule-text', // only allow dragging by text
 		ghostClass: "drag-ghost", // optional class to style dragged item
 		onEnd: function (evt) {
-			// saveVariables.scheduleOrder = document.getElementById("schedule-specific").children;
-			// You can iterate over the children of #schedules here to get their new order
 		},
 	});
 

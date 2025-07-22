@@ -59,7 +59,7 @@
 					</div>
 				</div>
 
-				<p style="font-size: 2.5vh; margin-left: 0; text-align: center">Click the timer to toggle the UI</p>
+				<p style="font-size: 2.5vh; margin-left: 0; text-align: center">Click the clock to toggle the UI</p>
 				<hr class="options-seperator" />
 				<div class="organizer-button-grid" onclick="IdToggle('color-organizer', ['color-organizer'], 'change')">
 					<div class="middle-align">
@@ -69,6 +69,7 @@
 						<img src="Icons/down.png" class="down-img" />
 					</div>
 				</div>
+				
 				<div class="organizer-box" id="color-organizer">
 					<hr class="options-seperator-mini" />
 					<p class="selector">
@@ -85,6 +86,28 @@
 						<input id="menu-picker" type="color" value="#ffffff" class="button" onchange="ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" /> : Menu Color
 					</p>
 				</div>
+
+				<hr class="options-seperator" />
+				<div class="organizer-button-grid" onclick="IdToggle('font-organizer', ['font-organizer'], 'change')">
+					<div class="middle-align">
+						<p class="organizer-text">Text</p>
+					</div>
+					<div class="middle-align">
+						<img src="Icons/down.png" class="down-img" />
+					</div>
+				</div>
+				<div class="organizer-box" id="font-organizer">
+					<hr class="options-seperator-mini" />
+					<p class="selector">
+						<input type="image" class="reset-button" value="30vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
+						<input id="font-size-picker" type="text" value="30" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','font-size'],this.value+'vw')" /> : Clock Size
+					</p>
+					<p class="selector">
+						<input type="image" class="reset-button" value="5vw" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker2'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('period-display'), ['style','font-size'])" />
+						<input id="font-size-picker2" type="text" value="5" class="button" size="1" oninput="ChangeElement('', document.getElementById('period-display'), ['style','font-size'],this.value+'vh')" /> : Period Display Size
+					</p>
+				</div>
+
 				<hr class="options-seperator" />
 				<div class="organizer-button-grid" onclick="IdToggle('clock-organizer', ['clock-organizer'], 'change')">
 					<div class="middle-align">
@@ -96,10 +119,6 @@
 				</div>
 				<div class="organizer-box" id="clock-organizer">
 					<hr class="options-seperator-mini" />
-					<p class="selector">
-						<input type="image" class="reset-button" value="30vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
-						<input id="font-size-picker" type="text" value="30" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','font-size'],this.value+'vw')" /> : Clock Size
-					</p>
 					<p class="selector">
 						<input type="image" class="reset-button" value="Break" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('break-picker'), ['value'], this.value.slice(0, -2));breaks = this.value" />
 						<input id="break-picker" type="text" value="Break" class="button" size="4" oninput="breaks = this.value" /> : In-Between Periods Text
@@ -132,10 +151,6 @@
 						</label>
 					</div>
 					<p class="selector">
-						<input type="image" class="reset-button" value="5vw" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker2'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('period-display'), ['style','font-size'])" />
-						<input id="font-size-picker2" type="text" value="5" class="button" size="1" oninput="ChangeElement('', document.getElementById('period-display'), ['style','font-size'],this.value+'vh')" /> : Period Display Size
-					</p>
-					<p class="selector">
 						<input type="image" class="reset-button" value="Current Period: " src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('display-picker'), ['value'], this.value);CurrentPeriods = this.value" />
 						<input id="display-picker" type="text" value="Current Period: " class="button" size="6" oninput="currentPeriods = this.value;" /> : Period Display Prefix Text
 					</p>
@@ -157,7 +172,7 @@
 				<div class="middle-align">
 					<div class="custom-select">
 						<div class="current-chedule-wrapper" onclick="removeFixedDisplay('schedules');IdToggle('schedules', ['schedules']);">
-							<div data-value="Yellow Springs High School" style="border: none; background-color: transparent; color: white;display: flex;align-items: center;" class="select-box" id="schedule-picker" ><p>Yellow Springs High School</p></div>
+							<div data-value="Yellow Springs High School" style="border: none; background-color: transparent; color: white; display: flex; align-items: center" class="select-box" id="schedule-picker"><p>Yellow Springs High School</p></div>
 							<div class="middle-align">
 								<img src="Icons/down.png" style="margin-top: 0.5vh" class="down-img" />
 							</div>
