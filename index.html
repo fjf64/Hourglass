@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!-- To-Do - font selection, about section -->
+	<!-- To-Do - css input boxes, about section -->
 
 	<head>
 		<meta charset="UTF-8" />
@@ -10,6 +10,9 @@
 		<link rel="icon" type="image/x-icon" href="Icons/Hourglass.png" />
 		<link rel="stylesheet" href="styles.css" />
 
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Allura&family=Alumni+Sans+Pinstripe:ital@0;1&family=Bitcount+Prop+Single:wght@100..900&family=Caesar+Dressing&family=Changa:wght@200..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Jura:wght@300..700&family=Major+Mono+Display&family=Megrim&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nanum+Gothic+Coding&family=Nanum+Myeongjo&family=Playwrite+VN+Guides&family=Poiret+One&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wdth,wght@0,75.8,205;1,75.8,205&family=Rubik+80s+Fade&family=Sacramento&family=Special+Elite&family=Tilt+Prism&family=Yeseva+One&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet" />
 		<link rel="manifest" href="manifest.json" />
 		<meta name="theme-color" content="#ffffff" />
 		<link rel="apple-touch-icon" href="Icons/icon-192.png" />
@@ -69,7 +72,7 @@
 						<img src="Icons/down.png" class="down-img" />
 					</div>
 				</div>
-				
+
 				<div class="organizer-box" id="color-organizer">
 					<hr class="options-seperator-mini" />
 					<p class="selector">
@@ -99,13 +102,31 @@
 				<div class="organizer-box" id="font-organizer">
 					<hr class="options-seperator-mini" />
 					<p class="selector">
-						<input type="image" class="reset-button" value="30vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
-						<input id="font-size-picker" type="text" value="30" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','font-size'],this.value+'vw')" /> : Clock Size
+						<input type="image" class="reset-button" value="28vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
+						<input id="font-size-picker" type="text" value="28" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','font-size'],this.value+'vw')" /> : Clock Size
 					</p>
 					<p class="selector">
 						<input type="image" class="reset-button" value="5vw" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker2'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('period-display'), ['style','font-size'])" />
 						<input id="font-size-picker2" type="text" value="5" class="button" size="1" oninput="ChangeElement('', document.getElementById('period-display'), ['style','font-size'],this.value+'vh')" /> : Period Display Size
 					</p>
+					<div class="middle-align">
+						<div class="custom-select">
+							<div class="current-chedule-wrapper" onclick="removeFixedDisplay('fonts');IdToggle('fonts', ['fonts']);">
+								<div data-value="ccl" style="border: none; background-color: transparent; color: white; display: flex; align-items: center" class="select-box" id="font-picker"><p>ccl</p></div>
+								<div class="middle-align">
+									<img src="Icons/down.png" style="margin-top: 0.5vh" class="down-img" />
+								</div>
+							</div>
+							<div class="options" id="fonts">
+								<div class="schedules-grouper hide-on-mobile">
+									<div class="options" style="display: block; border-top: none" id="font-choices"></div>
+									<!-- <div class="schedule-tooltip-container" style="cursor: default"> -->
+									<!-- <p id="schedule-tooltip"></p> -->
+									<!-- </div> -->
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<hr class="options-seperator" />
@@ -146,7 +167,7 @@
 					<div class="middle-align">
 						<label class="switch" style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 0; width: 50%; text-align: center"
 							><input id="display-lock-box" type="checkbox" onclick="lockDisplay(this)" /><span class="slider" style="width: 100%">
-								<p style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh; color: black">Lock Display</p>
+								<p style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">Lock Display</p>
 							</span>
 						</label>
 					</div>
@@ -161,12 +182,6 @@
 				</div>
 				<hr class="options-seperator" />
 			</div>
-
-			<!-- <div class="settings-grid" style="grid-column: 2; width: 100%; padding: 0">
-				 <button style="min-width: 0; padding: 0; display: inline-block; margin-left: 0.5vh; margin-right: 1vh;width: 90%;"> -->
-
-			<!-- </button> 
-			</div> -->
 
 			<div class="settings-grid" style="grid-column: 2; border-width: 0.5vh">
 				<div class="middle-align">

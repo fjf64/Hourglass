@@ -1,12 +1,165 @@
 body {
 	background: black;
 	color: whitesmoke;
+	overflow-x: hidden;
 }
 /* @media only screen and (max-width: 767px) {
   .hide-on-mobile {
     display: none;
   }
 } */
+
+.yeseva-one-regular {
+	font-family: "Yeseva One", serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.sans-serif {
+	font-family: sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.quantico-regular {
+	font-family: "Quantico", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.poiret-one-regular {
+	font-family: "Poiret One", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.caesar-dressing-regular {
+	font-family: "Caesar Dressing", system-ui;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.special-elite-regular {
+	font-family: "Special Elite", system-ui;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.jura {
+	font-family: "Jura", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.sacramento-regular {
+	font-family: "Sacramento", cursive;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.allura-regular {
+	font-family: "Allura", cursive;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.changa {
+	font-family: "Changa", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.playwrite-vn-guides-regular {
+	font-family: "Playwrite VN Guides", cursive;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.major-mono-display-regular {
+	font-family: "Major Mono Display", monospace;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.jetbrains-mono {
+	font-family: "JetBrains Mono", monospace;
+	font-optical-sizing: auto;
+	font-weight: 350;
+	font-style: normal;
+}
+
+.nanum-gothic-coding-regular {
+	font-family: "Nanum Gothic Coding", monospace;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.megrim-regular {
+	font-family: "Megrim", system-ui;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.rubik-80s-fade-regular {
+	font-family: "Rubik 80s Fade", system-ui;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.tilt-prism {
+	font-family: "Tilt Prism", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+	font-variation-settings: "XROT" 0, "YROT" 0;
+}
+
+.bitcount-prop-single {
+	font-family: "Bitcount Prop Single", system-ui;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+	font-variation-settings: "slnt" 0, "CRSV" 0.5, "ELSH" 0, "ELXP" 0;
+}
+
+.roboto {
+	font-family: "Roboto", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 205;
+	font-style: normal;
+	font-variation-settings: "wdth" 75.8;
+}
+
+
+.alumni-sans-pinstripe-regular {
+  font-family: "Alumni Sans Pinstripe", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.zain-light {
+  font-family: "Zain", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.montserrat-alternates-regular {
+  font-family: "Montserrat Alternates", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.nanum-myeongjo-regular {
+  font-family: "Nanum Myeongjo", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+
+
 
 #mainContainer {
 	top: 1vh;
@@ -63,8 +216,10 @@ input {
 	line-height: 1vh;
 	margin: 0;
 	border-style: solid;
-	border-width: 0.5vh;
-	border-color: grey;
+	border-width: 0.25vh;
+	background-color: #101010;
+	color: white;
+	border-color: white;
 }
 .settings-grid {
 	border-left: 0.25vh solid white;
@@ -88,8 +243,10 @@ input {
 .period-input-box {
 	font-size: 2vh;
 	border-style: solid;
-	border-width: 0.5vh;
-	border-color: grey;
+	border-width: 0.25vh;
+	border-color: white;
+	color: white;
+	background-color: #101010;
 	max-width: 3vw;
 	min-width: 0;
 }
@@ -149,7 +306,7 @@ footer {
 
 input {
 	border-style: solid;
-	border-width: 0.5vh;
+	border-width: 0.25vh;
 	border-color: grey;
 	display: inline-block;
 }
@@ -160,7 +317,7 @@ input {
 
 .hour-switch {
 	border-style: solid;
-	border-width: 0.5vh;
+	border-width: 0.25vh;
 	border-color: grey;
 	display: inline-block;
 	background: #ccc;
@@ -175,9 +332,6 @@ input {
 	bottom: 0;
 	top: 0;
 	margin: 0;
-	border-style: solid;
-	border-width: 0.5vh;
-	border-color: grey;
 }
 
 .switch input {
@@ -193,7 +347,11 @@ input {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: #ccc;
+	background-color: #101010;
+	color: white;
+	border-style: solid;
+	border-width: 0.25vh;
+	border-color: white;
 	-webkit-transition: 0.4s;
 	transition: 0.4s;
 }
@@ -201,8 +359,8 @@ input {
 .slider:before {
 	position: absolute;
 	content: "";
-	height: 0.5vh;
-	top: 3.5vh;
+	height: 0.25vh;
+	top: 3.6125vh;
 	width: 100%;
 	left: 0vh;
 	bottom: 0vh;
@@ -213,6 +371,11 @@ input {
 
 input:checked + .slider {
 	background-color: greenyellow;
+	color: black;
+}
+.switch input:checked {
+	border-color: black;
+	background-color: green;
 }
 
 input:focus + .slider {
@@ -222,14 +385,14 @@ input:focus + .slider {
 input:checked + .slider:before {
 	/* -webkit-transform: translateX(26px); */
 	/* -ms-transform: translateX(26px); */
-	transform: translateY(-3.5vh);
+	transform: translateY(-3.75vh);
 }
 .am-pm {
 	display: none;
 	font-size: 2vh;
 	min-width: 3.5vh;
 	border-style: solid;
-	border-width: 0.5vh;
+	border-width: 0.25vh;
 	border-color: grey;
 }
 .am-pm.change {
@@ -244,7 +407,7 @@ input:checked + .slider:before {
 	color: black;
 	font-size: 2vh;
 	border-style: solid;
-	border-width: 0.5vh;
+	border-width: 0.25vh;
 	width: 92%;
 	margin-left: 2.5%;
 	margin-right: 2.5%;
@@ -268,7 +431,7 @@ input[type="file"] {
 	width: 95%;
 	font-size: 2vh;
 	border-style: solid;
-	border-width: 0.5vh;
+	border-width: 0.25vh;
 	border-color: grey;
 }
 
@@ -281,7 +444,7 @@ input[type="file"] {
 	top: 0.75vh;
 	font-size: 2vh;
 	border-style: solid;
-	border-width: 0.5vh;
+	border-width: 0.25vh;
 	border-color: grey;
 }
 
@@ -327,7 +490,7 @@ input[type="file"] {
 	grid-auto-flow: column;
 	cursor: pointer;
 	border: 0.25vh solid white;
-	border-radius: .25vh;
+	border-radius: 0.25vh;
 	background-color: #101010;
 }
 
@@ -350,13 +513,13 @@ input[type="file"] {
 	/* margin-left:0; */
 	font-size: calc(0.5vh + 0.75vw);
 	line-height: 1.5vh;
-	border-radius: .25vh;
+	border-radius: 0.25vh;
 	/* width: 75%; */
 }
 .schedule-tooltip-container {
 	width: 50%;
 	padding: 0;
-	padding-left: .5vh;
+	padding-left: 0.5vh;
 	margin-left: -0.25vh;
 	border: 0.25vh solid white;
 	cursor: pointer;
@@ -377,7 +540,7 @@ input[type="file"] {
 	background: #101010;
 	z-index: 1;
 	color: white;
-	border-radius: .25vh;
+	border-radius: 0.25vh;
 }
 #schedules {
 	border: none;
@@ -393,7 +556,7 @@ input[type="file"] {
 .option {
 	/* font-size: 2vh; */
 	font-size: calc(0.6vh + 0.8vw);
-	padding-left: .5vh;
+	padding-left: 0.5vh;
 	line-height: 1.75vh;
 	display: flex;
 	/* margin-right: .5vh; */
@@ -412,6 +575,7 @@ input[type="file"] {
 .remove-schedule {
 	display: inline-block;
 	margin-right: 1vh;
+	border: 0.25vh solid white;
 }
 
 .drag-ghost {

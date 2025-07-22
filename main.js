@@ -34,6 +34,31 @@ var breaks = "Break";
 var currentPeriods = "Current Period: ";
 var betweenCurrentPeriods = "Next Period: ";
 
+var fonts = [
+	["yeseva-one-regular", "Yeseva"],
+	["quantico-regular", "Quantico"],
+	["poiret-one-regular", "Poiret"],
+	["special-elite-regular", "Special Elite"],
+	["jura", "Jura"],
+	["sacramento-regular", "Sacramento"],
+	["allura-regular", "Allura"],
+	["changa", "Changa"],
+	["playwrite-vn-guides-regular", "Playwrite"],
+	["major-mono-display-regular", "Major Mono"],
+	["jetbrains-mono", "Jetbrains Mono"],
+	["nanum-gothic-coding-regular", "Nanum Gothic"],
+	["megrim-regular", "Megrim"],
+	["rubik-80s-fade-regular", "Rubik 80s"],
+	["tilt-prism", "Tilt Prism"],
+	["bitcount-prop-single", "Bitcount"],
+	["roboto", "Roboto"],
+	["sans-serif", "Sans Serif"],
+	["alumni-sans-pinstripe-regular", "Alumni"],
+	["zain-light", "Zain"],
+	["montserrat-alternates-regular", "Montserrat"],
+	["nanum-myeongjo-regular", "Nanum Myeongjo"],
+];
+
 var scheduleValue = document.getElementById("schedule-picker").getAttribute("data-value");
 
 function sleep(ms) {
@@ -466,7 +491,10 @@ function addToSchedule(nameKey, items) {
 
 function allInputs() {
 	var returnal = {
-		C1: {},
+		C1: {
+			fontCurrent: [],
+			fontFront: {},
+		},
 		C2: {
 			dragLock: false,
 		},
@@ -487,6 +515,9 @@ function allInputs() {
 		inputBox = x.querySelector(".button");
 		returnal.C1[inputBox.id] = inputBox.value;
 	}
+	returnal.C1.fontCurrent = [document.getElementById("font-picker").getAttribute("data-value"), document.getElementById("font-picker").textContent];
+	returnal.C1.fontFront = document.getElementById("font-choices").innerHTML;
+
 	returnal.C2.dragLock = dragLock;
 	//Column 2
 
@@ -573,11 +604,26 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 			cacheBox = JSON.parse(cacheBox);
 			//C1
 			for (let x of Object.keys(cacheBox.C1)) {
+				if (["fontCurrent", "fontFront"].includes(x)) {
+					continue;
+				}
 				var input = document.getElementById(x);
 				input.value = cacheBox.C1[x];
 				input.dispatchEvent(new Event("change", { bubbles: true }));
 				input.dispatchEvent(new Event("input", { bubbles: true }));
 			}
+			// returnal.C3.fontCurrent = [document.getElementById("font-picker").getAttribute("data-value"), document.getElementById("font-picker").textContent];
+			// returnal.C3.fontFront = document.getElementById("font-choices").innerHTML;
+			document.getElementById("font-picker").setAttribute("data-value", cacheBox.C1.fontCurrent[0]);
+			document.getElementById("font-picker").textContent = cacheBox.C1.fontCurrent[1];
+			document.getElementById("font-choices").innerHTML = cacheBox.C1.fontFront;
+			if (!document.getElementById("mainContainer").classList.length) {
+				document.getElementById("mainContainer").classList.add(cacheBox.C1.fontCurrent[0]);
+			} else {
+				document.getElementById("mainContainer").classList.replace(mainFont, cacheBox.C1.fontCurrent[0]);
+			}
+			mainFont = cacheBox.C1.fontCurrent[0]
+
 			dragLock = cacheBox.C2.dragLock; //Draglock
 			if (dragLock) {
 				document.getElementById("display-lock-box").checked = true;
@@ -652,6 +698,31 @@ function clearStorage(selfItem) {
 	}
 }
 
+function addToFonts(frontName, backName) {
+	var selectElement = createElementFromHTML('<div data-value="YSHS Two Hour Delay" class="option"><p class="schedule-text"></p></div>');
+	selectElement.setAttribute("onclick", 'pickFont(document.getElementById("font-picker"), this);IdToggle("fonts", ["fonts"])');
+	selectElement.querySelector(".schedule-text").textContent = frontName;
+	selectElement.setAttribute("data-value", backName);
+	selectElement.classList.add(backName);
+	document.getElementById("font-choices").appendChild(selectElement);
+}
+
+var mainFont;
+function pickFont(element, option) {
+	ChangeElement("", document.getElementById("fonts"), ["style", "display"], "none");
+	element.setAttribute("data-value", option.getAttribute("data-value"));
+	element.textContent = option.querySelector(".schedule-text").textContent;
+	if (!document.getElementById("mainContainer").classList.length) {
+		document.getElementById("mainContainer").classList.add(option.getAttribute("data-value"));
+	} else {
+		document.getElementById("mainContainer").classList.replace(mainFont, option.getAttribute("data-value"));
+	}
+	mainFont = option.getAttribute("data-value");
+}
+
+// addToFonts("aaa", "aa");
+// addToFonts("bbb", "bb");
+
 function Main() {
 	var currentSchedule = scheduleValue;
 	var usedSchedule = schedules[currentSchedule];
@@ -705,8 +776,12 @@ window.onload = () => {
 	new Sortable(document.getElementById("schedule-specific"), {
 		animation: 150,
 		ghostClass: "drag-ghost", // optional class to style dragged item
-		onEnd: function (evt) {
-		},
+		onEnd: function (evt) {},
+	});
+	new Sortable(document.getElementById("font-choices"), {
+		animation: 150,
+		ghostClass: "drag-ghost", // optional class to style dragged item
+		onEnd: function (evt) {},
 	});
 
 	document.addEventListener("click", async function (e) {
@@ -814,9 +889,19 @@ for (let x of document.getElementById("column-1").querySelectorAll(".selector"))
 	input.dispatchEvent(new Event("change", { bubbles: true }));
 	input.dispatchEvent(new Event("input", { bubbles: true }));
 }
+addToFonts("Sans Serif", "sans-serif");
+for (let x of fonts) {
+	if (x[1] == "Sans Serif") {
+		continue;
+	}
+	addToFonts(x[1], x[0]);
+}
 
 var initialOption = document.querySelector("#schedules .option");
 selectOption(document.getElementById("schedule-picker"), initialOption);
+
+var initalFont = document.querySelector("#fonts .option");
+pickFont(document.getElementById("font-picker"), initalFont);
 
 cacheRecall("", true);
 
