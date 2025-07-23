@@ -314,7 +314,7 @@ input {
 	font-size: 2.5vh;
 	border-style: solid;
 	border-width: 0.25vh;
-	border-color: #a0a0a0B0;
+	border-color: #a0a0a0b0;
 	margin: 0vh;
 	margin-left: 5%;
 	margin-right: 5%;
@@ -324,7 +324,6 @@ input {
 	padding-bottom: 1vh;
 	line-height: 4vh;
 	/* display: flex; */
-
 }
 
 .selector + .selector {
@@ -335,7 +334,7 @@ input {
 .selector input {
 	background-color: black;
 	color: white;
-	font-size: calc(.5vh + 1vw);
+	font-size: calc(0.5vh + 1vw);
 	/* top: 0.75vh; */
 }
 .reset-button {
@@ -474,7 +473,6 @@ input[type="file"] {
 	border-width: 0.25vh;
 	border-color: grey;
 }
-
 
 #log-container {
 	display: inline-block;

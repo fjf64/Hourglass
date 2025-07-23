@@ -169,7 +169,7 @@
 					</p>
 					<p class="selector">
 						In-Between Periods Text<br />
-						<input type="image" class="reset-button" value="Break" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('break-picker'), ['value'], this.value.slice(0, -2));breaks = this.value" />
+						<input type="image" class="reset-button" value="Break" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('break-picker'), ['value'], this.value);breaks = this.value" />
 						<input id="break-picker" type="text" value="Break" class="button" size="4" oninput="breaks = this.value" />
 					</p>
 					<p class="selector">
@@ -194,7 +194,7 @@
 				</div>
 				<div class="organizer-box" id="period-organizer">
 					<hr class="options-seperator-mini" />
-					<div class="middle-align" style="margin-top: 1vh;">
+					<div class="middle-align" style="margin-top: 1vh;margin-bottom: 2vh;">
 						<label class="switch" style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 0; width: 50%; text-align: center"
 							><input id="display-lock-box" type="checkbox" onclick="lockDisplay(this)" /><span class="slider" style="width: 100%">
 								<p style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">Lock Display</p>
@@ -224,13 +224,18 @@
 				</div>
 				<div class="organizer-box" id="misc-organizer">
 					<hr class="options-seperator-mini" />
-					<div class="middle-align" style="margin-top: 1vh;">
+					<div class="middle-align" style="margin-top: 1vh;margin-bottom: 2vh;">
 						<label class="switch" style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 0; width: 95%; text-align: center"
 							><input id="opacity-lock-box" type="checkbox" onclick="lockOpacity(this)" /><span class="slider" style="width: 100%">
 								<p style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">Prevent Settings Transparency</p>
 							</span>
 						</label>
 					</div>
+					<p class="selector">
+						Background Image<br />
+						<input type="image" class="reset-button" value="" src="Icons/image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('src-picker'), ['value'], this.value);ChangeElement(this, document.getElementById('mainContainer'), ['style','background-image'],'url('+this.value+')')" />
+						<input id="src-picker" type="text" value="" class="button" size="1" oninput="ChangeElement(this, document.getElementById('mainContainer'), ['style','background-image'],'url('+this.value+')');srcBackgroundFix(document.getElementById('mainContainer'))" />
+					</p>
 				</div>
 				<hr class="options-seperator" />
 			</div>

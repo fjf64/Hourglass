@@ -385,6 +385,12 @@ async function importClipCode() {
 function removeFixedDisplay(id) {
 	document.getElementById(id).style.removeProperty("display");
 }
+function srcBackgroundFix(element) {
+	element.style.backgroundRepeat = "no-repeat";
+	element.style.backgroundPosition = "center";
+	element.style.backgroundSize = "100% 100%";
+}
+
 function lockDisplay(thisItem) {
 	if (dragLock) {
 		dragLock = false;
@@ -501,11 +507,10 @@ function allInputs() {
 		C1: {
 			fontCurrent: [],
 			fontFront: {},
-			opacityLock:false,
+			opacityLock: false,
 			dragLock: false,
 		},
-		C2: {
-		},
+		C2: {},
 		C3: {
 			scheduleCurrent: [],
 			scheduleFront: {},
@@ -613,7 +618,7 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 			cacheBox = JSON.parse(cacheBox);
 			//C1
 			for (let x of Object.keys(cacheBox.C1)) {
-				if (["fontCurrent", "fontFront",'dragLock','opacityLock'].includes(x)) {
+				if (["fontCurrent", "fontFront", "dragLock", "opacityLock"].includes(x)) {
 					continue;
 				}
 				var input = document.getElementById(x);
@@ -631,10 +636,10 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 			} else {
 				document.getElementById("mainContainer").classList.replace(mainFont, cacheBox.C1.fontCurrent[0]);
 			}
-			mainFont = cacheBox.C1.fontCurrent[0]
+			mainFont = cacheBox.C1.fontCurrent[0];
 
 			dragLock = cacheBox.C1.dragLock; //Draglock
-			opacityLock = cacheBox.C1.opacityLock; 
+			opacityLock = cacheBox.C1.opacityLock;
 			if (dragLock) {
 				document.getElementById("display-lock-box").checked = true;
 				document.getElementById("display-lock-box").dispatchEvent(new Event("change", { bubbles: true }));
@@ -908,19 +913,18 @@ for (let x of document.getElementById("column-1").querySelectorAll(".selector"))
 }
 
 let inputs = document.querySelectorAll('input[type="text"]');
-var opacityLock = false
+var opacityLock = false;
 
-inputs.forEach(input => {
-    input.addEventListener('focus', () => {
+inputs.forEach((input) => {
+	input.addEventListener("focus", () => {
 		if (opacityLock == false) {
-        document.getElementById('settings').style.opacity = '0.3';
+			document.getElementById("settings").style.opacity = "0.2";
 		}
-    });
-    input.addEventListener('blur', () => {
-        document.getElementById('settings').style.opacity = '1';
-    });
+	});
+	input.addEventListener("blur", () => {
+		document.getElementById("settings").style.opacity = "1";
+	});
 });
-
 
 addToFonts("Sans Serif", "sans-serif");
 for (let x of fonts) {
