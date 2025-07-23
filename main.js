@@ -392,6 +392,13 @@ function lockDisplay(thisItem) {
 		dragLock = true;
 	}
 }
+function lockOpacity(thisItem) {
+	if (opacityLock) {
+		opacityLock = false;
+	} else {
+		opacityLock = true;
+	}
+}
 
 async function flashElement(element, effect, ogColor, newColor, time = 500, count = 1) {
 	//effect in path list
@@ -494,9 +501,10 @@ function allInputs() {
 		C1: {
 			fontCurrent: [],
 			fontFront: {},
+			opacityLock:false,
+			dragLock: false,
 		},
 		C2: {
-			dragLock: false,
 		},
 		C3: {
 			scheduleCurrent: [],
@@ -518,7 +526,8 @@ function allInputs() {
 	returnal.C1.fontCurrent = [document.getElementById("font-picker").getAttribute("data-value"), document.getElementById("font-picker").textContent];
 	returnal.C1.fontFront = document.getElementById("font-choices").innerHTML;
 
-	returnal.C2.dragLock = dragLock;
+	returnal.C1.dragLock = dragLock;
+	returnal.C1.opacityLock = opacityLock;
 	//Column 2
 
 	//column 3
@@ -604,7 +613,7 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 			cacheBox = JSON.parse(cacheBox);
 			//C1
 			for (let x of Object.keys(cacheBox.C1)) {
-				if (["fontCurrent", "fontFront"].includes(x)) {
+				if (["fontCurrent", "fontFront",'dragLock','opacityLock'].includes(x)) {
 					continue;
 				}
 				var input = document.getElementById(x);
@@ -624,13 +633,21 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 			}
 			mainFont = cacheBox.C1.fontCurrent[0]
 
-			dragLock = cacheBox.C2.dragLock; //Draglock
+			dragLock = cacheBox.C1.dragLock; //Draglock
+			opacityLock = cacheBox.C1.opacityLock; 
 			if (dragLock) {
 				document.getElementById("display-lock-box").checked = true;
 				document.getElementById("display-lock-box").dispatchEvent(new Event("change", { bubbles: true }));
 			} else {
 				document.getElementById("display-lock-box").checked = false;
 				document.getElementById("display-lock-box").dispatchEvent(new Event("change", { bubbles: true }));
+			}
+			if (opacityLock) {
+				document.getElementById("opacity-lock-box").checked = true;
+				document.getElementById("opacity-lock-box").dispatchEvent(new Event("change", { bubbles: true }));
+			} else {
+				document.getElementById("opacity-lock-box").checked = false;
+				document.getElementById("opacity-lock-box").dispatchEvent(new Event("change", { bubbles: true }));
 			}
 			//C3
 			document.getElementById("schedule-picker").setAttribute("data-value", cacheBox.C3.scheduleCurrent[0]);
@@ -889,6 +906,22 @@ for (let x of document.getElementById("column-1").querySelectorAll(".selector"))
 	input.dispatchEvent(new Event("change", { bubbles: true }));
 	input.dispatchEvent(new Event("input", { bubbles: true }));
 }
+
+let inputs = document.querySelectorAll('input[type="text"]');
+var opacityLock = false
+
+inputs.forEach(input => {
+    input.addEventListener('focus', () => {
+		if (opacityLock == false) {
+        document.getElementById('settings').style.opacity = '0.3';
+		}
+    });
+    input.addEventListener('blur', () => {
+        document.getElementById('settings').style.opacity = '1';
+    });
+});
+
+
 addToFonts("Sans Serif", "sans-serif");
 for (let x of fonts) {
 	if (x[1] == "Sans Serif") {

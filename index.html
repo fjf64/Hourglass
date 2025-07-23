@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!-- To-Do - about section, setting menu transparency on input -->
+	<!-- To-Do - about section, background image support -->
 
 	<head>
 		<meta charset="UTF-8" />
@@ -213,7 +213,28 @@
 					</p>
 				</div>
 				<hr class="options-seperator" />
+				
+				<div class="organizer-button-grid" onclick="IdToggle('clock-organizer', ['misc-organizer'], 'change')">
+					<div class="middle-align">
+						<p class="organizer-text">Misc.</p>
+					</div>
+					<div class="middle-align">
+						<img src="Icons/down.png" class="down-img" />
+					</div>
+				</div>
+				<div class="organizer-box" id="misc-organizer">
+					<hr class="options-seperator-mini" />
+					<div class="middle-align" style="margin-top: 1vh;">
+						<label class="switch" style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 0; width: 95%; text-align: center"
+							><input id="opacity-lock-box" type="checkbox" onclick="lockOpacity(this)" /><span class="slider" style="width: 100%">
+								<p style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">Prevent Settings Transparency</p>
+							</span>
+						</label>
+					</div>
+				</div>
+				<hr class="options-seperator" />
 			</div>
+			
 
 			<div class="settings-grid" style="grid-column: 2; border-width: 0.5vh">
 				<div class="middle-align">
