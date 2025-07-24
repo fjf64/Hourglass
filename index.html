@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!-- To-Do - about section -->
+	<!-- To-Do - about section, move auto YSHS append functions to link, noise-->
 
 	<head>
 		<meta charset="UTF-8" />
@@ -194,7 +194,7 @@
 				</div>
 				<div class="organizer-box" id="period-organizer">
 					<hr class="options-seperator-mini" />
-					<div class="middle-align" style="margin-top: 1vh;margin-bottom: 2vh;">
+					<div class="middle-align" style="margin-top: 1vh; margin-bottom: 2vh">
 						<label class="switch" style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 0; width: 50%; text-align: center"
 							><input id="display-lock-box" type="checkbox" onclick="lockDisplay(this)" /><span class="slider" style="width: 100%">
 								<p style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">Lock Display</p>
@@ -213,7 +213,7 @@
 					</p>
 				</div>
 				<hr class="options-seperator" />
-				
+
 				<div class="organizer-button-grid" onclick="IdToggle('clock-organizer', ['misc-organizer'], 'change')">
 					<div class="middle-align">
 						<p class="organizer-text">Misc.</p>
@@ -224,7 +224,7 @@
 				</div>
 				<div class="organizer-box" id="misc-organizer">
 					<hr class="options-seperator-mini" />
-					<div class="middle-align" style="margin-top: 1vh;margin-bottom: 2vh;">
+					<div class="middle-align" style="margin-top: 1vh; margin-bottom: 2vh">
 						<label class="switch" style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 0; width: 95%; text-align: center"
 							><input id="opacity-lock-box" type="checkbox" onclick="lockOpacity(this)" /><span class="slider" style="width: 100%">
 								<p style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">Prevent Settings Transparency</p>
@@ -239,7 +239,6 @@
 				</div>
 				<hr class="options-seperator" />
 			</div>
-			
 
 			<div class="settings-grid" style="grid-column: 2; border-width: 0.5vh">
 				<div class="middle-align">
@@ -318,7 +317,7 @@
 						<hr class="options-seperator" />
 						<div class="organizer-button-grid" onclick="IdToggle('url-schedule-organizer', ['url-schedule-organizer'], 'change')">
 							<div class="middle-align">
-								<p class="organizer-text">Import/Export All Schedules</p>
+								<p class="organizer-text">Export All Schedules</p>
 							</div>
 							<div class="middle-align">
 								<img src="Icons/down.png" class="down-img" />
@@ -380,7 +379,7 @@
 						</div>
 						<div class="organizer-box" id="new-schedule-organizer">
 							<hr class="options-seperator-mini" />
-							<p class="organizer-text" style="margin-bottom: 2vh;margin-top: 2vh;">Use rightmost column to create a new schedule.</p>
+							<p class="organizer-text" style="margin-bottom: 2vh; margin-top: 2vh">Use rightmost column to create a new schedule.</p>
 							<div class="middle-align">
 								<input type="text" value="" class="button-draft" id="draft-name" placeholder="Draft Name" />
 							</div>
@@ -408,13 +407,37 @@
 				</div>
 			</div>
 			<div id="dev-settings">
-				<p style="font-size: 2vh">In developer mode. Click "Made by Wolf Lieff" to exit.</p>
-				<p class="selector"><input type="text" value="" class="button" size="10" id="dev-time-fix" /></p>
+				<p style="font-size: 2vh">In developer mode. Click "About this project" in the footer information to exit.</p>
+				<p class="selector"><input type="text" value="" class="button" size="10" placeholder="fix time (24h) to:" id="dev-time-fix" /></p>
+				<p class="selector"><input type="text" value="" class="button" size="10" placeholder="add time (in hours):" id="dev-time-add" /></p>
 			</div>
 		</div>
 
 		<footer class="footer" id="footer">
-			<p style="font-size: 2vh" onclick="IdToggle('dev-settings', ['dev-settings'], 'change')">Made by Wolf Lieff</p>
+			<!-- onclick="IdToggle('dev-settings', ['dev-settings'], 'change')" -->
+
+			<div class="middle-align">
+				<div style="width: 50%" class="" onclick="IdToggle('footer-grid-settings-wrapper', ['footer-grid-wrapper','footer-arrow'], 'change')">
+					<p style="font-size: 2vh; margin-bottom: 1vh">See Info about this page.</p>
+					<img src="Icons/down.png" class="footer-img" id="footer-arrow" />
+				</div>
+			</div>
+			<div id="footer-grid-wrapper">
+				<hr class="options-seperator" />
+				<div class="footer-grid" id="footer-grid">
+					<div style="border-right: solid 0.25vh white; padding: 1vh; padding-top: 0.25vh">
+						<h1 class="footer-header" onclick="IdToggle('dev-settings', ['dev-settings'], 'change')">About this Project</h1>
+						<p class="footer-text">This website was built as a senior project in highschool, and its purpose was originally to help streamline the process of checking how much time was available in the current school period. <br />
+							This has evolved into a customizable timer schedule, which I hope gets a lot of use!</p>
+					</div>
+					<div style="margin-bottom: 1vh;padding: .25vh;">
+						<h1 class="footer-header">Contact Information</h1>
+						<a href="mailto:dandelioncoding@gmail.com" class="footer-text" style="color:yellowgreen">Send me an email (dandelioncoding@gmail.com) </a>
+						<br><br>
+						<a href="https://github.com/fjf64" class="footer-text" target="_blank" style="color:yellowgreen">Check out my Github</a>
+					</div>
+				</div>
+			</div>
 		</footer>
 		<script src="main.js"></script>
 		<script>

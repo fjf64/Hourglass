@@ -442,10 +442,8 @@ function editLog(text, time) {
 
 function optionHover(selfItem, toggle) {
 	if (toggle) {
-		// console.log('on ')
 		document.getElementById("schedule-tooltip").textContent = schedules[selfItem.getAttribute("data-value")].map(([period, time]) => `${period}: ${time}`).join("\n\n");
 	} else {
-		// console.log('off ')
 	}
 }
 function selectOption(element, option) {
@@ -454,10 +452,13 @@ function selectOption(element, option) {
 	element.textContent = option.querySelector(".schedule-text").textContent;
 	scheduleValue = option.getAttribute("data-value");
 	document.getElementById("schedule-tooltip").textContent = schedules[scheduleValue].map(([period, time]) => `${period}: ${time}`).join("\n\n");
-	// console.log(schedules[scheduleValue].map(([period, time]) => `${period}: ${time}`).join("\n\n"));
 }
 
 function addToSchedule(nameKey, items) {
+	let autoChooseSchedule = false
+	if (Object.keys(schedules).length == 0) {
+		autoChooseSchedule = true
+	}
 	if (Object.keys(schedules).includes(nameKey)) {
 		editLog("Schedule already named: " + nameKey, 2000);
 		flashElement(document.getElementById("settings"), ["style", "background"], saveBackground, "#808080", 300, 1);
@@ -498,6 +499,12 @@ function addToSchedule(nameKey, items) {
 		lastClickedElement = selectElement.querySelector(".remove-schedule");
 	};
 	document.getElementById("schedule-specific").appendChild(selectElement);
+	console.log(autoChooseSchedule)
+	if (autoChooseSchedule) {
+		var initialOption = document.querySelector("#schedules .option");
+		console.log(initialOption)
+		selectOption(document.getElementById("schedule-picker"), initialOption);
+	}
 
 	flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);
 }
@@ -749,10 +756,13 @@ function Main() {
 	var currentSchedule = scheduleValue;
 	var usedSchedule = schedules[currentSchedule];
 	var clock = document.getElementById("mainTime");
-	var currentDate = Date.now() + 3600000 * 0; //'3600000 * x'=hours TEST
+	var currentDate = Date.now(); //'3600000 * x'=hours TEST
 	var devTimeFix = document.getElementById("dev-time-fix").value;
+	var devTimeAdd = document.getElementById("dev-time-add").value;
 	if (devTimeFix != "0" && devTimeFix != "") {
 		currentDate = ClockToEpoch(devTimeFix);
+	} else if (devTimeAdd != "0" && devTimeAdd != "") {
+		currentDate += 3600000 * parseInt(devTimeAdd);
 	}
 	// var currentDate = ClockToEpoch('15:40') //TEST
 	var currrentPassedPeriods = PassedPeriods(currentSchedule, currentDate);
