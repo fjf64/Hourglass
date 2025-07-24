@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!-- To-Do - about section, move auto YSHS append functions to link, noise-->
+	<!-- To-Do - move auto YSHS append functions to link, noise-->
 
 	<head>
 		<meta charset="UTF-8" />
@@ -386,6 +386,24 @@
 							<button class="period-button" style="margin-left: 2.5%; width: 95%; color: white; background-color: #101010; border-color: white; border-width: 0.25vh" onclick="saveDraft()">Save Current Draft →</button>
 						</div>
 						<hr class="options-seperator" />
+						<div class="organizer-button-grid" onclick="IdToggle('noise-organizer', ['noise-organizer'], 'change')">
+							<div class="middle-align">
+								<p class="organizer-text">Noise</p>
+							</div>
+							<div class="middle-align">
+								<img src="Icons/down.png" class="down-img" />
+							</div>
+						</div>
+						<div class="organizer-box" id="noise-organizer">
+							<hr class="options-seperator-mini" />
+							<!-- <div class="ixport-buttons"> -->
+							<div class="ixport-botton-section" style="margin-right: 1vh">
+								<input type="image" class="ixport-button" value="#ffffff" src="Icons/export.png" onclick="activateNoise()" />
+								<p class="ixport-text">Test Noise</p>
+							</div>
+							<!-- </div> -->
+						</div>
+						<hr class="options-seperator" />
 					</div>
 				</div>
 			</div>
@@ -427,14 +445,16 @@
 				<div class="footer-grid" id="footer-grid">
 					<div style="border-right: solid 0.25vh white; padding: 1vh; padding-top: 0.25vh">
 						<h1 class="footer-header" onclick="IdToggle('dev-settings', ['dev-settings'], 'change')">About this Project</h1>
-						<p class="footer-text">This website was built as a senior project in highschool, and its purpose was originally to help streamline the process of checking how much time was available in the current school period. <br />
-							This has evolved into a customizable timer schedule, which I hope gets a lot of use!</p>
+						<p class="footer-text">
+							This website was built as a senior project in highschool, and its purpose was originally to help streamline the process of checking how much time was available in the current school period. <br />
+							This has evolved into a customizable timer schedule, which I hope gets a lot of use!
+						</p>
 					</div>
-					<div style="margin-bottom: 1vh;padding: .25vh;">
+					<div style="margin-bottom: 1vh; padding: 0.25vh">
 						<h1 class="footer-header">Contact Information</h1>
-						<a href="mailto:dandelioncoding@gmail.com" class="footer-text" style="color:yellowgreen">Send me an email (dandelioncoding@gmail.com) </a>
-						<br><br>
-						<a href="https://github.com/fjf64" class="footer-text" target="_blank" style="color:yellowgreen">Check out my Github</a>
+						<a href="mailto:dandelioncoding@gmail.com" class="footer-text" style="color: yellowgreen">Send me an email (dandelioncoding@gmail.com) </a>
+						<br /><br />
+						<a href="https://github.com/fjf64" class="footer-text" target="_blank" style="color: yellowgreen">Check out my Github</a>
 					</div>
 				</div>
 			</div>

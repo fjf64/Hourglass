@@ -23,7 +23,7 @@ var schedules = {
 	// 	["8", "15:00-15:30"],
 	// ],
 };
-
+var lastClockState = "";
 var saveBackground = "#0a190e";
 var badBackground = "maroon";
 var goodBackground = "greenyellow";
@@ -455,9 +455,9 @@ function selectOption(element, option) {
 }
 
 function addToSchedule(nameKey, items) {
-	let autoChooseSchedule = false
+	let autoChooseSchedule = false;
 	if (Object.keys(schedules).length == 0) {
-		autoChooseSchedule = true
+		autoChooseSchedule = true;
 	}
 	if (Object.keys(schedules).includes(nameKey)) {
 		editLog("Schedule already named: " + nameKey, 2000);
@@ -499,10 +499,8 @@ function addToSchedule(nameKey, items) {
 		lastClickedElement = selectElement.querySelector(".remove-schedule");
 	};
 	document.getElementById("schedule-specific").appendChild(selectElement);
-	console.log(autoChooseSchedule)
 	if (autoChooseSchedule) {
 		var initialOption = document.querySelector("#schedules .option");
-		console.log(initialOption)
 		selectOption(document.getElementById("schedule-picker"), initialOption);
 	}
 
@@ -749,8 +747,9 @@ function pickFont(element, option) {
 	mainFont = option.getAttribute("data-value");
 }
 
-// addToFonts("aaa", "aa");
-// addToFonts("bbb", "bb");
+function activateNoise() {
+	console.log("fake noise played");
+}
 
 function Main() {
 	var currentSchedule = scheduleValue;
@@ -762,7 +761,7 @@ function Main() {
 	if (devTimeFix != "0" && devTimeFix != "") {
 		currentDate = ClockToEpoch(devTimeFix);
 	} else if (devTimeAdd != "0" && devTimeAdd != "") {
-		currentDate += 3600000 * parseInt(devTimeAdd);
+		currentDate += (3600000 * parseFloat(devTimeAdd));
 	}
 	// var currentDate = ClockToEpoch('15:40') //TEST
 	var currrentPassedPeriods = PassedPeriods(currentSchedule, currentDate);
@@ -772,14 +771,26 @@ function Main() {
 		// before
 		clock.innerHTML = befores;
 		document.getElementById("period-display").textContent = "";
+		if (lastClockState == "current"+scheduleValue) {
+			activateNoise();
+		}
+		lastClockState = "before"+scheduleValue;
 	} else if (currrentPassedPeriods[1].length == usedSchedule.length) {
 		// after
 		clock.innerHTML = afters;
 		document.getElementById("period-display").textContent = "";
+		if (lastClockState == "current"+scheduleValue) {
+			activateNoise();
+		}
+		lastClockState = "after"+scheduleValue;
 	} else if (currrentPassedPeriods[0].length == currrentPassedPeriods[1].length) {
 		// break
 		clock.innerHTML = breaks;
 		document.getElementById("period-display").textContent = betweenCurrentPeriods + nextPeriod;
+		if (lastClockState == "current"+scheduleValue) {
+			activateNoise();
+		}
+		lastClockState = "break"+scheduleValue;
 	} else if (currrentPassedPeriods[0].length > currrentPassedPeriods[1].length) {
 		// period x
 		var scheduleChunk = usedSchedule[currrentPassedPeriods[0][currrentPassedPeriods[0].length - 1]];
@@ -791,8 +802,13 @@ function Main() {
 			mainSeconds = "0" + mainSeconds;
 		}
 		clock.innerHTML = mainMinutes + ":" + mainSeconds;
+		if (['after'+scheduleValue,+'break'+scheduleValue,'before'+scheduleValue].includes(lastClockState)) {
+			activateNoise();
+		}
+		lastClockState = "current"+scheduleValue;
 	}
 }
+
 var lastClickedElement;
 window.onload = () => {
 	// var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
