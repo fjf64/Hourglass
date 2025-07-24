@@ -1,1 +1,1 @@
-A timer-schedule system built as a website. 
+A timer-schedule system built as a website.
