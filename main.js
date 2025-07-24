@@ -841,7 +841,7 @@ function startDrag(e) {
 	const now = Date.now();
 	if (now - lastTapTime < 300) {
 		// Double-tap detected
-		setBoxPosition(0, 0);
+		setBoxPosition(10, 0);
 		lastTapTime = 0;
 		return;
 	}

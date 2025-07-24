@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!-- To-Do - about section, background image support -->
+	<!-- To-Do - about section -->
 
 	<head>
 		<meta charset="UTF-8" />
@@ -62,7 +62,7 @@
 					</div>
 				</div>
 
-				<p style="font-size: 2.5vh; margin-left: 0; text-align: center">Click the clock to toggle the UI</p>
+				<p style="font-size: 2.5vh; margin-left: 0; text-align: center">Click the clock to toggle the UI visibility</p>
 				<hr class="options-seperator" />
 				<div class="organizer-button-grid" onclick="IdToggle('color-organizer', ['color-organizer'], 'change')">
 					<div class="middle-align">
@@ -234,7 +234,7 @@
 					<p class="selector">
 						Background Image<br />
 						<input type="image" class="reset-button" value="" src="Icons/image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('src-picker'), ['value'], this.value);ChangeElement(this, document.getElementById('mainContainer'), ['style','background-image'],'url('+this.value+')')" />
-						<input id="src-picker" type="text" value="" class="button" size="1" oninput="ChangeElement(this, document.getElementById('mainContainer'), ['style','background-image'],'url('+this.value+')');srcBackgroundFix(document.getElementById('mainContainer'))" />
+						<input id="src-picker" type="text" placeholder="Paste Image Address" value="" class="button" size="1" oninput="ChangeElement(this, document.getElementById('mainContainer'), ['style','background-image'],'url('+this.value+')');srcBackgroundFix(document.getElementById('mainContainer'))" />
 					</p>
 				</div>
 				<hr class="options-seperator" />
