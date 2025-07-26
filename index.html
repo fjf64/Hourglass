@@ -388,7 +388,7 @@
 						<hr class="options-seperator" />
 						<div class="organizer-button-grid" onclick="IdToggle('noise-organizer', ['noise-organizer'], 'change')">
 							<div class="middle-align">
-								<p class="organizer-text">Noise</p>
+								<p class="organizer-text">Audio</p>
 							</div>
 							<div class="middle-align">
 								<img src="Icons/down.png" class="down-img" />
@@ -396,12 +396,28 @@
 						</div>
 						<div class="organizer-box" id="noise-organizer">
 							<hr class="options-seperator-mini" />
+							<p class="organizer-text" style="margin-bottom: 2vh; margin-top: 2vh">Requires tab to be open to hear audio.</p>
 							<div class="ixport-buttons">
 								<div class="ixport-botton-section" style="margin-right: 1vh">
 									<input type="image" class="ixport-button" value="#ffffff" src="Icons/noise.png" onclick="activateNoise()" />
 									<p class="ixport-text">Test Noise</p>
 								</div>
 							</div>
+							<div class="middle-align" style="margin-bottom: 1vh;">
+								<button style="min-width: 0; padding: 0; display: inline-block; margin-left: 0.5vh; margin-right: 0.5vh; border: none; width: 100%">
+									<label class="switch" style="width: 100%;">
+										<input id="audio-box" type="checkbox" onclick="allowAudio()" /><span class="slider">
+											<p style="font-size: 2vh; line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">Allow Audio</p>
+										</span>
+									</label>
+								</button>
+							</div>
+							<div class="slidecontainer">
+								<p class="organizer-text" style="margin-bottom: 2vh; margin-top: 2vh">Audio Volume</p>
+								<input type="range" min="1" max="100" value="50" id="volume" />
+							</div>
+
+							<!-- Box to toggle noise, box for custom noise, box for volume -->
 						</div>
 						<hr class="options-seperator" />
 					</div>

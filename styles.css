@@ -800,3 +800,9 @@ input[type="file"] {
 .footer-text {
 	font-size: calc(0.75vh + 0.75vw);
 }
+
+.slidecontainer {
+  width: 100%;
+  	border: 0.35vh solid white;
+	background: #101010;
+}

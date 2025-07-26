@@ -520,6 +520,7 @@ function allInputs() {
 			scheduleCurrent: [],
 			scheduleFront: {},
 			scheduleBack: {},
+			audio: false,
 		},
 		C4: {
 			roundClock: true,
@@ -544,12 +545,12 @@ function allInputs() {
 	returnal.C3.scheduleCurrent = [document.getElementById("schedule-picker").getAttribute("data-value"), document.getElementById("schedule-picker").textContent];
 	returnal.C3.scheduleFront = document.getElementById("schedule-specific").innerHTML;
 	returnal.C3.scheduleBack = schedules;
+	returnal.C3.audio = audioToggle;
 
 	if (!document.getElementById("24h-box").checked) {
 		returnal.C4.roundClock = false;
 	}
 	returnal.misc.periodDisplayPos = [document.getElementById("period-display").style.left, document.getElementById("period-display").style.top];
-
 	return returnal;
 }
 
@@ -644,6 +645,7 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 			mainFont = cacheBox.C1.fontCurrent[0];
 
 			dragLock = cacheBox.C1.dragLock; //Draglock
+
 			opacityLock = cacheBox.C1.opacityLock;
 			if (dragLock) {
 				document.getElementById("display-lock-box").checked = true;
@@ -659,6 +661,7 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 				document.getElementById("opacity-lock-box").checked = false;
 				document.getElementById("opacity-lock-box").dispatchEvent(new Event("change", { bubbles: true }));
 			}
+
 			//C3
 			document.getElementById("schedule-picker").setAttribute("data-value", cacheBox.C3.scheduleCurrent[0]);
 			document.getElementById("schedule-picker").textContent = cacheBox.C3.scheduleCurrent[1];
@@ -694,6 +697,14 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 				};
 			}
 			schedules = cacheBox.C3.scheduleBack;
+			audioToggle = cacheBox.C3.audio;
+			if (audioToggle) {
+				document.getElementById("audio-box").checked = true;
+				document.getElementById("audio-box").dispatchEvent(new Event("change", { bubbles: true }));
+			} else {
+				document.getElementById("audio-box").checked = false;
+				document.getElementById("audio-box").dispatchEvent(new Event("change", { bubbles: true }));
+			}
 
 			//C4
 			if (!cacheBox.C4.roundClock) {
@@ -746,9 +757,27 @@ function pickFont(element, option) {
 	}
 	mainFont = option.getAttribute("data-value");
 }
-
+var audioToggle = false;
 function activateNoise() {
 	console.log("fake noise played");
+	if (audioToggle) {
+		playNoise("school-bell.wav");
+	}
+}
+function allowAudio() {
+	if (audioToggle) {
+		audioToggle = false;
+	} else {
+		audioToggle = true;
+	}
+}
+function playNoise(audioSrc) {
+	const audio = new Audio(audioSrc);
+	audio.preload = "auto";
+	audio.volume = Math.min(Math.max(document.getElementById("volume").value / 100, 0), 1);
+	audio.play().catch((err) => {
+		console.error("Playback failed:", err);
+	});
 }
 
 function Main() {
@@ -761,7 +790,7 @@ function Main() {
 	if (devTimeFix != "0" && devTimeFix != "") {
 		currentDate = ClockToEpoch(devTimeFix);
 	} else if (devTimeAdd != "0" && devTimeAdd != "") {
-		currentDate += (3600000 * parseFloat(devTimeAdd));
+		currentDate += 3600000 * parseFloat(devTimeAdd);
 	}
 	// var currentDate = ClockToEpoch('15:40') //TEST
 	var currrentPassedPeriods = PassedPeriods(currentSchedule, currentDate);
@@ -771,26 +800,26 @@ function Main() {
 		// before
 		clock.innerHTML = befores;
 		document.getElementById("period-display").textContent = "";
-		if (lastClockState == "current"+scheduleValue) {
+		if (lastClockState == "current" + scheduleValue) {
 			activateNoise();
 		}
-		lastClockState = "before"+scheduleValue;
+		lastClockState = "before" + scheduleValue;
 	} else if (currrentPassedPeriods[1].length == usedSchedule.length) {
 		// after
 		clock.innerHTML = afters;
 		document.getElementById("period-display").textContent = "";
-		if (lastClockState == "current"+scheduleValue) {
+		if (lastClockState == "current" + scheduleValue) {
 			activateNoise();
 		}
-		lastClockState = "after"+scheduleValue;
+		lastClockState = "after" + scheduleValue;
 	} else if (currrentPassedPeriods[0].length == currrentPassedPeriods[1].length) {
 		// break
 		clock.innerHTML = breaks;
 		document.getElementById("period-display").textContent = betweenCurrentPeriods + nextPeriod;
-		if (lastClockState == "current"+scheduleValue) {
+		if (lastClockState == "current" + scheduleValue) {
 			activateNoise();
 		}
-		lastClockState = "break"+scheduleValue;
+		lastClockState = "break" + scheduleValue;
 	} else if (currrentPassedPeriods[0].length > currrentPassedPeriods[1].length) {
 		// period x
 		var scheduleChunk = usedSchedule[currrentPassedPeriods[0][currrentPassedPeriods[0].length - 1]];
@@ -802,10 +831,10 @@ function Main() {
 			mainSeconds = "0" + mainSeconds;
 		}
 		clock.innerHTML = mainMinutes + ":" + mainSeconds;
-		if (['after'+scheduleValue,+'break'+scheduleValue,'before'+scheduleValue].includes(lastClockState)) {
+		if (["after" + scheduleValue, +"break" + scheduleValue, "before" + scheduleValue].includes(lastClockState)) {
 			activateNoise();
 		}
-		lastClockState = "current"+scheduleValue;
+		lastClockState = "current" + scheduleValue;
 	}
 }
 
