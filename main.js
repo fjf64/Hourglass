@@ -546,6 +546,7 @@ function allInputs() {
 	returnal.C3.scheduleFront = document.getElementById("schedule-specific").innerHTML;
 	returnal.C3.scheduleBack = schedules;
 	returnal.C3.audio = audioToggle;
+	returnal.C3.volume = document.getElementById('volume').value
 
 	if (!document.getElementById("24h-box").checked) {
 		returnal.C4.roundClock = false;
@@ -697,6 +698,7 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 				};
 			}
 			schedules = cacheBox.C3.scheduleBack;
+			document.getElementById('volume').value = cacheBox.C3.volume
 			audioToggle = cacheBox.C3.audio;
 			if (audioToggle) {
 				document.getElementById("audio-box").checked = true;
