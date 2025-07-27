@@ -306,8 +306,6 @@ function exportCode() {
 	var exporting = exportNewLine.join("\n\n");
 	var exporting = [scheduleValue, exporting].join("\n\n\n");
 	var copyText = btoa(exporting);
-	// copyText.select();
-	// copyText.setSelectionRange(0, 99999); // For mobile devices
 	navigator.clipboard.writeText(copyText);
 	alert("Copied the text: " + copyText);
 }
@@ -344,7 +342,6 @@ async function importCode(code) {
 async function importClipCode() {
 	var code;
 	var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
-	// const clipboardContents = await navigator.clipboard.read();
 
 	try {
 		const clipboardContents = await navigator.clipboard.read();
@@ -447,7 +444,6 @@ function optionHover(selfItem, toggle) {
 	if (toggle) {
 		document.getElementById("schedule-tooltip").style.display = "block";
 		document.querySelector(".schedule-tooltip-container").style.border = ".25vh solid white";
-		// document.querySelector(".schedule-tooltip-container").style.borderTop = 'none'
 		document.getElementById("schedule-tooltip").textContent = schedules[selfItem.getAttribute("data-value")].map(([period, time]) => `${period}: ${time}`).join("\n\n");
 	} else {
 		document.getElementById("schedule-tooltip").style.display = "none";
@@ -672,8 +668,6 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 				input.dispatchEvent(new Event("change", { bubbles: true }));
 				input.dispatchEvent(new Event("input", { bubbles: true }));
 			}
-			// returnal.C3.fontCurrent = [document.getElementById("font-picker").getAttribute("data-value"), document.getElementById("font-picker").textContent];
-			// returnal.C3.fontFront = document.getElementById("font-choices").innerHTML;
 			document.getElementById("font-picker").setAttribute("data-value", cacheBox.C1.fontCurrent[0]);
 			document.getElementById("font-picker").textContent = cacheBox.C1.fontCurrent[1];
 			document.getElementById("font-choices").innerHTML = cacheBox.C1.fontFront;
@@ -778,8 +772,6 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 			//MISC
 			document.getElementById("period-display").style.left = cacheBox.misc.periodDisplayPos[0];
 			document.getElementById("period-display").style.top = cacheBox.misc.periodDisplayPos[1];
-		} else {
-			// location.reload(true)
 		}
 	}
 }
@@ -856,7 +848,6 @@ function Main() {
 	} else if (devTimeAdd != "0" && devTimeAdd != "") {
 		currentDate += 3600000 * parseFloat(devTimeAdd);
 	}
-	// var currentDate = ClockToEpoch('15:40') //TEST
 	var currrentPassedPeriods = PassedPeriods(currentSchedule, currentDate);
 	var lastPastPeriod = usedSchedule[currrentPassedPeriods[0][currrentPassedPeriods[0].length - 1]];
 	var nextPeriod = usedSchedule[parseInt(usedSchedule.indexOf(lastPastPeriod)) + 1] ? usedSchedule[parseInt(usedSchedule.indexOf(lastPastPeriod)) + 1][0] : "End";
@@ -928,7 +919,6 @@ window.onload = () => {
 	document.addEventListener("click", async function (e) {
 		await sleep(10);
 		lastClickedElement = e.target;
-		// }
 	});
 };
 
@@ -1037,7 +1027,6 @@ setBoxPosition(10, 0);
 //YSHS
 importCode("WWVsbG93IFNwcmluZ3MgSGlnaCBTY2hvb2wKCgoxCjg6MzAtOToxNwoKMgo5OjIxLTEwOjA2CgozCjEwOjEwLTEwOjU1Cgo0CjEwOjU5LTExOjQ0CgpsdW5jaAoxMTo0NC0xMjoxNAoKNQoxMjoxOC0xMzowNAoKNgoxMzowOC0xMzo1MwoKNwoxMzo1Ny0xNDo0MgoKOAoxNDo0Ni0xNTozMA==");
 importCode("WVNIUyBUd28gSG91ciBEZWxheQoKCjEKMTA6MzAtMTE6MDIKCjIKMTE6MDYtMTE6MzYKCmx1bmNoCjExOjM2LTEyOjA2CgozCjEyOjEwLTEyOjQwCgo0CjEyOjQ0LTEzOjE0Cgo1CjEzOjE4LTEzOjQ4Cgo2CjEzOjUyLTE0OjIyCgo3CjE0OjI2LTE0OjU2Cgo4CjE1OjAwLTE1OjMw");
-// saveVariables.scheduleOrder = document.getElementById("schedule-specific").children;
 
 for (let x of document.getElementById("column-1").querySelectorAll(".selector")) {
 	let input = x.querySelector(".button");
