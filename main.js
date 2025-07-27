@@ -33,6 +33,9 @@ var afters = "After";
 var breaks = "Break";
 var currentPeriods = "Current Period: ";
 var betweenCurrentPeriods = "Next Period: ";
+var DB_NAME = "MediaDB";
+var STORE_NAME = "audioFiles";
+var AUDIO_KEY = "defaultAudio";
 
 var fonts = [
 	["yeseva-one-regular", "Yeseva"],
@@ -442,12 +445,13 @@ function editLog(text, time) {
 
 function optionHover(selfItem, toggle) {
 	if (toggle) {
-		document.getElementById("schedule-tooltip").style.display = 'block'
-		document.querySelector(".schedule-tooltip-container").style.border = '.25vh solid white'
+		document.getElementById("schedule-tooltip").style.display = "block";
+		document.querySelector(".schedule-tooltip-container").style.border = ".25vh solid white";
+		// document.querySelector(".schedule-tooltip-container").style.borderTop = 'none'
 		document.getElementById("schedule-tooltip").textContent = schedules[selfItem.getAttribute("data-value")].map(([period, time]) => `${period}: ${time}`).join("\n\n");
 	} else {
-		document.getElementById("schedule-tooltip").style.display = 'none'
-		document.querySelector(".schedule-tooltip-container").style.border = 'none'
+		document.getElementById("schedule-tooltip").style.display = "none";
+		document.querySelector(".schedule-tooltip-container").style.border = "none";
 		// console.log(document.getElementById("schedule-tooltip").display)
 	}
 }
@@ -511,6 +515,32 @@ function addToSchedule(nameKey, items) {
 
 	flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);
 }
+function openDB() {
+	return new Promise((resolve, reject) => {
+		const request = indexedDB.open(DB_NAME, 1);
+
+		request.onupgradeneeded = function (event) {
+			const db = event.target.result;
+			db.createObjectStore(STORE_NAME);
+		};
+
+		request.onsuccess = function (event) {
+			resolve(event.target.result);
+		};
+
+		request.onerror = function (event) {
+			reject(event.target.error);
+		};
+	});
+}
+
+// Save blob to IndexedDB
+async function saveAudioToDB(fileBlob) {
+	const db = await openDB();
+	const tx = db.transaction(STORE_NAME, "readwrite");
+	const store = tx.objectStore(STORE_NAME);
+	store.put(fileBlob, AUDIO_KEY);
+}
 
 function allInputs() {
 	var returnal = {
@@ -526,6 +556,8 @@ function allInputs() {
 			scheduleFront: {},
 			scheduleBack: {},
 			audio: false,
+			audioUrl: "",
+			currentSound: "",
 		},
 		C4: {
 			roundClock: true,
@@ -551,7 +583,9 @@ function allInputs() {
 	returnal.C3.scheduleFront = document.getElementById("schedule-specific").innerHTML;
 	returnal.C3.scheduleBack = schedules;
 	returnal.C3.audio = audioToggle;
-	returnal.C3.volume = document.getElementById('volume').value
+	returnal.C3.volume = document.getElementById("volume").value;
+	returnal.C3.currentSound = document.getElementById("current-sound").innerHTML;
+	saveAudioToDB(soundFile);
 
 	if (!document.getElementById("24h-box").checked) {
 		returnal.C4.roundClock = false;
@@ -703,7 +737,7 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 				};
 			}
 			schedules = cacheBox.C3.scheduleBack;
-			document.getElementById('volume').value = cacheBox.C3.volume
+			document.getElementById("volume").value = cacheBox.C3.volume;
 			audioToggle = cacheBox.C3.audio;
 			if (audioToggle) {
 				document.getElementById("audio-box").checked = true;
@@ -712,6 +746,25 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 				document.getElementById("audio-box").checked = false;
 				document.getElementById("audio-box").dispatchEvent(new Event("change", { bubbles: true }));
 			}
+			document.getElementById("current-sound").innerHTML = cacheBox.C3.currentSound;
+			const db = await openDB();
+			const tx = db.transaction(STORE_NAME, "readonly");
+			const store = tx.objectStore(STORE_NAME);
+			const getRequest = store.get(AUDIO_KEY);
+
+			getRequest.onsuccess = function (event) {
+				const blob = event.target.result;
+				if (blob) {
+					soundFile = blob
+				}
+			};
+			if (!soundFile) return;
+
+			if (customURL) URL.revokeObjectURL(customURL);
+
+			customURL = URL.createObjectURL(soundFile);
+			document.getElementById("current-sound").innerText = 'Current Audio: "' + soundFile.name + '"';
+			audio.src = customURL;
 
 			//C4
 			if (!cacheBox.C4.roundClock) {
@@ -739,6 +792,7 @@ function clearStorage(selfItem) {
 		editLog("", 10);
 		localStorage.clear();
 		sessionStorage.clear();
+		const deleteRequest = indexedDB.deleteDatabase(DB_NAME);
 		location.reload(true);
 	}
 }
@@ -766,9 +820,8 @@ function pickFont(element, option) {
 }
 var audioToggle = false;
 function activateNoise() {
-	console.log("fake noise played");
 	if (audioToggle) {
-		playNoise("school-bell.wav");
+		playNoise();
 	}
 }
 function allowAudio() {
@@ -778,13 +831,17 @@ function allowAudio() {
 		audioToggle = true;
 	}
 }
-function playNoise(audioSrc) {
-	const audio = new Audio(audioSrc);
-	audio.preload = "auto";
+function stopAudio() {
+	const audio = document.getElementById("audioPlayer");
+
+	audio.pause();
+	audio.currentTime = 0;
+}
+function playNoise() {
+	const audio = document.getElementById("audioPlayer");
 	audio.volume = Math.min(Math.max(document.getElementById("volume").value / 100, 0), 1);
-	audio.play().catch((err) => {
-		console.error("Playback failed:", err);
-	});
+	audio.play();
+	audio.style.display = "block";
 }
 
 function Main() {
@@ -879,6 +936,20 @@ window.addEventListener("beforeunload", (e) => {
 	if (!unsaveEscape) {
 		saveAll();
 	}
+});
+const audio = document.getElementById("audioPlayer");
+let customURL = null;
+var soundFile;
+
+document.getElementById("soundInput").addEventListener("change", function (event) {
+	soundFile = event.target.files[0];
+	if (!soundFile) return;
+
+	if (customURL) URL.revokeObjectURL(customURL);
+
+	customURL = URL.createObjectURL(soundFile);
+	document.getElementById("current-sound").innerText = 'Current Audio: "' + soundFile.name + '"';
+	audio.src = customURL;
 });
 
 const box = document.getElementById("period-display");

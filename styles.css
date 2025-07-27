@@ -510,7 +510,7 @@ input[type="file"] {
 	display: flex;
 	flex-direction: row;
 	align-items: flex-start;
-	width: 100%;
+	width: 150%;
 }
 .current-chedule-wrapper {
 	display: grid;
@@ -773,7 +773,7 @@ input[type="file"] {
 	/* height: 2vh; */
 	height: calc(0.75vh + 1.5vw);
 	filter: invert(1);
-	transition: .5s;
+	transition: 0.5s;
 }
 .footer-grid {
 	grid-auto-flow: column;
@@ -794,8 +794,7 @@ input[type="file"] {
 }
 
 #footer-arrow.change {
-	transform:  rotate(-180deg);
-
+	transform: rotate(-180deg);
 }
 
 .footer-text {
@@ -803,7 +802,8 @@ input[type="file"] {
 }
 
 .slidecontainer {
-  width: 100%;
-  	border: 0.35vh solid white;
+	width: 90%;
+	border: 0.25vh solid white;
 	background: #101010;
+	line-height: 1vh;
 }

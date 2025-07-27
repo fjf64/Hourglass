@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!-- To-Do - move auto YSHS append functions to link, noise-->
+	<!-- To-Do - move auto YSHS append functions to link-->
 
 	<head>
 		<meta charset="UTF-8" />
@@ -24,6 +24,10 @@
 	</head>
 
 	<body>
+		<audio id="audioPlayer" style="display: none">
+			<source src="school-bell.wav" type="audio/mp3" />
+			Your browser does not support the audio element.
+		</audio>
 		<div class="menu-button" onclick="IdToggle('settings', ['menu-button', 'settings'], 'change')" id="menu-button">
 			<div class="bar1" id="menu-1"></div>
 			<div class="bar2" id="menu-2"></div>
@@ -397,27 +401,48 @@
 						<div class="organizer-box" id="noise-organizer">
 							<hr class="options-seperator-mini" />
 							<p class="organizer-text" style="margin-bottom: 2vh; margin-top: 2vh">Requires tab to be open to hear audio.</p>
-							<div class="ixport-buttons">
-								<div class="ixport-botton-section" style="margin-right: 1vh">
-									<input type="image" class="ixport-button" value="#ffffff" src="Icons/noise.png" onclick="activateNoise()" />
-									<p class="ixport-text">Test Noise</p>
-								</div>
-							</div>
-							<div class="middle-align" style="margin-bottom: 1vh;">
+							<div class="middle-align" style="margin-bottom: 1vh">
 								<button style="min-width: 0; padding: 0; display: inline-block; margin-left: 0.5vh; margin-right: 0.5vh; border: none; width: 100%">
-									<label class="switch" style="width: 100%;">
+									<label class="switch" style="width: 100%">
 										<input id="audio-box" type="checkbox" onclick="allowAudio()" /><span class="slider">
 											<p style="font-size: 2vh; line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">Allow Audio</p>
 										</span>
 									</label>
 								</button>
 							</div>
-							<div class="slidecontainer">
-								<p class="organizer-text" style="margin-bottom: 2vh; margin-top: 2vh">Audio Volume</p>
-								<input type="range" min="1" max="100" value="50" id="volume" />
+							<div class="middle-align">
+							<div class="ixport-buttons" style="display: inline-block;">
+								<div class="ixport-botton-section" style="margin-right: 1vh">
+									<input type="image" class="ixport-button" value="#ffffff" src="Icons/noise.png" onclick="activateNoise()" />
+									<p class="ixport-text">Test Audio</p>
+								</div>
 							</div>
-
-							<!-- Box for custom noise -->
+							<div class="ixport-buttons" style="display: inline-block;">
+								<div class="ixport-botton-section" style="margin-right: 1vh">
+									<input type="image" class="ixport-button" value="#ffffff" src="Icons/noise.png" onclick="stopAudio()" />
+									<p class="ixport-text">Stop Audio</p>
+								</div>
+							</div>
+							</div>
+							<div class="middle-align">
+							<div class="slidecontainer">
+								<p class="organizer-text" style="margin-bottom: .5vh; margin-top: 2vh">Audio Volume</p>
+								<div class="middle-align">
+								<input type="range" min="1" max="100" value="50" id="volume" />
+								</div>
+							</div>
+							</div>
+							<div class="selector" >Custom Audio file<br />
+								<input type="image" class="reset-button" value="school-bell.wav" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('audioPlayer'), ['src'], this.value);ChangeElement('', document.getElementById('current-sound'), ['innerText'], 'Current Sound: &quot;school-bell.wav&quot;')" />
+								<div class="ixport-buttons" style="display: inline;">
+									<div class="ixport-botton-section" style="margin-right: 1vh; margin-top: 0vh">
+										<label for="soundInput"><img class="ixport-button" src="Icons/export.png" alt="Import Audio" /></label>
+										<input type="file" accept="audio/*, video/mp4" id="soundInput" class="ixport-button" value="#ffffff" src="Icons/export.png" />
+										<p class="ixport-text">Import File</p>
+									</div>
+								</div>
+								<p id='current-sound' style="font-size: 2vh;line-height: 2vh;border-top: .25vh solid #a0a0a0b0;padding: 1vh;margin: 0;margin-top: 1vh;">Current Sound: "school-bell.wav"</p>
+							</div>
 						</div>
 						<hr class="options-seperator" />
 					</div>
@@ -463,7 +488,7 @@
 						<h1 class="footer-header" onclick="IdToggle('dev-settings', ['dev-settings'], 'change')">About this Project</h1>
 						<p class="footer-text">
 							This website was built as a senior project in highschool, and its purpose was originally to help streamline the process of checking how much time was available in the current school period. <br />
-							This has evolved into a customizable timer schedule, which I hope gets a lot of use!
+							This has evolved into a customizable timer-schedule, which I hope gets a lot of use!
 						</p>
 					</div>
 					<div style="margin-bottom: 1vh; padding: 0.25vh">
