@@ -535,6 +535,7 @@ input[type="file"] {
 }
 #schedule-tooltip {
 	white-space: pre-line;
+	display: none;
 	/* font-family: monospace; */
 	line-height: 1.5;
 	width: 100%;
@@ -549,7 +550,7 @@ input[type="file"] {
 	padding: 0;
 	padding-left: 0.5vh;
 	margin-left: -0.25vh;
-	border: 0.25vh solid white;
+	/* border: 0.25vh solid white; */
 	cursor: pointer;
 	background: #101010;
 	font-size: 2vh;

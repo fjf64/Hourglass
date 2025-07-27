@@ -442,8 +442,13 @@ function editLog(text, time) {
 
 function optionHover(selfItem, toggle) {
 	if (toggle) {
+		document.getElementById("schedule-tooltip").style.display = 'block'
+		document.querySelector(".schedule-tooltip-container").style.border = '.25vh solid white'
 		document.getElementById("schedule-tooltip").textContent = schedules[selfItem.getAttribute("data-value")].map(([period, time]) => `${period}: ${time}`).join("\n\n");
 	} else {
+		document.getElementById("schedule-tooltip").style.display = 'none'
+		document.querySelector(".schedule-tooltip-container").style.border = 'none'
+		// console.log(document.getElementById("schedule-tooltip").display)
 	}
 }
 function selectOption(element, option) {
