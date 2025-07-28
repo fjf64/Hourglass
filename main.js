@@ -740,26 +740,28 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 				document.getElementById("audio-box").checked = false;
 				document.getElementById("audio-box").dispatchEvent(new Event("change", { bubbles: true }));
 			}
-			document.getElementById("current-sound").innerHTML = cacheBox.C3.currentSound;
-			const db = await openDB();
-			const tx = db.transaction(STORE_NAME, "readonly");
-			const store = tx.objectStore(STORE_NAME);
-			const getRequest = store.get(AUDIO_KEY);
+			if (!(source == "clipboard")) {
+				const db = await openDB();
+				const tx = db.transaction(STORE_NAME, "readonly");
+				const store = tx.objectStore(STORE_NAME);
+				const getRequest = store.get(AUDIO_KEY);
 
-			getRequest.onsuccess = function (event) {
-				const blob = event.target.result;
-				if (blob) {
-					soundFile = blob
-				}
-			};
-			if (!soundFile) return;
-
-			if (customURL) URL.revokeObjectURL(customURL);
-
-			customURL = URL.createObjectURL(soundFile);
-			document.getElementById("current-sound").innerText = 'Current Audio: "' + soundFile.name + '"';
-			audio.src = customURL;
-
+				getRequest.onsuccess = function (event) {
+					const blob = event.target.result;
+					if (blob) {
+						soundFile = blob;
+						document.getElementById("current-sound").innerHTML = cacheBox.C3.currentSound;
+						if (customURL) URL.revokeObjectURL(customURL);
+						customURL = URL.createObjectURL(soundFile);
+						document.getElementById("current-sound").innerText = 'Current Audio: "' + soundFile.name + '"';
+						audio.src = customURL;
+					}
+				};
+				getRequest.onerror = function (event) {
+					console.log("pain.");
+					console.log(event.target.error);
+				};
+			}
 			//C4
 			if (!cacheBox.C4.roundClock) {
 				document.getElementById("24h-box").checked = false;
@@ -964,7 +966,7 @@ function startDrag(e) {
 	const now = Date.now();
 	if (now - lastTapTime < 300) {
 		// Double-tap detected
-		setBoxPosition(10, 0);
+		setBoxPosition(15, 0);
 		lastTapTime = 0;
 		return;
 	}
@@ -1022,7 +1024,7 @@ document.addEventListener("touchmove", duringDrag, { passive: false });
 document.addEventListener("touchend", endDrag);
 
 // Initialize position
-setBoxPosition(10, 0);
+setBoxPosition(15, 0);
 
 //YSHS
 importCode("WWVsbG93IFNwcmluZ3MgSGlnaCBTY2hvb2wKCgoxCjg6MzAtOToxNwoKMgo5OjIxLTEwOjA2CgozCjEwOjEwLTEwOjU1Cgo0CjEwOjU5LTExOjQ0CgpsdW5jaAoxMTo0NC0xMjoxNAoKNQoxMjoxOC0xMzowNAoKNgoxMzowOC0xMzo1MwoKNwoxMzo1Ny0xNDo0MgoKOAoxNDo0Ni0xNTozMA==");
@@ -1062,7 +1064,7 @@ selectOption(document.getElementById("schedule-picker"), initialOption);
 var initalFont = document.querySelector("#fonts .option");
 pickFont(document.getElementById("font-picker"), initalFont);
 
-cacheRecall("", true);
+cacheRecall("", true, "");
 
 setInterval(Main, 1000);
 Main();
