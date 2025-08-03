@@ -581,6 +581,8 @@ function allInputs() {
 	returnal.C3.audio = audioToggle;
 	returnal.C3.volume = document.getElementById("volume").value;
 	returnal.C3.currentSound = document.getElementById("current-sound").innerHTML;
+	returnal.C3.audioForm = audioForm;
+	returnal.C3.audioLink = document.getElementById("youtubeInput").value;
 	saveAudioToDB(soundFile);
 
 	if (!document.getElementById("24h-box").checked) {
@@ -754,6 +756,7 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 						if (customURL) URL.revokeObjectURL(customURL);
 						customURL = URL.createObjectURL(soundFile);
 						document.getElementById("current-sound").innerText = 'Current Audio: "' + soundFile.name + '"';
+						document.getElementById("soundInput").value = soundFile
 						audio.src = customURL;
 					}
 				};
@@ -762,6 +765,14 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 					console.log(event.target.error);
 				};
 			}
+
+			if (cacheBox.C3.audioLink) {
+				document.getElementById("youtubeInput").value = cacheBox.C3.audioLink;
+			} else {
+				ChangeElement("", document.getElementById("current-sound"), ["innerText"], 'Current Sound: "' + (document.getElementById("soundInput").value ? document.getElementById("soundInput").value.slice(12) : "school-bell.wav") + '"');
+			}
+			audioForm = cacheBox.C3.audioForm;
+			setAudioURL();
 			//C4
 			if (!cacheBox.C4.roundClock) {
 				document.getElementById("24h-box").checked = false;
@@ -812,7 +823,21 @@ function pickFont(element, option) {
 	}
 	mainFont = option.getAttribute("data-value");
 }
+function postCommand(func, args = []) {
+	const iframe = document.getElementById("ytPlayer");
+	if (iframe.contentWindow) {
+		iframe.contentWindow.postMessage(
+			JSON.stringify({
+				event: "command",
+				func,
+				args,
+			}),
+			"*"
+		);
+	}
+}
 var audioToggle = false;
+var audioForm = "file";
 function activateNoise() {
 	if (audioToggle) {
 		playNoise();
@@ -830,12 +855,94 @@ function stopAudio() {
 
 	audio.pause();
 	audio.currentTime = 0;
+	if (audioForm == "link") {
+		postCommand("pauseVideo");
+		postCommand("seekTo", [0, true]);
+	}
 }
 function playNoise() {
-	const audio = document.getElementById("audioPlayer");
-	audio.volume = Math.min(Math.max(document.getElementById("volume").value / 100, 0), 1);
-	audio.play();
-	audio.style.display = "block";
+	if (audioForm == "file") {
+		const audio = document.getElementById("audioPlayer");
+		audio.volume = Math.min(Math.max(document.getElementById("volume").value / 100, 0), 1);
+		audio.play();
+		audio.style.display = "block";
+	} else {
+		const iframe = document.getElementById("ytPlayer");
+		if (!iframe.contentWindow) {
+			alert("Load a valid video first.");
+			return;
+		}
+
+		// Tell the embedded YouTube iframe to play using postMessage
+		iframe.contentWindow.postMessage(
+			JSON.stringify({
+				event: "command",
+				func: "seekTo",
+				args: [0, true],
+			}),
+			"*"
+		);
+		const vol = Math.min(Math.max(document.getElementById("volume").value, 0), 100);
+		iframe.contentWindow.postMessage(
+			JSON.stringify({
+				event: "command",
+				func: "setVolume",
+				args: [vol],
+			}),
+			"*"
+		);
+		iframe.contentWindow.postMessage(
+			JSON.stringify({
+				event: "command",
+				func: "playVideo",
+				args: [],
+			}),
+			"*"
+		);
+	}
+}
+function extractVideoID(url) {
+	const regex = /(?:youtube\.com\/.*v=|youtu\.be\/)([^&]+)/;
+	const match = url.match(regex);
+	return match ? match[1] : null;
+}
+
+function setAudioURL(reset = "nah") {
+	const input = document.getElementById("youtubeInput").value;
+	const videoID = extractVideoID(input);
+	if (reset != "nah") {
+		audioForm = "file";
+		ChangeElement("", document.getElementById("current-sound"), ["innerText"], 'Current Sound: "' + (document.getElementById("soundInput").value ? document.getElementById("soundInput").value.slice(12) : "school-bell.wav") + '"');
+		document.getElementById("youtubeInput").value = "";
+		return;
+	}
+	if (!input) {
+		audioForm = "file";
+		ChangeElement("", document.getElementById("current-sound"), ["innerText"], 'Current Sound: "' + (document.getElementById("soundInput").value ? document.getElementById("soundInput").value.slice(12) : "school-bell.wav") + '"');
+		return;
+	}
+	if (!videoID) {
+		alert("Please enter a valid YouTube URL.");
+		audioForm = "file";
+		document.getElementById("youtubeInput").value = "";
+		ChangeElement("", document.getElementById("current-sound"), ["innerText"], 'Current Sound: "' + (document.getElementById("soundInput").value ? document.getElementById("soundInput").value.slice(12) : "school-bell.wav") + '"');
+		return;
+	}
+
+	audioForm = "link";
+	const iframe = document.getElementById("ytPlayer");
+	ChangeElement("", document.getElementById("current-sound"), ["innerText"], 'Current Sound: "' + `https://www.youtube.com/embed/${videoID}?enablejsapi=1&autoplay=0&controls=0` + '"');
+	iframe.src = `https://www.youtube.com/embed/${videoID}?enablejsapi=1&autoplay=0&controls=0`;
+	if (iframe.contentWindow) {
+		iframe.contentWindow.postMessage(
+			JSON.stringify({
+				event: "command",
+				func: "cueVideoById",
+				args: [videoID],
+			}),
+			"*"
+		);
+	}
 }
 
 function Main() {
@@ -940,7 +1047,9 @@ document.getElementById("soundInput").addEventListener("change", function (event
 	if (customURL) URL.revokeObjectURL(customURL);
 
 	customURL = URL.createObjectURL(soundFile);
-	document.getElementById("current-sound").innerText = 'Current Audio: "' + soundFile.name + '"';
+	if (!document.getElementById("youtubeInput").value) {
+		document.getElementById("current-sound").innerText = 'Current Audio: "' + soundFile.name + '"';
+	}
 	audio.src = customURL;
 });
 

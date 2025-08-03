@@ -28,6 +28,10 @@
 			<source src="school-bell.wav" type="audio/mp3" />
 			Your browser does not support the audio element.
 		</audio>
+
+		<div style="display: none">
+			<iframe id="ytPlayer" width="0" height="0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen> </iframe>
+		</div>
 		<div class="menu-button" onclick="IdToggle('settings', ['menu-button', 'settings'], 'change')" id="menu-button">
 			<div class="bar1" id="menu-1"></div>
 			<div class="bar2" id="menu-2"></div>
@@ -404,38 +408,44 @@
 								</button>
 							</div>
 							<div class="middle-align">
-							<div class="ixport-buttons" style="display: inline-block;">
-								<div class="ixport-botton-section" style="margin-right: 1vh">
-									<input type="image" class="ixport-button" value="#ffffff" src="Icons/noise.png" onclick="activateNoise()" />
-									<p class="ixport-text">Test Audio</p>
+								<div class="ixport-buttons" style="display: inline-block">
+									<div class="ixport-botton-section" style="margin-right: 1vh">
+										<input type="image" class="ixport-button" value="#ffffff" src="Icons/noise.png" onclick="activateNoise()" />
+										<p class="ixport-text">Test Audio</p>
+									</div>
 								</div>
-							</div>
-							<div class="ixport-buttons" style="display: inline-block;">
-								<div class="ixport-botton-section" style="margin-right: 1vh">
-									<input type="image" class="ixport-button" value="#ffffff" src="Icons/noise.png" onclick="stopAudio()" />
-									<p class="ixport-text">Stop Audio</p>
+								<div class="ixport-buttons" style="display: inline-block">
+									<div class="ixport-botton-section" style="margin-right: 1vh">
+										<input type="image" class="ixport-button" value="#ffffff" src="Icons/noise.png" onclick="stopAudio()" />
+										<p class="ixport-text">Stop Audio</p>
+									</div>
 								</div>
-							</div>
 							</div>
 							<div class="middle-align">
-							<div class="slidecontainer">
-								<p class="organizer-text" style="margin-bottom: .5vh; margin-top: 2vh">Audio Volume</p>
-								<div class="middle-align">
-								<input type="range" min="1" max="100" value="50" id="volume" />
+								<div class="slidecontainer">
+									<p class="organizer-text" style="margin-bottom: 0.5vh; margin-top: 2vh">Audio Volume</p>
+									<div class="middle-align">
+										<input type="range" min="1" max="100" value="50" id="volume" />
+									</div>
 								</div>
 							</div>
+							<div class="selector">
+								Custom Audio Link<br />
+								<input type="image" class="reset-button" value="" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('youtubeInput'), ['value'], '');setAudioURL('yuh');" />
+								<input id="youtubeInput" placeholder="https://www.youtube.com/watch?v=..." type="text" value="" class="button" size="6" onchange="setAudioURL()" />
 							</div>
-							<div class="selector" >Custom Audio file<br />
+							<div class="selector">
+								Custom Audio File<br />
 								<input type="image" class="reset-button" value="school-bell.wav" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('audioPlayer'), ['src'], this.value);ChangeElement('', document.getElementById('current-sound'), ['innerText'], 'Current Sound: &quot;school-bell.wav&quot;')" />
-								<div class="ixport-buttons" style="display: inline;">
+								<div class="ixport-buttons" style="display: inline">
 									<div class="ixport-botton-section" style="margin-right: 1vh; margin-top: 0vh">
 										<label for="soundInput"><img class="ixport-button" src="Icons/export.png" alt="Import Audio" /></label>
 										<input type="file" accept="audio/*, video/mp4" id="soundInput" class="ixport-button" value="#ffffff" src="Icons/export.png" />
 										<p class="ixport-text">Import File</p>
 									</div>
 								</div>
-								<p id='current-sound' style="font-size: 2vh;line-height: 2vh;border-top: .25vh solid #a0a0a0b0;padding: 1vh;margin: 0;margin-top: 1vh;">Current Sound: "school-bell.wav"</p>
-								<p id='current-sound' style="font-size: calc(0.75vh + 0.75vw);line-height: 2.5vh;border-top: .25vh solid #a0a0a0b0;padding: 1vh;margin: 0;margin-top: 1vh;">*WARNING: Custom sound effect files do NOT get sent when exporting through ANY method due to requiring the sound file. The recomended method is to send the send the audio file along with the method of exporting and manually input it. </p>
+								<p id="current-sound" style="font-size: 2vh; line-height: 2vh; border-top: 0.25vh solid #a0a0a0b0; padding: 1vh; margin: 0; margin-top: 1vh">Current Sound: "school-bell.wav"</p>
+								<p style="font-size: calc(0.75vh + 0.75vw); line-height: 2.5vh; border-top: 0.25vh solid #a0a0a0b0; padding: 1vh; margin: 0; margin-top: 1vh">*WARNING*: Custom sound effect <b>files</b> do <b>not</b> get sent when exporting through ANY method due to requiring the sound file.</p>
 							</div>
 						</div>
 						<hr class="options-seperator" />
