@@ -1079,7 +1079,7 @@ function setBoxPosition(xPercent, yPercent) {
 
 function startDrag(e) {
 	const now = Date.now();
-	if (now - lastTapTime < 300) {
+	if (now - lastTapTime < 300 && !dragLock) {
 		// Double-tap detected
 		setBoxPosition(15, 0);
 		lastTapTime = 0;
