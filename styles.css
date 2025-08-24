@@ -3,6 +3,7 @@ body {
 	color: whitesmoke;
 	overflow-x: hidden;
 	margin: 0;
+	overscroll-behavior: none;
 }
 /* @media only screen and (max-width: 767px) {
   .hide-on-mobile {

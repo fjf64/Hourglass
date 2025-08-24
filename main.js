@@ -172,7 +172,7 @@ function PassedPeriods(schedule, currentTime) {
 function appendPeriod() {
 	var newElement = document.createElement("div");
 	newElement.className = "period-input-div";
-	var inputBoxes = "<input class='period-input-box'></input>";
+	var inputBoxes = "<input class='period-input-box' placeholder='00:00'></input>";
 	if (document.getElementById("24h-box").checked) {
 		var switchElement = '<button class="am-pm" onclick="amPmButton(this)">AM</button>';
 	} else {
@@ -756,7 +756,7 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 						if (customURL) URL.revokeObjectURL(customURL);
 						customURL = URL.createObjectURL(soundFile);
 						document.getElementById("current-sound").innerText = 'Current Audio: "' + soundFile.name + '"';
-						document.getElementById("soundInput").value = soundFile
+						document.getElementById("soundInput").value = soundFile;
 						audio.src = customURL;
 					}
 				};
@@ -948,6 +948,9 @@ function setAudioURL(reset = "nah") {
 function Main() {
 	var currentSchedule = scheduleValue;
 	var usedSchedule = schedules[currentSchedule];
+	if (usedSchedule == undefined) {
+		return
+	}
 	var clock = document.getElementById("mainTime");
 	var currentDate = Date.now(); //'3600000 * x'=hours TEST
 	var devTimeFix = document.getElementById("dev-time-fix").value;
@@ -1011,6 +1014,9 @@ window.onload = () => {
 	if (action) {
 		for (let x of action.split("_")) {
 			importCode(x);
+			let url = new URL(window.location.href);
+			url.searchParams.delete("code");
+			history.replaceState(null, "", url);
 		}
 	}
 
