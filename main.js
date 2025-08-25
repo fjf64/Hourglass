@@ -240,14 +240,22 @@ async function saveDraft() {
 		}
 		var mA = 0;
 		var mB = 0;
-		if (elements[2].innerHTML == "PM" && elements[2].classList.value.indexOf("change") > -1) {
-			mA = 12;
-		}
-		if (elements[4].innerHTML == "PM" && elements[4].classList.value.indexOf("change") > -1) {
-			mB = 12;
-		}
+		
 		var times = [];
 		var ogTimes = [elements[1].value, elements[3].value];
+		if (elements[2].innerHTML == "PM" && elements[2].classList.value.indexOf("change") > -1 && parseInt(ogTimes[0].split(":")[0]) !== 12) {
+			mA = 12;
+		}
+		if (elements[4].innerHTML == "PM" && elements[4].classList.value.indexOf("change") > -1 && parseInt(ogTimes[1].split(":")[0]) !== 12) {
+			mB = 12;
+		}
+
+		if (elements[2].innerHTML == "AM" && parseInt(ogTimes[0].split(":")[0]) == 12) {
+			mA = -12;
+		}
+		if (elements[4].innerHTML == "AM" && parseInt(ogTimes[1].split(":")[0]) == 12) {
+			mB = -12;
+		}
 		ampmList = [mA, mB];
 		for (let x in [elements[1].value, elements[3].value]) {
 			var tempTime = ogTimes[x].split(":");
@@ -264,6 +272,7 @@ async function saveDraft() {
 		periods.push([elements[0].value, times.join("-")]);
 	}
 	addToSchedule(draftName, periods);
+	document.getElementById("draft-name").value = ""
 }
 function exportCurrent() {
 	var exportNewLine = [];
@@ -513,6 +522,7 @@ function addToSchedule(nameKey, items) {
 	document.getElementById("schedule-specific").appendChild(selectElement);
 	if (autoChooseSchedule) {
 		var initialOption = document.querySelector("#schedules .option");
+		if (!initialOption) {return}
 		selectOption(document.getElementById("schedule-picker"), initialOption);
 	}
 
@@ -1029,7 +1039,6 @@ function Main() {
 		clock.innerHTML = mainMinutes + ":" + mainSeconds;
 		if (["after" + scheduleValue, "break" + scheduleValue, "before" + scheduleValue].includes(lastClockState)) {
 			activateNoise();
-			console.log("aaa");
 		}
 		lastClockState = "current" + scheduleValue;
 	}
@@ -1065,6 +1074,16 @@ window.onload = () => {
 		await sleep(10);
 		lastClickedElement = e.target;
 	});
+
+	var initialOption = document.querySelector("#schedules .option");
+	if (initialOption) {
+	selectOption(document.getElementById("schedule-picker"), initialOption);
+	} else {
+		document.getElementById('schedule-picker').textContent = "No Schedules";
+	}
+
+	var initalFont = document.querySelector("#fonts .option");
+	pickFont(document.getElementById("font-picker"), initalFont);
 };
 
 window.addEventListener("beforeunload", (e) => {
@@ -1203,12 +1222,6 @@ for (let x of fonts) {
 	}
 	addToFonts(x[1], x[0]);
 }
-
-var initialOption = document.querySelector("#schedules .option");
-selectOption(document.getElementById("schedule-picker"), initialOption);
-
-var initalFont = document.querySelector("#fonts .option");
-pickFont(document.getElementById("font-picker"), initalFont);
 
 cacheRecall("", true, "");
 
