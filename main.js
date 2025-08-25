@@ -405,6 +405,13 @@ function lockOpacity(thisItem) {
 		opacityLock = true;
 	}
 }
+function NegativeTimeToggle(thisItem) {
+	if (negativeTime) {
+		negativeTime = false;
+	} else {
+		negativeTime = true;
+	}
+}
 
 async function flashElement(element, effect, ogColor, newColor, time = 500, count = 1) {
 	//effect in path list
@@ -545,6 +552,7 @@ function allInputs() {
 			fontFront: {},
 			opacityLock: false,
 			dragLock: false,
+			negativeTime: false,
 		},
 		C2: {},
 		C3: {
@@ -572,6 +580,7 @@ function allInputs() {
 
 	returnal.C1.dragLock = dragLock;
 	returnal.C1.opacityLock = opacityLock;
+	returnal.C1.negativeTime = negativeTime;
 	//Column 2
 
 	//column 3
@@ -662,7 +671,7 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 			cacheBox = JSON.parse(cacheBox);
 			//C1
 			for (let x of Object.keys(cacheBox.C1)) {
-				if (["fontCurrent", "fontFront", "dragLock", "opacityLock"].includes(x)) {
+				if (["fontCurrent", "fontFront", "dragLock", "opacityLock", "negativeTime"].includes(x)) {
 					continue;
 				}
 				var input = document.getElementById(x);
@@ -683,6 +692,7 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 			dragLock = cacheBox.C1.dragLock; //Draglock
 
 			opacityLock = cacheBox.C1.opacityLock;
+			negativeTime = cacheBox.C1.negativeTime;
 			if (dragLock) {
 				document.getElementById("display-lock-box").checked = true;
 				document.getElementById("display-lock-box").dispatchEvent(new Event("change", { bubbles: true }));
@@ -696,6 +706,13 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 			} else {
 				document.getElementById("opacity-lock-box").checked = false;
 				document.getElementById("opacity-lock-box").dispatchEvent(new Event("change", { bubbles: true }));
+			}
+			if (negativeTime) {
+				document.getElementById("negative-time-box").checked = true;
+				document.getElementById("negative-time-box").dispatchEvent(new Event("change", { bubbles: true }));
+			} else {
+				document.getElementById("negative-time-box").checked = false;
+				document.getElementById("negative-time-box").dispatchEvent(new Event("change", { bubbles: true }));
 			}
 
 			//C3
@@ -949,7 +966,7 @@ function Main() {
 	var currentSchedule = scheduleValue;
 	var usedSchedule = schedules[currentSchedule];
 	if (usedSchedule == undefined) {
-		return
+		return;
 	}
 	var clock = document.getElementById("mainTime");
 	var currentDate = Date.now(); //'3600000 * x'=hours TEST
@@ -981,7 +998,19 @@ function Main() {
 		lastClockState = "after" + scheduleValue;
 	} else if (currrentPassedPeriods[0].length == currrentPassedPeriods[1].length) {
 		// break
-		clock.innerHTML = breaks;
+		if (negativeTime) {
+			var scheduleChunk = usedSchedule[parseInt(usedSchedule.indexOf(lastPastPeriod)) + 1];
+			document.getElementById("period-display").textContent = currentPeriods + lastPastPeriod[0];
+			var timeDiff = ClockToEpoch(scheduleChunk[1].split("-")[0]) - currentDate + 1000;
+			var mainMinutes = Math.floor(timeDiff / 60000);
+			var mainSeconds = Math.floor((timeDiff % 60000) / 1000);
+			if (mainSeconds.toString().length <= 1) {
+				mainSeconds = "0" + mainSeconds;
+			}
+			clock.innerHTML = "-" + mainMinutes + ":" + mainSeconds;
+		} else {
+			clock.innerHTML = breaks;
+		}
 		document.getElementById("period-display").textContent = betweenCurrentPeriods + nextPeriod;
 		if (lastClockState == "current" + scheduleValue) {
 			activateNoise();
@@ -998,8 +1027,9 @@ function Main() {
 			mainSeconds = "0" + mainSeconds;
 		}
 		clock.innerHTML = mainMinutes + ":" + mainSeconds;
-		if (["after" + scheduleValue, +"break" + scheduleValue, "before" + scheduleValue].includes(lastClockState)) {
+		if (["after" + scheduleValue, "break" + scheduleValue, "before" + scheduleValue].includes(lastClockState)) {
 			activateNoise();
+			console.log("aaa");
 		}
 		lastClockState = "current" + scheduleValue;
 	}
@@ -1153,6 +1183,7 @@ for (let x of document.getElementById("column-1").querySelectorAll(".selector"))
 
 let inputs = document.querySelectorAll('input[type="text"]');
 var opacityLock = false;
+var negativeTime = false;
 
 inputs.forEach((input) => {
 	input.addEventListener("focus", () => {

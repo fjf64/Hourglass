@@ -4,7 +4,7 @@
 
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
 		<title>Hourglass</title>
 
@@ -190,6 +190,13 @@
 						<input type="image" class="reset-button" value="After" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('after-picker'), ['value'], this.value);afters = this.value" />
 						<input id="after-picker" type="text" value="After" class="button" size="4" oninput="afters = this.value" />
 					</p>
+					<div class="middle-align" style="margin-top: 1vh; margin-bottom: 2vh">
+						<label class="switch" style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 0; width: 95%; text-align: center"
+							><input id="negative-time-box" type="checkbox" onclick="NegativeTimeToggle(this)" /><span class="slider" style="width: 100%">
+								<p style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">Show Time Before Next Period</p>
+							</span>
+						</label>
+					</div>
 				</div>
 				<hr class="options-seperator" />
 				<div class="organizer-button-grid" onclick="IdToggle('period-organizer', ['period-organizer'], 'change')">
