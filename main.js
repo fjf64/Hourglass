@@ -1046,7 +1046,17 @@ function Main() {
 
 var lastClickedElement;
 window.onload = () => {
+		var initialOption = document.querySelector("#schedules .option");
+	if (initialOption) {
+	selectOption(document.getElementById("schedule-picker"), initialOption);
+	} else {
+		document.getElementById('schedule-picker').textContent = "No Schedules";
+	}
+	
+	var initalFont = document.querySelector("#fonts .option");
+	pickFont(document.getElementById("font-picker"), initalFont);
 	// var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
+	cacheRecall("", true, "");
 	const params = new URLSearchParams(window.location.search);
 	const action = params.get("code");
 
@@ -1058,6 +1068,7 @@ window.onload = () => {
 			history.replaceState(null, "", url);
 		}
 	}
+	console.log(schedules)
 
 	new Sortable(document.getElementById("schedule-specific"), {
 		animation: 150,
@@ -1075,15 +1086,9 @@ window.onload = () => {
 		lastClickedElement = e.target;
 	});
 
-	var initialOption = document.querySelector("#schedules .option");
-	if (initialOption) {
-	selectOption(document.getElementById("schedule-picker"), initialOption);
-	} else {
-		document.getElementById('schedule-picker').textContent = "No Schedules";
-	}
 
-	var initalFont = document.querySelector("#fonts .option");
-	pickFont(document.getElementById("font-picker"), initalFont);
+
+
 };
 
 window.addEventListener("beforeunload", (e) => {
@@ -1223,7 +1228,6 @@ for (let x of fonts) {
 	addToFonts(x[1], x[0]);
 }
 
-cacheRecall("", true, "");
 
 setInterval(Main, 1000);
 Main();
