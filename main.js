@@ -72,7 +72,7 @@ function decodeBase64Url(str) {
 	while (str.length % 4 !== 0) {
 		str += "=";
 	}
-	return atob(str);
+	return LZString.decompressFromBase64(str);
 }
 function deepEqual(a, b) {
 	if (a === b) return true;
@@ -314,7 +314,7 @@ function exportCode() {
 	}
 	var exporting = exportNewLine.join("\n\n");
 	var exporting = [scheduleValue, exporting].join("\n\n\n");
-	var copyText = btoa(exporting);
+	var copyText = LZString.compressToBase64(exporting);
 	navigator.clipboard.writeText(copyText);
 	alert("Copied the text: " + copyText);
 }
@@ -328,7 +328,7 @@ function exportURL() {
 		}
 		var exporting = exportNewLine.join("\n\n");
 		var exporting = [sched, exporting].join("\n\n\n");
-		btoaSchedules.push(btoa(exporting));
+		btoaSchedules.push(LZString.compressToBase64(exporting));
 	}
 
 	const url = new URL(window.location.origin + window.location.pathname);
@@ -341,7 +341,7 @@ function exportURL() {
 }
 
 async function importCode(code) {
-	const namePeriods = atob(code).split("\n\n\n");
+	const namePeriods = LZString.decompressFromBase64(code).split("\n\n\n");
 	const periods = namePeriods[1].split("\n\n");
 	const returnal = periods.map((p) => p.split("\n"));
 	const nameKey = namePeriods[0];
@@ -615,7 +615,7 @@ function saveAll() {
 	localStorage["Hourglass"] = JSON.stringify(allInputs());
 }
 async function exportEnv() {
-	copyText = btoa(JSON.stringify(allInputs()));
+	copyText = LZString.compressToBase64(JSON.stringify(allInputs()));
 	navigator.clipboard.writeText(copyText);
 	alert("Copied the text: " + copyText);
 }
