@@ -1068,8 +1068,6 @@ window.onload = () => {
 			history.replaceState(null, "", url);
 		}
 	}
-	console.log(schedules)
-
 	new Sortable(document.getElementById("schedule-specific"), {
 		animation: 150,
 		ghostClass: "drag-ghost", // optional class to style dragged item
