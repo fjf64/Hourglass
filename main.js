@@ -60,6 +60,7 @@ var fonts = [
 	["zain-light", "Zain"],
 	["montserrat-alternates-regular", "Montserrat"],
 	["nanum-myeongjo-regular", "Nanum Myeongjo"],
+	["open-sans-x", "Open Sans"],
 ];
 
 var scheduleValue = document.getElementById("schedule-picker").getAttribute("data-value");
@@ -421,6 +422,13 @@ function NegativeTimeToggle(thisItem) {
 		negativeTime = true;
 	}
 }
+function autoHideMenuToggle(thisItem) {
+	if (autoHideMenu) {
+		autoHideMenu = false;
+	} else {
+		autoHideMenu = true;
+	}
+}
 
 async function flashElement(element, effect, ogColor, newColor, time = 500, count = 1) {
 	//effect in path list
@@ -563,6 +571,7 @@ function allInputs() {
 			opacityLock: false,
 			dragLock: false,
 			negativeTime: true,
+			autoHideMenu: false,
 		},
 		C2: {},
 		C3: {
@@ -591,6 +600,7 @@ function allInputs() {
 	returnal.C1.dragLock = dragLock;
 	returnal.C1.opacityLock = opacityLock;
 	returnal.C1.negativeTime = negativeTime;
+	returnal.C1.autoHideMenu = autoHideMenu;
 	//Column 2
 
 	//column 3
@@ -681,7 +691,7 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 			cacheBox = JSON.parse(cacheBox);
 			//C1
 			for (let x of Object.keys(cacheBox.C1)) {
-				if (["fontCurrent", "fontFront", "dragLock", "opacityLock", "negativeTime"].includes(x)) {
+				if (["fontCurrent", "fontFront", "dragLock", "opacityLock", "negativeTime", "autoHideMenu"].includes(x)) {
 					continue;
 				}
 				var input = document.getElementById(x);
@@ -703,6 +713,7 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 
 			opacityLock = cacheBox.C1.opacityLock;
 			negativeTime = cacheBox.C1.negativeTime;
+			autoHideMenu = cacheBox.C1.autoHideMenu;
 			if (dragLock) {
 				document.getElementById("display-lock-box").checked = true;
 				document.getElementById("display-lock-box").dispatchEvent(new Event("change", { bubbles: true }));
@@ -723,6 +734,14 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 			} else {
 				document.getElementById("negative-time-box").checked = false;
 				document.getElementById("negative-time-box").dispatchEvent(new Event("change", { bubbles: true }));
+			}
+			if (autoHideMenu) {
+				document.getElementById("autoHideMenu-box").checked = true;
+				IdToggle('settings', ['menu-button', 'footer'], 'change1')
+				document.getElementById("autoHideMenu-box").dispatchEvent(new Event("change", { bubbles: true }));
+			} else {
+				document.getElementById("autoHideMenu-box").checked = false;
+				document.getElementById("autoHideMenu-box").dispatchEvent(new Event("change", { bubbles: true }));
 			}
 
 			//C3
@@ -1208,6 +1227,7 @@ for (let x of document.getElementById("column-1").querySelectorAll(".selector"))
 let inputs = document.querySelectorAll('input[type="text"]');
 var opacityLock = false;
 var negativeTime = true;
+var autoHideMenu = false;
 
 inputBlacklist = ['youtubeInput', 'draft-name']
 inputs.forEach((input) => {
@@ -1222,13 +1242,26 @@ inputs.forEach((input) => {
 	});
 });
 
-addToFonts("Sans Serif", "sans-serif");
+addToFonts("Open Sans", "open-sans-x");
 for (let x of fonts) {
-	if (x[1] == "Sans Serif") {
+	if (x[1] == "Open Sans") {
 		continue;
 	}
 	addToFonts(x[1], x[0]);
 }
+
+function onTabSwitch() {
+    Main() 
+    // Place your custom function logic here
+}
+
+// Listen for visibility changes
+document.addEventListener("visibilitychange", function() {
+    if (document.hidden) {
+    } else {
+        onTabSwitch();
+    }
+});
 
 
 setInterval(Main, 1000);
