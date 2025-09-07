@@ -42,7 +42,7 @@
 		</div>
 		<div id="mainContainer">
 			<h3 id="period-display"></h3>
-			<h1 id="mainTime" onclick="IdToggle('settings', ['menu-button', 'footer'], 'change1')">00:00</h1>
+			<h1 id="mainTime" onclick="IdToggle('settings', ['menu-button', 'footer'], 'change1')">N/A</h1>
 		</div>
 
 		<div id="settings" class="menu">
@@ -114,31 +114,12 @@
 				</div>
 				<div class="organizer-box" id="font-organizer">
 					<hr class="options-seperator-mini" />
-					<p class="selector">
-						Clock Size<br />
-						<input type="image" class="reset-button" value="28vw" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
-						<input id="font-size-picker" type="text" value="28" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','font-size'],this.value+'vw')" />
-					</p>
-					<p class="selector">
-						Period Display Size<br />
-						<input type="image" class="reset-button" value="5vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker2'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('period-display'), ['style','font-size'])" />
-						<input id="font-size-picker2" type="text" value="5" class="button" size="1" oninput="ChangeElement('', document.getElementById('period-display'), ['style','font-size'],this.value+'vh')" />
-					</p>
-
-					<p class="selector">
-						Clock Letter Spacing<br />
-						<input type="image" class="reset-button" value="0vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('letter-spacing-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','letter-spacing'])" />
-						<input id="letter-spacing-size-picker" type="text" value="0" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','letter-spacing'],this.value+'vw')" />
-					</p>
-					<p class="selector">
-						Period Display Letter Spacing<br />
-						<input type="image" class="reset-button" value="0vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('letter-spacing-size-picker2'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('period-display'), ['style','letter-spacing'])" />
-						<input id="letter-spacing-size-picker2" type="text" value="0" class="button" size="1" oninput="ChangeElement('', document.getElementById('period-display'), ['style','letter-spacing'],this.value+'vh')" />
-					</p>
+					
+					
 
 					<div class="middle-align">
 						<div class="custom-select">
-							<div class="current-chedule-wrapper" onclick="removeFixedDisplay('fonts');IdToggle('fonts', ['fonts']);">
+							<div  class="current-chedule-wrapper" onclick="removeFixedDisplay('fonts');IdToggle('fonts', ['fonts']);">
 								<div data-value="ccl" style="border: none; background-color: transparent; color: white; display: flex; align-items: center" class="select-box" id="font-picker"><p>ccl</p></div>
 								<div class="middle-align">
 									<img src="Icons/down.png" style="margin-top: 0.5vh" class="down-img" />
@@ -168,6 +149,16 @@
 				<div class="organizer-box" id="clock-organizer">
 					<hr class="options-seperator-mini" />
 					<p class="selector">
+						Clock Size<br />
+						<input type="image" class="reset-button" value="28vw" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
+						<input id="font-size-picker" type="text" value="28" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','font-size'],this.value+'vw')" />
+					</p>
+					<p class="selector">
+						Clock Letter Spacing<br />
+						<input type="image" class="reset-button" value="0vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('letter-spacing-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','letter-spacing'])" />
+						<input id="letter-spacing-size-picker" type="text" value="0" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','letter-spacing'],this.value+'vw')" />
+					</p>
+					<p class="selector">
 						Clock Left Offset<br />
 						<input type="image" class="reset-button" value="0vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('clock-left-offset-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','margin-left'])" />
 						<input id="clock-left-offset-picker" type="text" value="0" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','margin-left'],this.value+'vh')" />
@@ -194,7 +185,7 @@
 					</p>
 					<div class="middle-align" style="margin-top: 1vh; margin-bottom: 2vh">
 						<label class="switch" style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 0; width: 95%; text-align: center"
-							><input id="negative-time-box" type="checkbox" onclick="NegativeTimeToggle(this)" /><span class="slider" style="width: 100%">
+							><input id="negative-time-box" type="checkbox" onclick="NegativeTimeToggle(this)" checked/><span class="slider" style="width: 100%">
 								<p style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">Show Time Before Next Period</p>
 							</span>
 						</label>
@@ -218,6 +209,18 @@
 							</span>
 						</label>
 					</div>
+					<p class="selector">
+						Period Display Size<br />
+						<input type="image" class="reset-button" value="5vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker2'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('period-display'), ['style','font-size'])" />
+						<input id="font-size-picker2" type="text" value="5" class="button" size="1" oninput="ChangeElement('', document.getElementById('period-display'), ['style','font-size'],this.value+'vh')" />
+					</p>
+
+					
+					<p class="selector">
+						Period Display Letter Spacing<br />
+						<input type="image" class="reset-button" value="0vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('letter-spacing-size-picker2'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('period-display'), ['style','letter-spacing'])" />
+						<input id="letter-spacing-size-picker2" type="text" value="0" class="button" size="1" oninput="ChangeElement('', document.getElementById('period-display'), ['style','letter-spacing'],this.value+'vh')" />
+					</p>
 					<p class="selector">
 						Period Display Prefix Text<br />
 						<input type="image" class="reset-button" value="Current Period: " src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('display-picker'), ['value'], this.value);CurrentPeriods = this.value" />
@@ -260,7 +263,7 @@
 			<div class="settings-grid" style="grid-column: 2; border-width: 0.5vh">
 				<div class="middle-align">
 					<div class="custom-select">
-						<div class="current-chedule-wrapper" onclick="removeFixedDisplay('schedules');IdToggle('schedules', ['schedules']);">
+						<div id="current-chedule-wrapper" class="current-chedule-wrapper" onclick="removeFixedDisplay('schedules');IdToggle('schedules', ['schedules']);">
 							<div data-value="Yellow Springs High School" style="border: none; background-color: transparent; color: white; display: flex; align-items: center" class="select-box" id="schedule-picker"><p>No Schedules</p></div>
 							<div class="middle-align">
 								<img src="Icons/down.png" style="margin-top: 0.5vh" class="down-img" />

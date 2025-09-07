@@ -240,7 +240,7 @@ async function saveDraft() {
 		}
 		var mA = 0;
 		var mB = 0;
-		
+
 		var times = [];
 		var ogTimes = [elements[1].value, elements[3].value];
 		if (elements[2].innerHTML == "PM" && elements[2].classList.value.indexOf("change") > -1 && parseInt(ogTimes[0].split(":")[0]) !== 12) {
@@ -250,10 +250,10 @@ async function saveDraft() {
 			mB = 12;
 		}
 
-		if (elements[2].innerHTML == "AM" && parseInt(ogTimes[0].split(":")[0]) == 12) {
+		if (elements[2].innerHTML == "AM" && parseInt(ogTimes[0].split(":")[0]) == 12 && elements[2].classList.value.indexOf("change") > -1) {
 			mA = -12;
 		}
-		if (elements[4].innerHTML == "AM" && parseInt(ogTimes[1].split(":")[0]) == 12) {
+		if (elements[4].innerHTML == "AM" && parseInt(ogTimes[1].split(":")[0]) == 12 && elements[2].classList.value.indexOf("change") > -1) {
 			mB = -12;
 		}
 		ampmList = [mA, mB];
@@ -522,7 +522,7 @@ function addToSchedule(nameKey, items) {
 	document.getElementById("schedule-specific").appendChild(selectElement);
 	if (autoChooseSchedule) {
 		var initialOption = document.querySelector("#schedules .option");
-		if (!initialOption) {return}
+		if (!initialOption) { return }
 		selectOption(document.getElementById("schedule-picker"), initialOption);
 	}
 
@@ -562,7 +562,7 @@ function allInputs() {
 			fontFront: {},
 			opacityLock: false,
 			dragLock: false,
-			negativeTime: false,
+			negativeTime: true,
 		},
 		C2: {},
 		C3: {
@@ -976,8 +976,10 @@ function Main() {
 	var currentSchedule = scheduleValue;
 	var usedSchedule = schedules[currentSchedule];
 	if (usedSchedule == undefined) {
+		document.getElementById('current-chedule-wrapper').style.backgroundColor = '#5e0000ff';
 		return;
 	}
+	document.getElementById('current-chedule-wrapper').style.backgroundColor = '';
 	var clock = document.getElementById("mainTime");
 	var currentDate = Date.now(); //'3600000 * x'=hours TEST
 	var devTimeFix = document.getElementById("dev-time-fix").value;
@@ -1046,13 +1048,13 @@ function Main() {
 
 var lastClickedElement;
 window.onload = () => {
-		var initialOption = document.querySelector("#schedules .option");
+	var initialOption = document.querySelector("#schedules .option");
 	if (initialOption) {
-	selectOption(document.getElementById("schedule-picker"), initialOption);
+		selectOption(document.getElementById("schedule-picker"), initialOption);
 	} else {
 		document.getElementById('schedule-picker').textContent = "No Schedules";
 	}
-	
+
 	var initalFont = document.querySelector("#fonts .option");
 	pickFont(document.getElementById("font-picker"), initalFont);
 	// var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
@@ -1071,12 +1073,12 @@ window.onload = () => {
 	new Sortable(document.getElementById("schedule-specific"), {
 		animation: 150,
 		ghostClass: "drag-ghost", // optional class to style dragged item
-		onEnd: function (evt) {},
+		onEnd: function (evt) { },
 	});
 	new Sortable(document.getElementById("font-choices"), {
 		animation: 150,
 		ghostClass: "drag-ghost", // optional class to style dragged item
-		onEnd: function (evt) {},
+		onEnd: function (evt) { },
 	});
 
 	document.addEventListener("click", async function (e) {
@@ -1205,9 +1207,11 @@ for (let x of document.getElementById("column-1").querySelectorAll(".selector"))
 
 let inputs = document.querySelectorAll('input[type="text"]');
 var opacityLock = false;
-var negativeTime = false;
+var negativeTime = true;
 
+inputBlacklist = ['youtubeInput', 'draft-name']
 inputs.forEach((input) => {
+	if (inputBlacklist.includes(input.id)) return;
 	input.addEventListener("focus", () => {
 		if (opacityLock == false) {
 			document.getElementById("settings").style.opacity = "0.2";
