@@ -1242,9 +1242,10 @@ inputs.forEach((input) => {
 	});
 });
 
-addToFonts("Open Sans", "open-sans-x");
+
+addToFonts("Time New Roman", "times-new-roman");
 for (let x of fonts) {
-	if (x[1] == "Open Sans") {
+	if (x[1] == "Times New Roman") {
 		continue;
 	}
 	addToFonts(x[1], x[0]);

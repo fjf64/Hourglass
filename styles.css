@@ -12,6 +12,9 @@ body {
   }
 } */
 
+ .times-new-roman {
+  font-family: "Times New Roman", Times, serif;
+}
 
 .open-sans-x {
 	font-family: "Open Sans", sans-serif;
