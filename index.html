@@ -1,653 +1,567 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- To-Do - move auto YSHS append functions to link-->
+	<!-- To-Do - move auto YSHS append functions to link-->
 
-<head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
-	<title>Hourglass</title>
+		<title>Hourglass</title>
 
+		<link rel="icon" type="image/x-icon" href="Icons/Hourglass.png" />
+		<link rel="stylesheet" href="styles.css" />
 
-	<link rel="icon" type="image/x-icon" href="Icons/Hourglass.png" />
-	<link rel="stylesheet" href="styles.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Allura&family=Alumni+Sans+Pinstripe:ital@0;1&family=Bitcount+Prop+Single:wght@100..900&family=Caesar+Dressing&family=Changa:wght@200..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Jura:wght@300..700&family=Major+Mono+Display&family=Megrim&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nanum+Gothic+Coding&family=Nanum+Myeongjo&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playwrite+VN+Guides&family=Poiret+One&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wdth,wght@0,75.8,205;1,75.8,205&family=Rubik+80s+Fade&family=Sacramento&family=Special+Elite&family=Tilt+Prism&family=Yeseva+One&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="manifest" href="manifest.json" />
+		<meta name="theme-color" content="#ffffff" />
+		<link rel="apple-touch-icon" href="Icons/icon-192.png" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link
-		href="https://fonts.googleapis.com/css2?family=Allura&family=Alumni+Sans+Pinstripe:ital@0;1&family=Bitcount+Prop+Single:wght@100..900&family=Caesar+Dressing&family=Changa:wght@200..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Jura:wght@300..700&family=Major+Mono+Display&family=Megrim&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nanum+Gothic+Coding&family=Nanum+Myeongjo&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playwrite+VN+Guides&family=Poiret+One&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wdth,wght@0,75.8,205;1,75.8,205&family=Rubik+80s+Fade&family=Sacramento&family=Special+Elite&family=Tilt+Prism&family=Yeseva+One&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap"
-		rel="stylesheet">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-	<link rel="manifest" href="manifest.json" />
-	<meta name="theme-color" content="#ffffff" />
-	<link rel="apple-touch-icon" href="Icons/icon-192.png" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<script src="https://cdn.jsdelivr.net/gh/pieroxy/lz-string/libs/lz-string.js"></script>
+		<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+	</head>
 
-	<script src="https://cdn.jsdelivr.net/gh/pieroxy/lz-string/libs/lz-string.js"></script>
-	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-</head>
+	<body>
+		<audio id="audioPlayer" style="display: none">
+			<source src="school-bell.wav" type="audio/mp3" />
+			Your browser does not support the audio element.
+		</audio>
 
-<body>
-	<audio id="audioPlayer" style="display: none">
-		<source src="school-bell.wav" type="audio/mp3" />
-		Your browser does not support the audio element.
-	</audio>
-
-	<div style="display: none">
-		<iframe id="ytPlayer" width="0" height="0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-		</iframe>
-	</div>
-	<div class="menu-button" onclick="IdToggle('settings', ['menu-button', 'settings'], 'change')" id="menu-button">
-		<div class="bar1" id="menu-1"></div>
-		<div class="bar2" id="menu-2"></div>
-		<div class="bar3" id="menu-3"></div>
-	</div>
-	<div id="mainContainer">
-		<h3 id="period-display"></h3>
-		<h1 id="mainTime"
-			onclick="if (!(document.getElementById('settings').classList.contains('change'))) IdToggle('settings', ['menu-button', 'footer'], 'change1');">
-			N/A</h1>
-	</div>
-
-	<div id="settings" class="menu">
-		<div id="log-container">
-			<p style="text-wrap: nowrap" id="log"></p>
+		<div style="display: none">
+			<iframe id="ytPlayer" width="0" height="0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen> </iframe>
+		</div>
+		<div class="menu-button" onclick="IdToggle('settings', ['menu-button', 'settings'], 'change');if ((document.getElementById('preset-organizer').classList.contains('change'))) IdToggle('', ['preset-organizer'], 'change');" id="menu-button">
+			<div class="bar1" id="menu-1"></div>
+			<div class="bar2" id="menu-2"></div>
+			<div class="bar3" id="menu-3"></div>
+		</div>
+		<div id="mainContainer">
+			<h3 id="period-display"></h3>
+			<h1 id="mainTime" onclick="if (!(document.getElementById('settings').classList.contains('change'))) IdToggle('settings', ['menu-button', 'footer'], 'change1');">N/A</h1>
 		</div>
 
-		<div class="settings-grid" style="grid-column: 1; width: 100%; border-left: none; border-right: none"
-			id="column-1">
-			<div class="ixport-wrapper">
-				<div class="ixport-buttons">
-					<div class="ixport-botton-section">
-						<input type="image" class="ixport-button" value="#ffffff" src="Icons/export.png"
-							onclick="saveAll()" />
-						<p class="ixport-text">Save All to Cache</p>
+		<div id="settings" class="menu">
+			<div id="log-container">
+				<p style="text-wrap: nowrap" id="log"></p>
+			</div>
+
+			<div class="settings-grid" style="grid-column: 1; width: 100%; border-left: none; border-right: none" id="column-1">
+				<div class="ixport-wrapper">
+					<div class="ixport-buttons">
+						<div class="ixport-botton-section">
+							<input type="image" class="ixport-button" value="#ffffff" src="Icons/export.png" onclick="saveAll()" />
+							<p class="ixport-text">Save All to Cache</p>
+						</div>
+					</div>
+					<div class="ixport-buttons">
+						<div class="ixport-botton-section">
+							<input type="image" class="ixport-button danger-button-inverse" value="#ffffff" src="Icons/import.png" onclick="cacheRecall(this)" />
+							<p class="ixport-text">Import from Cache</p>
+						</div>
+					</div>
+					<div class="ixport-buttons">
+						<div class="ixport-botton-section" style="margin-right: 1vh; margin-top: 0vh">
+							<input type="image" class="ixport-button danger-button-inverse" value="#ffffff" src="Icons/Reset.png" onclick="clearStorage(this)" />
+							<p class="ixport-text">Full Reset</p>
+						</div>
 					</div>
 				</div>
-				<div class="ixport-buttons">
-					<div class="ixport-botton-section">
-						<input type="image" class="ixport-button danger-button-inverse" value="#ffffff"
-							src="Icons/import.png" onclick="cacheRecall(this)" />
-						<p class="ixport-text">Import from Cache</p>
+
+				<p style="font-size: 2.5vh; margin-left: 0; text-align: center">Click the clock to toggle the UI visibility</p>
+				<hr class="options-seperator" />
+				<div class="organizer-button-grid" onclick="IdToggle('color-organizer', ['color-organizer'], 'change')">
+					<div class="middle-align">
+						<p class="organizer-text">Colors</p>
+					</div>
+					<div class="middle-align">
+						<img src="Icons/down.png" class="down-img" />
 					</div>
 				</div>
-				<div class="ixport-buttons">
-					<div class="ixport-botton-section" style="margin-right: 1vh; margin-top: 0vh">
-						<input type="image" class="ixport-button danger-button-inverse" value="#ffffff"
-							src="Icons/Reset.png" onclick="clearStorage(this)" />
-						<p class="ixport-text">Full Reset</p>
+
+				<div class="organizer-box" id="color-organizer">
+					<hr class="options-seperator-mini" />
+					<p class="selector">
+						Background Color<br />
+						<input type="image" class="reset-button" value="#000000" src="Icons/image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('background-picker'), ['value']);ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])" />
+						<input id="background-picker" type="color" value="#000000" class="button" onchange="ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])" />
+					</p>
+					<p class="selector">
+						Text Color<br />
+						<input type="image" class="reset-button" value="#ffffff" src="Icons/image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('text-picker'), ['value']);ChangeElement(this, document.getElementById('mainContainer'), ['style','color'])" />
+						<input id="text-picker" type="color" value="#ffffff" class="button" onchange="ChangeElement(this, document.getElementById('mainContainer'), ['style','color'])" />
+					</p>
+
+					<p class="selector">
+						Menu Color<br />
+						<input type="image" class="reset-button" value="#ffffff" src="Icons/image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('menu-picker'), ['value']);ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" />
+						<input id="menu-picker" type="color" value="#ffffff" class="button" onchange="ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" />
+					</p>
+				</div>
+
+				<hr class="options-seperator" />
+				<div class="organizer-button-grid" onclick="IdToggle('font-organizer', ['font-organizer'], 'change')">
+					<div class="middle-align">
+						<p class="organizer-text">Text</p>
+					</div>
+					<div class="middle-align">
+						<img src="Icons/down.png" class="down-img" />
 					</div>
 				</div>
+				<div class="organizer-box" id="font-organizer">
+					<hr class="options-seperator-mini" />
+
+					<div class="middle-align">
+						<div class="custom-select">
+							<div class="current-chedule-wrapper" onclick="removeFixedDisplay('fonts');IdToggle('fonts', ['fonts']);">
+								<div data-value="ccl" style="border: none; background-color: transparent; color: white; display: flex; align-items: center" class="select-box" id="font-picker">
+									<p>ccl</p>
+								</div>
+								<div class="middle-align">
+									<img src="Icons/down.png" style="margin-top: 0.5vh" class="down-img" />
+								</div>
+							</div>
+							<div class="options" id="fonts">
+								<div class="schedules-grouper hide-on-mobile">
+									<div class="options" style="display: block; border-top: none" id="font-choices"></div>
+									<!-- <div class="schedule-tooltip-container" style="cursor: default"> -->
+									<!-- <p id="schedule-tooltip"></p> -->
+									<!-- </div> -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<hr class="options-seperator" />
+				<div class="organizer-button-grid" onclick="IdToggle('clock-organizer', ['clock-organizer'], 'change')">
+					<div class="middle-align">
+						<p class="organizer-text">Clock</p>
+					</div>
+					<div class="middle-align">
+						<img src="Icons/down.png" class="down-img" />
+					</div>
+				</div>
+				<div class="organizer-box" id="clock-organizer">
+					<hr class="options-seperator-mini" />
+					<p class="selector">
+						Clock Size<br />
+						<input type="image" class="reset-button" value="28vw" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
+						<input id="font-size-picker" type="text" value="28" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','font-size'],this.value+'vw')" />
+					</p>
+					<p class="selector">
+						Clock Letter Spacing<br />
+						<input type="image" class="reset-button" value="0vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('letter-spacing-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','letter-spacing'])" />
+						<input id="letter-spacing-size-picker" type="text" value="0" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','letter-spacing'],this.value+'vw')" />
+					</p>
+					<p class="selector">
+						Clock Left Offset<br />
+						<input type="image" class="reset-button" value="0vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('clock-left-offset-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','margin-left'])" />
+						<input id="clock-left-offset-picker" type="text" value="0" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','margin-left'],this.value+'vh')" />
+					</p>
+					<p class="selector">
+						Clock Top Offset<br />
+						<input type="image" class="reset-button" value="0vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('clock-top-offset-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','margin-top'])" />
+						<input id="clock-top-offset-picker" type="text" value="0" class="button" size="1" oninput="ChangeElement('', document.getElementById('mainTime'), ['style','margin-top'],this.value+'vh')" />
+					</p>
+					<p class="selector">
+						In-Between Periods Text<br />
+						<input type="image" class="reset-button" value="Break" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('break-picker'), ['value'], this.value);breaks = this.value" />
+						<input id="break-picker" type="text" value="Break" class="button" size="4" oninput="breaks = this.value" />
+					</p>
+					<p class="selector">
+						Before-Schedule Text<br />
+						<input type="image" class="reset-button" value="Before" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('before-picker'), ['value'], this.value);befores = this.value" />
+						<input id="before-picker" type="text" value="Before" class="button" size="4" oninput="befores = this.value" />
+					</p>
+					<p class="selector">
+						After-Schedule Text<br />
+						<input type="image" class="reset-button" value="After" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('after-picker'), ['value'], this.value);afters = this.value" />
+						<input id="after-picker" type="text" value="After" class="button" size="4" oninput="afters = this.value" />
+					</p>
+					<div class="middle-align" style="margin-top: 1vh; margin-bottom: 2vh">
+						<label class="switch" style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 0; width: 95%; text-align: center"
+							><input id="negative-time-box" type="checkbox" onclick="NegativeTimeToggle(this)" checked /><span class="slider" style="width: 100%">
+								<p style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">Show Time Before Next Period</p>
+							</span>
+						</label>
+					</div>
+				</div>
+				<hr class="options-seperator" />
+				<div class="organizer-button-grid" onclick="IdToggle('period-organizer', ['period-organizer'], 'change')">
+					<div class="middle-align">
+						<p class="organizer-text">Period Display</p>
+					</div>
+					<div class="middle-align">
+						<img src="Icons/down.png" class="down-img" />
+					</div>
+				</div>
+				<div class="organizer-box" id="period-organizer">
+					<hr class="options-seperator-mini" />
+					<div class="middle-align" style="margin-top: 1vh; margin-bottom: 2vh">
+						<label class="switch" style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 0; width: 50%; text-align: center"
+							><input id="display-lock-box" type="checkbox" onclick="lockDisplay(this)" /><span class="slider" style="width: 100%">
+								<p style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">Lock Display</p>
+							</span>
+						</label>
+					</div>
+					<p class="selector">
+						Period Display Size<br />
+						<input type="image" class="reset-button" value="5vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('font-size-picker2'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('period-display'), ['style','font-size'])" />
+						<input id="font-size-picker2" type="text" value="5" class="button" size="1" oninput="ChangeElement('', document.getElementById('period-display'), ['style','font-size'],this.value+'vh')" />
+					</p>
+
+					<p class="selector">
+						Period Display Letter Spacing<br />
+						<input type="image" class="reset-button" value="0vh" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('letter-spacing-size-picker2'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('period-display'), ['style','letter-spacing'])" />
+						<input id="letter-spacing-size-picker2" type="text" value="0" class="button" size="1" oninput="ChangeElement('', document.getElementById('period-display'), ['style','letter-spacing'],this.value+'vh')" />
+					</p>
+					<p class="selector">
+						Period Display Prefix Text<br />
+						<input type="image" class="reset-button" value="Current Period: " src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('display-picker'), ['value'], this.value);CurrentPeriods = this.value" />
+						<input id="display-picker" type="text" value="Current Period: " class="button" size="6" oninput="currentPeriods = this.value;" />
+					</p>
+					<p class="selector">
+						In-Between Periods Display Prefix Text<br />
+						<input type="image" class="reset-button" value="Next Period: " src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('betweens-display-picker'), ['value'], this.value);betweenCurrentPeriods = this.value" />
+						<input id="betweens-display-picker" type="text" value="Next Period: " class="button" size="6" oninput="betweenCurrentPeriods = this.value" />
+					</p>
+				</div>
+				<hr class="options-seperator" />
+
+				<div class="organizer-button-grid" onclick="IdToggle('clock-organizer', ['misc-organizer'], 'change')">
+					<div class="middle-align">
+						<p class="organizer-text">Misc.</p>
+					</div>
+					<div class="middle-align">
+						<img src="Icons/down.png" class="down-img" />
+					</div>
+				</div>
+				<div class="organizer-box" id="misc-organizer">
+					<hr class="options-seperator-mini" />
+					<p class="selector">
+						Background Image<br />
+						<input type="image" class="reset-button" value="" src="Icons/image-removebg-preview.png" onclick="ChangeElement(this, document.getElementById('src-picker'), ['value'], this.value);ChangeElement(this, document.getElementById('mainContainer'), ['style','background-image'],'url('+this.value+')')" />
+						<input id="src-picker" type="text" placeholder="Paste Image Address" value="" class="button" size="1" oninput="ChangeElement(this, document.getElementById('mainContainer'), ['style','background-image'],'url('+this.value+')');srcBackgroundFix(document.getElementById('mainContainer'))" />
+					</p>
+					<div class="middle-align" style="margin-top: 1vh; margin-bottom: 2vh">
+						<label class="switch" style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 0; width: 95%; text-align: center"
+							><input id="autoHideMenu-box" type="checkbox" onclick="autoHideMenuToggle(this)" /><span class="slider" style="width: 100%">
+								<p style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">Automatically Hide Menu</p>
+							</span>
+						</label>
+					</div>
+					<div class="middle-align" style="margin-top: 1vh; margin-bottom: 2vh">
+						<label class="switch" style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 0; width: 95%; text-align: center"
+							><input id="opacity-lock-box" type="checkbox" onclick="lockOpacity(this)" /><span class="slider" style="width: 100%">
+								<p style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">Prevent Settings Transparency</p>
+							</span>
+						</label>
+					</div>
+				</div>
+				<hr class="hidden-options-seperator" />
 			</div>
 
-			<p style="font-size: 2.5vh; margin-left: 0; text-align: center">Click the clock to toggle the UI visibility
-			</p>
-			<hr class="options-seperator" />
-			<div class="organizer-button-grid" onclick="IdToggle('color-organizer', ['color-organizer'], 'change')">
-				<div class="middle-align">
-					<p class="organizer-text">Colors</p>
-				</div>
-				<div class="middle-align">
-					<img src="Icons/down.png" class="down-img" />
-				</div>
-			</div>
-
-			<div class="organizer-box" id="color-organizer">
-				<hr class="options-seperator-mini" />
-				<p class="selector">
-					Background Color<br />
-					<input type="image" class="reset-button" value="#000000" src="Icons/image-removebg-preview.png"
-						onclick="ChangeElement(this, document.getElementById('background-picker'), ['value']);ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])" />
-					<input id="background-picker" type="color" value="#000000" class="button"
-						onchange="ChangeElement(this, document.getElementById('mainContainer'), ['style','background'])" />
-				</p>
-				<p class="selector">
-					Text Color<br />
-					<input type="image" class="reset-button" value="#ffffff" src="Icons/image-removebg-preview.png"
-						onclick="ChangeElement(this, document.getElementById('text-picker'), ['value']);ChangeElement(this, document.getElementById('mainContainer'), ['style','color'])" />
-					<input id="text-picker" type="color" value="#ffffff" class="button"
-						onchange="ChangeElement(this, document.getElementById('mainContainer'), ['style','color'])" />
-				</p>
-
-				<p class="selector">
-					Menu Color<br />
-					<input type="image" class="reset-button" value="#ffffff" src="Icons/image-removebg-preview.png"
-						onclick="ChangeElement(this, document.getElementById('menu-picker'), ['value']);ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" />
-					<input id="menu-picker" type="color" value="#ffffff" class="button"
-						onchange="ChangeElement(this, document.getElementById('menu-1'), ['style','background']);ChangeElement(this, document.getElementById('menu-2'), ['style','background']);ChangeElement(this, document.getElementById('menu-3'), ['style','background']);" />
-				</p>
-			</div>
-
-			<hr class="options-seperator" />
-			<div class="organizer-button-grid" onclick="IdToggle('font-organizer', ['font-organizer'], 'change')">
-				<div class="middle-align">
-					<p class="organizer-text">Text</p>
-				</div>
-				<div class="middle-align">
-					<img src="Icons/down.png" class="down-img" />
-				</div>
-			</div>
-			<div class="organizer-box" id="font-organizer">
-				<hr class="options-seperator-mini" />
-
-
-
+			<div class="settings-grid" style="grid-column: 2; border-width: 0.5vh">
 				<div class="middle-align">
 					<div class="custom-select">
-						<div class="current-chedule-wrapper"
-							onclick="removeFixedDisplay('fonts');IdToggle('fonts', ['fonts']);">
-							<div data-value="ccl"
-								style="border: none; background-color: transparent; color: white; display: flex; align-items: center"
-								class="select-box" id="font-picker">
-								<p>ccl</p>
+						<div id="current-chedule-wrapper" class="current-chedule-wrapper" onclick="removeFixedDisplay('schedules');IdToggle('schedules', ['schedules']);">
+							<div data-value="Yellow Springs High School" style="border: none; background-color: transparent; color: white; display: flex; align-items: center" class="select-box" id="schedule-picker">
+								<p>No Schedules</p>
 							</div>
 							<div class="middle-align">
 								<img src="Icons/down.png" style="margin-top: 0.5vh" class="down-img" />
 							</div>
 						</div>
-						<div class="options" id="fonts">
+						<div class="options" id="schedules">
 							<div class="schedules-grouper hide-on-mobile">
-								<div class="options" style="display: block; border-top: none" id="font-choices"></div>
-								<!-- <div class="schedule-tooltip-container" style="cursor: default"> -->
-								<!-- <p id="schedule-tooltip"></p> -->
-								<!-- </div> -->
+								<div class="options" style="display: block; border-top: none" id="schedule-specific"></div>
+								<div class="schedule-tooltip-container" style="cursor: default">
+									<p id="schedule-tooltip"></p>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-
-			<hr class="options-seperator" />
-			<div class="organizer-button-grid" onclick="IdToggle('clock-organizer', ['clock-organizer'], 'change')">
-				<div class="middle-align">
-					<p class="organizer-text">Clock</p>
-				</div>
-				<div class="middle-align">
-					<img src="Icons/down.png" class="down-img" />
-				</div>
-			</div>
-			<div class="organizer-box" id="clock-organizer">
-				<hr class="options-seperator-mini" />
-				<p class="selector">
-					Clock Size<br />
-					<input type="image" class="reset-button" value="28vw" src="Icons/image-removebg-preview.png"
-						onclick="ChangeElement('', document.getElementById('font-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','font-size'])" />
-					<input id="font-size-picker" type="text" value="28" class="button" size="1"
-						oninput="ChangeElement('', document.getElementById('mainTime'), ['style','font-size'],this.value+'vw')" />
-				</p>
-				<p class="selector">
-					Clock Letter Spacing<br />
-					<input type="image" class="reset-button" value="0vh" src="Icons/image-removebg-preview.png"
-						onclick="ChangeElement('', document.getElementById('letter-spacing-size-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','letter-spacing'])" />
-					<input id="letter-spacing-size-picker" type="text" value="0" class="button" size="1"
-						oninput="ChangeElement('', document.getElementById('mainTime'), ['style','letter-spacing'],this.value+'vw')" />
-				</p>
-				<p class="selector">
-					Clock Left Offset<br />
-					<input type="image" class="reset-button" value="0vh" src="Icons/image-removebg-preview.png"
-						onclick="ChangeElement('', document.getElementById('clock-left-offset-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','margin-left'])" />
-					<input id="clock-left-offset-picker" type="text" value="0" class="button" size="1"
-						oninput="ChangeElement('', document.getElementById('mainTime'), ['style','margin-left'],this.value+'vh')" />
-				</p>
-				<p class="selector">
-					Clock Top Offset<br />
-					<input type="image" class="reset-button" value="0vh" src="Icons/image-removebg-preview.png"
-						onclick="ChangeElement('', document.getElementById('clock-top-offset-picker'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('mainTime'), ['style','margin-top'])" />
-					<input id="clock-top-offset-picker" type="text" value="0" class="button" size="1"
-						oninput="ChangeElement('', document.getElementById('mainTime'), ['style','margin-top'],this.value+'vh')" />
-				</p>
-				<p class="selector">
-					In-Between Periods Text<br />
-					<input type="image" class="reset-button" value="Break" src="Icons/image-removebg-preview.png"
-						onclick="ChangeElement('', document.getElementById('break-picker'), ['value'], this.value);breaks = this.value" />
-					<input id="break-picker" type="text" value="Break" class="button" size="4"
-						oninput="breaks = this.value" />
-				</p>
-				<p class="selector">
-					Before-Schedule Text<br />
-					<input type="image" class="reset-button" value="Before" src="Icons/image-removebg-preview.png"
-						onclick="ChangeElement('', document.getElementById('before-picker'), ['value'], this.value);befores = this.value" />
-					<input id="before-picker" type="text" value="Before" class="button" size="4"
-						oninput="befores = this.value" />
-				</p>
-				<p class="selector">
-					After-Schedule Text<br />
-					<input type="image" class="reset-button" value="After" src="Icons/image-removebg-preview.png"
-						onclick="ChangeElement('', document.getElementById('after-picker'), ['value'], this.value);afters = this.value" />
-					<input id="after-picker" type="text" value="After" class="button" size="4"
-						oninput="afters = this.value" />
-				</p>
-				<div class="middle-align" style="margin-top: 1vh; margin-bottom: 2vh">
-					<label class="switch"
-						style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 0; width: 95%; text-align: center"><input
-							id="negative-time-box" type="checkbox" onclick="NegativeTimeToggle(this)" checked /><span
-							class="slider" style="width: 100%">
-							<p
-								style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">
-								Show Time Before Next Period</p>
-						</span>
-					</label>
-				</div>
-			</div>
-			<hr class="options-seperator" />
-			<div class="organizer-button-grid" onclick="IdToggle('period-organizer', ['period-organizer'], 'change')">
-				<div class="middle-align">
-					<p class="organizer-text">Period Display</p>
-				</div>
-				<div class="middle-align">
-					<img src="Icons/down.png" class="down-img" />
-				</div>
-			</div>
-			<div class="organizer-box" id="period-organizer">
-				<hr class="options-seperator-mini" />
-				<div class="middle-align" style="margin-top: 1vh; margin-bottom: 2vh">
-					<label class="switch"
-						style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 0; width: 50%; text-align: center"><input
-							id="display-lock-box" type="checkbox" onclick="lockDisplay(this)" /><span class="slider"
-							style="width: 100%">
-							<p
-								style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">
-								Lock Display</p>
-						</span>
-					</label>
-				</div>
-				<p class="selector">
-					Period Display Size<br />
-					<input type="image" class="reset-button" value="5vh" src="Icons/image-removebg-preview.png"
-						onclick="ChangeElement('', document.getElementById('font-size-picker2'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('period-display'), ['style','font-size'])" />
-					<input id="font-size-picker2" type="text" value="5" class="button" size="1"
-						oninput="ChangeElement('', document.getElementById('period-display'), ['style','font-size'],this.value+'vh')" />
-				</p>
-
-
-				<p class="selector">
-					Period Display Letter Spacing<br />
-					<input type="image" class="reset-button" value="0vh" src="Icons/image-removebg-preview.png"
-						onclick="ChangeElement('', document.getElementById('letter-spacing-size-picker2'), ['value'], this.value.slice(0, -2));ChangeElement(this, document.getElementById('period-display'), ['style','letter-spacing'])" />
-					<input id="letter-spacing-size-picker2" type="text" value="0" class="button" size="1"
-						oninput="ChangeElement('', document.getElementById('period-display'), ['style','letter-spacing'],this.value+'vh')" />
-				</p>
-				<p class="selector">
-					Period Display Prefix Text<br />
-					<input type="image" class="reset-button" value="Current Period: "
-						src="Icons/image-removebg-preview.png"
-						onclick="ChangeElement('', document.getElementById('display-picker'), ['value'], this.value);CurrentPeriods = this.value" />
-					<input id="display-picker" type="text" value="Current Period: " class="button" size="6"
-						oninput="currentPeriods = this.value;" />
-				</p>
-				<p class="selector">
-					In-Between Periods Display Prefix Text<br />
-					<input type="image" class="reset-button" value="Next Period: "
-						src="Icons/image-removebg-preview.png"
-						onclick="ChangeElement('', document.getElementById('betweens-display-picker'), ['value'], this.value);betweenCurrentPeriods = this.value" />
-					<input id="betweens-display-picker" type="text" value="Next Period: " class="button" size="6"
-						oninput="betweenCurrentPeriods = this.value" />
-				</p>
-			</div>
-			<hr class="options-seperator" />
-
-			<div class="organizer-button-grid" onclick="IdToggle('clock-organizer', ['misc-organizer'], 'change')">
-				<div class="middle-align">
-					<p class="organizer-text">Misc.</p>
-				</div>
-				<div class="middle-align">
-					<img src="Icons/down.png" class="down-img" />
-				</div>
-			</div>
-			<div class="organizer-box" id="misc-organizer">
-				<hr class="options-seperator-mini" />
-				<p class="selector">
-					Background Image<br />
-					<input type="image" class="reset-button" value="" src="Icons/image-removebg-preview.png"
-						onclick="ChangeElement(this, document.getElementById('src-picker'), ['value'], this.value);ChangeElement(this, document.getElementById('mainContainer'), ['style','background-image'],'url('+this.value+')')" />
-					<input id="src-picker" type="text" placeholder="Paste Image Address" value="" class="button"
-						size="1"
-						oninput="ChangeElement(this, document.getElementById('mainContainer'), ['style','background-image'],'url('+this.value+')');srcBackgroundFix(document.getElementById('mainContainer'))" />
-				</p>
-				<div class="middle-align" style="margin-top: 1vh; margin-bottom: 2vh">
-					<label class="switch"
-						style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 0; width: 95%; text-align: center"><input
-							id="autoHideMenu-box" type="checkbox" onclick="autoHideMenuToggle(this)" /><span
-							class="slider" style="width: 100%">
-							<p
-								style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">
-								Automatically Hide Menu</p>
-						</span>
-					</label>
-				</div>
-				<div class="middle-align" style="margin-top: 1vh; margin-bottom: 2vh">
-					<label class="switch"
-						style="width: 100%; min-width: 0; padding: 0; display: inline-block; margin-top: 0; width: 95%; text-align: center"><input
-							id="opacity-lock-box" type="checkbox" onclick="lockOpacity(this)" /><span class="slider"
-							style="width: 100%">
-							<p
-								style="font-size: calc(1vh + 0.5vw); line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">
-								Prevent Settings Transparency</p>
-						</span>
-					</label>
-				</div>
-
-			</div>
-			<hr class="options-seperator" />
-		</div>
-
-		<div class="settings-grid" style="grid-column: 2; border-width: 0.5vh">
-			<div class="middle-align">
-				<div class="custom-select">
-					<div id="current-chedule-wrapper" class="current-chedule-wrapper"
-						onclick="removeFixedDisplay('schedules');IdToggle('schedules', ['schedules']);">
-						<div data-value="Yellow Springs High School"
-							style="border: none; background-color: transparent; color: white; display: flex; align-items: center"
-							class="select-box" id="schedule-picker">
-							<p>No Schedules</p>
-						</div>
-						<div class="middle-align">
-							<img src="Icons/down.png" style="margin-top: 0.5vh" class="down-img" />
-						</div>
-					</div>
-					<div class="options" id="schedules">
-						<div class="schedules-grouper hide-on-mobile">
-							<div class="options" style="display: block; border-top: none" id="schedule-specific"></div>
-							<div class="schedule-tooltip-container" style="cursor: default">
-								<p id="schedule-tooltip"></p>
+				<div style="display: flex; justify-content: center; flex-direction: column; align-items: center">
+					<hr class="options-seperator" />
+					<div id="period-selectors" style="display: block; justify-content: center; align-items: center; width: 100%">
+						<div class="organizer-button-grid" onclick="IdToggle('Current-schedule-organizer', ['Current-schedule-organizer'], 'change')">
+							<div class="middle-align">
+								<p class="organizer-text">Import/Export Current Schedule (By Code/File)</p>
+							</div>
+							<div class="middle-align">
+								<img src="Icons/down.png" class="down-img" />
 							</div>
 						</div>
+						<div class="organizer-box" id="Current-schedule-organizer">
+							<hr class="options-seperator-mini" />
+							<div class="ixport-wrapper">
+								<div class="ixport-buttons">
+									<p class="ixport-description">By Code</p>
+								</div>
+								<div class="ixport-buttons">
+									<div class="ixport-botton-section">
+										<input type="image" class="ixport-button" value="#ffffff" src="Icons/import.png" onclick="exportCode()" />
+										<p class="ixport-text">Copy to Clipboard</p>
+									</div>
+								</div>
+								<div class="ixport-buttons">
+									<div class="ixport-botton-section" style="margin-right: 1vh">
+										<input type="image" class="ixport-button" value="#ffffff" src="Icons/export.png" onclick="importClipCode()" />
+										<p class="ixport-text">Paste from Clipboard</p>
+									</div>
+								</div>
+							</div>
+
+							<div class="ixport-wrapper">
+								<div class="ixport-buttons">
+									<p class="ixport-description">By File</p>
+								</div>
+								<div class="ixport-buttons">
+									<div class="ixport-botton-section">
+										<input type="image" class="ixport-button" value="#ffffff" src="Icons/import.png" onclick="exportCurrent()" />
+										<p class="ixport-text">Download file</p>
+									</div>
+								</div>
+								<div class="ixport-buttons">
+									<div class="ixport-botton-section" style="margin-right: 1vh; margin-top: 0vh">
+										<label for="fileInput"><img class="ixport-button" src="Icons/export.png" alt="Import Schedule" /></label>
+										<input type="file" accept=".txt" id="fileInput" class="ixport-button" value="#ffffff" src="Icons/export.png" onchange="importSchedule()" />
+										<!-- <input type="file" id="fileInput" accept=".txt" onchange="importSchedule()" /> -->
+										<p class="ixport-text">Import File</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<hr class="options-seperator" />
+						<div class="organizer-button-grid" onclick="IdToggle('url-schedule-organizer', ['url-schedule-organizer'], 'change')">
+							<div class="middle-align">
+								<p class="organizer-text">Export All Schedules (By URL)</p>
+							</div>
+							<div class="middle-align">
+								<img src="Icons/down.png" class="down-img" />
+							</div>
+						</div>
+						<div class="organizer-box" id="url-schedule-organizer">
+							<hr class="options-seperator-mini" />
+							<div class="ixport-wrapper" style="margin-bottom: 1vh">
+								<div class="ixport-buttons">
+									<p class="ixport-description">By Url</p>
+								</div>
+								<div class="ixport-buttons">
+									<div class="ixport-botton-section">
+										<input type="image" class="ixport-button" value="#ffffff" src="Icons/import.png" onclick="exportURL()" />
+										<p class="ixport-text">Copy Url</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<hr class="options-seperator" />
+						<div class="organizer-button-grid" onclick="IdToggle('everything-schedule-organizer', ['everything-schedule-organizer'], 'change')">
+							<div class="middle-align">
+								<p class="organizer-text">Import/Export Everything (By Code)</p>
+							</div>
+							<div class="middle-align">
+								<img src="Icons/down.png" class="down-img" />
+							</div>
+						</div>
+						<div class="organizer-box" id="everything-schedule-organizer">
+							<hr class="options-seperator-mini" />
+							<div class="ixport-wrapper">
+								<div class="ixport-buttons">
+									<p class="ixport-description">By Code</p>
+								</div>
+								<div class="ixport-buttons">
+									<div class="ixport-botton-section">
+										<input type="image" class="ixport-button" value="#ffffff" src="Icons/import.png" onclick="exportEnv()" />
+										<p class="ixport-text">Copy to Clipboard</p>
+									</div>
+								</div>
+								<div class="ixport-buttons">
+									<div class="ixport-botton-section" style="margin-right: 1vh">
+										<input type="image" class="ixport-button" value="#ffffff" src="Icons/export.png" onclick="importEnv()" />
+										<p class="ixport-text">Paste from Clipboard</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<hr class="options-seperator" />
+						<div class="organizer-button-grid" onclick="IdToggle('noise-organizer', ['noise-organizer'], 'change')">
+							<div class="middle-align">
+								<p class="organizer-text">Audio</p>
+							</div>
+							<div class="middle-align">
+								<img src="Icons/down.png" class="down-img" />
+							</div>
+						</div>
+						<div class="organizer-box" id="noise-organizer">
+							<hr class="options-seperator-mini" />
+							<div class="middle-align" style="margin-bottom: 1vh">
+								<button style="min-width: 0; padding: 0; display: inline-block; margin-left: 0.5vh; margin-right: 0.5vh; border: none; width: 100%">
+									<label class="switch" style="width: 100%">
+										<input id="audio-box" type="checkbox" onclick="allowAudio()" /><span class="slider">
+											<p style="font-size: 2vh; line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">Allow Audio</p>
+										</span>
+									</label>
+								</button>
+							</div>
+							<div class="middle-align">
+								<div class="ixport-buttons" style="display: inline-block">
+									<div class="ixport-botton-section" style="margin-right: 1vh">
+										<input type="image" class="ixport-button" value="#ffffff" src="Icons/noise.png" onclick="activateNoise()" />
+										<p class="ixport-text">Test Audio</p>
+									</div>
+								</div>
+								<div class="ixport-buttons" style="display: inline-block">
+									<div class="ixport-botton-section" style="margin-right: 1vh">
+										<input type="image" class="ixport-button" value="#ffffff" src="Icons/noise.png" onclick="stopAudio()" />
+										<p class="ixport-text">Stop Audio</p>
+									</div>
+								</div>
+							</div>
+							<div class="middle-align">
+								<div class="slidecontainer">
+									<p class="organizer-text" style="margin-bottom: 0.5vh; margin-top: 2vh">Audio Volume</p>
+									<div class="middle-align">
+										<input type="range" min="1" max="100" value="50" id="volume" />
+									</div>
+								</div>
+							</div>
+							<div class="selector">
+								Custom Audio Link<br />
+								<input type="image" class="reset-button" value="" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('youtubeInput'), ['value'], '');setAudioURL('yuh');" />
+								<input id="youtubeInput" placeholder="https://www.youtube.com/watch?v=..." type="text" value="" class="button" size="6" onchange="setAudioURL()" />
+							</div>
+							<div class="selector">
+								Custom Audio File<br />
+								<input type="image" class="reset-button" value="school-bell.wav" src="Icons/image-removebg-preview.png" onclick="ChangeElement('', document.getElementById('audioPlayer'), ['src'], this.value);ChangeElement('', document.getElementById('current-sound'), ['innerText'], 'Current Sound: &quot;school-bell.wav&quot;')" />
+								<div class="ixport-buttons" style="display: inline">
+									<div class="ixport-botton-section" style="margin-right: 1vh; margin-top: 0vh">
+										<label for="soundInput"><img class="ixport-button" src="Icons/export.png" alt="Import Audio" /></label>
+										<input type="file" accept="audio/*, video/mp4" id="soundInput" class="ixport-button" value="#ffffff" src="Icons/export.png" />
+										<p class="ixport-text">Import File</p>
+									</div>
+								</div>
+								<p id="current-sound" style="font-size: 2vh; line-height: 2vh; border-top: 0.25vh solid #a0a0a0b0; padding: 1vh; margin: 0; margin-top: 1vh">Current Sound: "school-bell.wav"</p>
+								<p style="font-size: calc(0.75vh + 0.75vw); line-height: 2.5vh; border-top: 0.25vh solid #a0a0a0b0; padding: 1vh; margin: 0; margin-top: 1vh">*WARNING*: Custom sound effect <b>files</b> do <b>not</b> get sent when exporting through ANY method due to requiring the sound file.</p>
+							</div>
+						</div>
+						<hr class="options-seperator" />
 					</div>
 				</div>
 			</div>
-			<div style="display: flex; justify-content: center; flex-direction: column; align-items: center">
+
+			<div id="settings-column-4" class="settings-grid" style="grid-column: 3; border-right: none; border-left: none">
+				<div class="organizer-button-grid" id="preset-wrapper" style="margin-top: 3vh" onclick="IdToggle('preset-organizer', ['preset-organizer'], 'change')">
+					<div class="middle-align">
+						<p class="organizer-text">Use Preset Schedules</p>
+					</div>
+					<div class="middle-align">
+						<img src="Icons/down.png" class="down-img" />
+					</div>
+				</div>
+
 				<hr class="options-seperator" />
-				<div id="period-selectors"
-					style="display: block; justify-content: center; align-items: center; width: 100%">
-					<div class="organizer-button-grid"
-						onclick="IdToggle('Current-schedule-organizer', ['Current-schedule-organizer'], 'change')">
-						<div class="middle-align">
-							<p class="organizer-text">Import/Export Current Schedule (By Code/File)</p>
-						</div>
-						<div class="middle-align">
-							<img src="Icons/down.png" class="down-img" />
-						</div>
-					</div>
-					<div class="organizer-box" id="Current-schedule-organizer">
-						<hr class="options-seperator-mini" />
-						<div class="ixport-wrapper">
-							<div class="ixport-buttons">
-								<p class="ixport-description">By Code</p>
-							</div>
-							<div class="ixport-buttons">
-								<div class="ixport-botton-section">
-									<input type="image" class="ixport-button" value="#ffffff" src="Icons/import.png"
-										onclick="exportCode()" />
-									<p class="ixport-text">Copy to Clipboard</p>
-								</div>
-							</div>
-							<div class="ixport-buttons">
-								<div class="ixport-botton-section" style="margin-right: 1vh">
-									<input type="image" class="ixport-button" value="#ffffff" src="Icons/export.png"
-										onclick="importClipCode()" />
-									<p class="ixport-text">Paste from Clipboard</p>
-								</div>
-							</div>
-						</div>
-
-						<div class="ixport-wrapper">
-							<div class="ixport-buttons">
-								<p class="ixport-description">By File</p>
-							</div>
-							<div class="ixport-buttons">
-								<div class="ixport-botton-section">
-									<input type="image" class="ixport-button" value="#ffffff" src="Icons/import.png"
-										onclick="exportCurrent()" />
-									<p class="ixport-text">Download file</p>
-								</div>
-							</div>
-							<div class="ixport-buttons">
-								<div class="ixport-botton-section" style="margin-right: 1vh; margin-top: 0vh">
-									<label for="fileInput"><img class="ixport-button" src="Icons/export.png"
-											alt="Import Schedule" /></label>
-									<input type="file" accept=".txt" id="fileInput" class="ixport-button"
-										value="#ffffff" src="Icons/export.png" onchange="importSchedule()" />
-									<!-- <input type="file" id="fileInput" accept=".txt" onchange="importSchedule()" /> -->
-									<p class="ixport-text">Import File</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<hr class="options-seperator" />
-					<div class="organizer-button-grid"
-						onclick="IdToggle('url-schedule-organizer', ['url-schedule-organizer'], 'change')">
-						<div class="middle-align">
-							<p class="organizer-text">Export All Schedules (By URL)</p>
-						</div>
-						<div class="middle-align">
-							<img src="Icons/down.png" class="down-img" />
-						</div>
-					</div>
-					<div class="organizer-box" id="url-schedule-organizer">
-						<hr class="options-seperator-mini" />
-						<div class="ixport-wrapper" style="margin-bottom: 1vh">
-							<div class="ixport-buttons">
-								<p class="ixport-description">By Url</p>
-							</div>
-							<div class="ixport-buttons">
-								<div class="ixport-botton-section">
-									<input type="image" class="ixport-button" value="#ffffff" src="Icons/import.png"
-										onclick="exportURL()" />
-									<p class="ixport-text">Copy Url</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<hr class="options-seperator" />
-					<div class="organizer-button-grid"
-						onclick="IdToggle('everything-schedule-organizer', ['everything-schedule-organizer'], 'change')">
-						<div class="middle-align">
-							<p class="organizer-text">Import/Export Everything (By Code)</p>
-						</div>
-						<div class="middle-align">
-							<img src="Icons/down.png" class="down-img" />
-						</div>
-					</div>
-					<div class="organizer-box" id="everything-schedule-organizer">
-						<hr class="options-seperator-mini" />
-						<div class="ixport-wrapper">
-							<div class="ixport-buttons">
-								<p class="ixport-description">By Code</p>
-							</div>
-							<div class="ixport-buttons">
-								<div class="ixport-botton-section">
-									<input type="image" class="ixport-button" value="#ffffff" src="Icons/import.png"
-										onclick="exportEnv()" />
-									<p class="ixport-text">Copy to Clipboard</p>
-								</div>
-							</div>
-							<div class="ixport-buttons">
-								<div class="ixport-botton-section" style="margin-right: 1vh">
-									<input type="image" class="ixport-button" value="#ffffff" src="Icons/export.png"
-										onclick="importEnv()" />
-									<p class="ixport-text">Paste from Clipboard</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<hr class="options-seperator" />
-					<div class="organizer-button-grid"
-						onclick="IdToggle('noise-organizer', ['noise-organizer'], 'change')">
-						<div class="middle-align">
-							<p class="organizer-text">Audio</p>
-						</div>
-						<div class="middle-align">
-							<img src="Icons/down.png" class="down-img" />
-						</div>
-					</div>
-					<div class="organizer-box" id="noise-organizer">
-						<hr class="options-seperator-mini" />
-						<div class="middle-align" style="margin-bottom: 1vh">
-							<button
-								style="min-width: 0; padding: 0; display: inline-block; margin-left: 0.5vh; margin-right: 0.5vh; border: none; width: 100%">
-								<label class="switch" style="width: 100%">
-									<input id="audio-box" type="checkbox" onclick="allowAudio()" /><span class="slider">
-										<p
-											style="font-size: 2vh; line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">
-											Allow Audio</p>
-									</span>
-								</label>
-							</button>
-						</div>
-						<div class="middle-align">
-							<div class="ixport-buttons" style="display: inline-block">
-								<div class="ixport-botton-section" style="margin-right: 1vh">
-									<input type="image" class="ixport-button" value="#ffffff" src="Icons/noise.png"
-										onclick="activateNoise()" />
-									<p class="ixport-text">Test Audio</p>
-								</div>
-							</div>
-							<div class="ixport-buttons" style="display: inline-block">
-								<div class="ixport-botton-section" style="margin-right: 1vh">
-									<input type="image" class="ixport-button" value="#ffffff" src="Icons/noise.png"
-										onclick="stopAudio()" />
-									<p class="ixport-text">Stop Audio</p>
-								</div>
-							</div>
-						</div>
-						<div class="middle-align">
-							<div class="slidecontainer">
-								<p class="organizer-text" style="margin-bottom: 0.5vh; margin-top: 2vh">Audio Volume</p>
-								<div class="middle-align">
-									<input type="range" min="1" max="100" value="50" id="volume" />
-								</div>
-							</div>
-						</div>
-						<div class="selector">
-							Custom Audio Link<br />
-							<input type="image" class="reset-button" value="" src="Icons/image-removebg-preview.png"
-								onclick="ChangeElement('', document.getElementById('youtubeInput'), ['value'], '');setAudioURL('yuh');" />
-							<input id="youtubeInput" placeholder="https://www.youtube.com/watch?v=..." type="text"
-								value="" class="button" size="6" onchange="setAudioURL()" />
-						</div>
-						<div class="selector">
-							Custom Audio File<br />
-							<input type="image" class="reset-button" value="school-bell.wav"
-								src="Icons/image-removebg-preview.png"
-								onclick="ChangeElement('', document.getElementById('audioPlayer'), ['src'], this.value);ChangeElement('', document.getElementById('current-sound'), ['innerText'], 'Current Sound: &quot;school-bell.wav&quot;')" />
-							<div class="ixport-buttons" style="display: inline">
-								<div class="ixport-botton-section" style="margin-right: 1vh; margin-top: 0vh">
-									<label for="soundInput"><img class="ixport-button" src="Icons/export.png"
-											alt="Import Audio" /></label>
-									<input type="file" accept="audio/*, video/mp4" id="soundInput" class="ixport-button"
-										value="#ffffff" src="Icons/export.png" />
-									<p class="ixport-text">Import File</p>
-								</div>
-							</div>
-							<p id="current-sound"
-								style="font-size: 2vh; line-height: 2vh; border-top: 0.25vh solid #a0a0a0b0; padding: 1vh; margin: 0; margin-top: 1vh">
-								Current Sound: "school-bell.wav"</p>
-							<p
-								style="font-size: calc(0.75vh + 0.75vw); line-height: 2.5vh; border-top: 0.25vh solid #a0a0a0b0; padding: 1vh; margin: 0; margin-top: 1vh">
-								*WARNING*: Custom sound effect <b>files</b> do <b>not</b> get sent when exporting
-								through ANY method due to requiring the sound file.</p>
-						</div>
-					</div>
-					<hr class="options-seperator" />
+				<div class="middle-align">
+					<p class="organizer-text" style="margin-top: 1vh">Create new schedule</p>
 				</div>
-			</div>
-		</div>
-
-		<div id="settings-column-4" class="settings-grid" style="grid-column: 3; border-right: none; border-left: none">
-			<div class="middle-align">
-				<p class="organizer-text" style="margin-top:1vh;">Create new schedule</p>
-			</div>
-			<!-- <div class="middle-align">
+				<!-- <div class="middle-align">
 								<img src="Icons/down.png" class="down-img" />
 							</div> -->
+				<div class="middle-align">
+					<div style="width: 80%" id="new-schedule-organizer">
+						<hr class="options-seperator-mini" />
+						<div class="middle-align">
+							<input type="text" value="" class="button-draft" id="draft-name" placeholder="Draft Name" />
+						</div>
+						<div class="middle-align">
+							<button class="period-button" style="margin-top: 1vh; width: 50%; color: white; background-color: #272727; border-color: white; border-width: 0.25vh" onclick="saveDraft()">Save Current Draft →</button>
+						</div>
+					</div>
+				</div>
+				<hr class="options-seperator-mini" />
+
+				<div id="period-count" style="display: flex; flex-wrap: wrap; justify-content: center; width: 100%; margin-top: 1vh; margin-bottom: 1vh">
+					<button class="button-remove" id="remove-period" style="margin-left: 0.5vh; margin-right: 0.5vh" onclick="removePeriod()">-</button>
+					<button style="min-width: 0; padding: 0; display: inline-block; margin-left: 0.5vh; margin-right: 0.5vh; border: none">
+						<label class="switch"
+							><input id="24h-box" type="checkbox" onclick="amPmSwitch(this)" checked /><span class="slider">
+								<p style="font-size: 2vh; line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">24H</p>
+							</span>
+						</label>
+					</button>
+					<button class="button-append" style="margin-left: 0.5vh; margin-right: 0.5vh" id="append-period" onclick="appendPeriod()">+</button>
+				</div>
+				<div style="display: flex; justify-content: center; flex-direction: column; align-items: center">
+					<div id="added-periods"></div>
+				</div>
+			</div>
+			<div id="dev-settings">
+				<p style="font-size: 2vh">In developer mode. Click "About this project" in the footer information to exit.</p>
+				<p class="selector"><input type="text" value="" class="button" size="10" placeholder="fix time (24h) to:" id="dev-time-fix" /></p>
+				<p class="selector"><input type="text" value="" class="button" size="10" placeholder="add time (in hours):" id="dev-time-add" /></p>
+			</div>
+		</div>
+
+		<div class="preset-box" id="preset-organizer">
+			<!-- <hr class="options-seperator-mini" /> -->
+			<div class="preset-x-button" onclick="IdToggle('settings', ['preset-organizer'], 'change')" id="preset-button">
+				<div class="pbar1" id="menu-1"></div>
+				<div class="pbar3" id="menu-3"></div>
+			</div>
+			<div class="ixport-wrapper">
+				<p class="ixport-description">Import Schedules From:</p>
+				<div class="ixport-buttons">
+					<div class="ixport-botton-section">
+						<input type="image" class="preset-button" value="#ffffff" src="Icons/Presets/YS.png" onclick="presetLoad('YS');IdToggle('', ['preset-organizer'], 'change');" />
+						<p class="ixport-text">Yellow Springs</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<footer class="footer" id="footer">
 			<div class="middle-align">
-				<div style="width: 80%;" id="new-schedule-organizer">
-					<hr class="options-seperator-mini" />
-					<div class="middle-align">
-						<input type="text" value="" class="button-draft" id="draft-name" placeholder="Draft Name" />
+				<div style="width: 50%" class="" onclick="IdToggle('footer-grid-settings-wrapper', ['footer-grid-wrapper','footer-arrow'], 'change');document.getElementById('github-link').scrollIntoView({behavior: 'smooth'});">
+					<p style="font-size: 2vh; margin-bottom: 1vh">See Info about this page.</p>
+					<img src="Icons/down.png" class="footer-img" id="footer-arrow" />
+				</div>
+			</div>
+			<div id="footer-grid-wrapper">
+				<hr class="options-seperator" />
+				<div class="footer-grid" id="footer-grid">
+					<div style="border-right: solid 0.25vh white; padding: 1vh; padding-top: 0.25vh">
+						<h1 class="footer-header" onclick="IdToggle('dev-settings', ['dev-settings'], 'change');">About this Project</h1>
+						<p class="footer-text">
+							This website was built as a senior project in highschool, and its purpose was originally to help streamline the process of checking how much time was available in the current school period.
+							<br />
+							This has evolved into a customizable timer-schedule, which I hope gets a lot of use!
+						</p>
 					</div>
-					<div class="middle-align">
-						<button class="period-button"
-							style="margin-top: 1vh; width: 50%; color: white; background-color: #272727; border-color: white; border-width: 0.25vh"
-							onclick="saveDraft()">Save Current Draft →</button>
+					<div style="margin-bottom: 1vh; padding: 0.25vh">
+						<h1 class="footer-header">Contact Information</h1>
+						<a href="mailto:dandelioncoding@gmail.com" class="footer-text" style="color: yellowgreen">Have a question? Send me an email! (dandelioncoding@gmail.com) </a>
+						<br /><br />
+						<a href="https://github.com/fjf64" class="footer-text" id="github-link" target="_blank" style="color: yellowgreen">Check out my Github</a>
 					</div>
 				</div>
 			</div>
-			<hr class="options-seperator-mini" />
-
-			<div id="period-count"
-				style="display: flex; flex-wrap: wrap; justify-content: center; width: 100%; margin-top: 1vh; margin-bottom: 1vh">
-				<button class="button-remove" id="remove-period" style="margin-left: 0.5vh; margin-right: 0.5vh"
-					onclick="removePeriod()">-</button>
-				<button
-					style="min-width: 0; padding: 0; display: inline-block; margin-left: 0.5vh; margin-right: 0.5vh; border: none">
-					<label class="switch"><input id="24h-box" type="checkbox" onclick="amPmSwitch(this)" checked /><span
-							class="slider">
-							<p style="font-size: 2vh; line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">24H</p>
-						</span>
-					</label>
-				</button>
-				<button class="button-append" style="margin-left: 0.5vh; margin-right: 0.5vh" id="append-period"
-					onclick="appendPeriod()">+</button>
-			</div>
-			<div style="display: flex; justify-content: center; flex-direction: column; align-items: center">
-				<div id="added-periods"></div>
-			</div>
-		</div>
-		<div id="dev-settings">
-			<p style="font-size: 2vh">In developer mode. Click "About this project" in the footer information to exit.
-			</p>
-			<p class="selector"><input type="text" value="" class="button" size="10" placeholder="fix time (24h) to:"
-					id="dev-time-fix" /></p>
-			<p class="selector"><input type="text" value="" class="button" size="10" placeholder="add time (in hours):"
-					id="dev-time-add" /></p>
-		</div>
-	</div>
-	<footer class="footer" id="footer">
-		<div class="middle-align">
-			<div style="width: 50%" class=""
-				onclick="IdToggle('footer-grid-settings-wrapper', ['footer-grid-wrapper','footer-arrow'], 'change')">
-				<p style="font-size: 2vh; margin-bottom: 1vh">See Info about this page.</p>
-				<img src="Icons/down.png" class="footer-img" id="footer-arrow" />
-			</div>
-		</div>
-		<div id="footer-grid-wrapper">
-			<hr class="options-seperator" />
-			<div class="footer-grid" id="footer-grid">
-				<div style="border-right: solid 0.25vh white; padding: 1vh; padding-top: 0.25vh">
-					<h1 class="footer-header" onclick="IdToggle('dev-settings', ['dev-settings'], 'change')">About this
-						Project</h1>
-					<p class="footer-text">
-						This website was built as a senior project in highschool, and its purpose was originally to help
-						streamline the process of checking how much time was available in the current school period.
-						<br />
-						This has evolved into a customizable timer-schedule, which I hope gets a lot of use!
-					</p>
-				</div>
-				<div style="margin-bottom: 1vh; padding: 0.25vh">
-					<h1 class="footer-header">Contact Information</h1>
-					<a href="mailto:dandelioncoding@gmail.com" class="footer-text" style="color: yellowgreen">Send me an
-						email (dandelioncoding@gmail.com) </a>
-					<br /><br />
-					<a href="https://github.com/fjf64" class="footer-text" target="_blank"
-						style="color: yellowgreen">Check out my Github</a>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<script src="main.js"></script>
-	<script>
-		if ("serviceWorker" in navigator) {
-			window.addEventListener("load", () => {
-				navigator.serviceWorker
-					.register("/service-worker.js")
-					.then((reg) => console.log("[SW] Registered:", reg.scope))
-					.catch((err) => console.error("[SW] Failed:", err));
-			});
-		}
-	</script>
-</body>
-
+		</footer>
+		<script src="main.js"></script>
+		<script>
+			if ("serviceWorker" in navigator) {
+				window.addEventListener("load", () => {
+					navigator.serviceWorker
+						.register("/service-worker.js")
+						.then((reg) => console.log("[SW] Registered:", reg.scope))
+						.catch((err) => console.error("[SW] Failed:", err));
+				});
+			}
+		</script>
+	</body>
 </html>

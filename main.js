@@ -23,6 +23,14 @@ var schedules = {
 	// 	["8", "15:00-15:30"],
 	// ],
 };
+var presets = {
+	YS: ["JoUwNmD2DuAEDKAHATgSwHYHMDOsASqmAFggMZGSRgBQtAjNQBwBcAzAAwC0AnM3QOy0ATNV5C6nOu2bsAbLVbUpfLsoCsa2gBYl0td0l1mWndTABXdOSVGTkoX1Oa6Duo0msZp+XU/t3vsxqitSCgWr8klrGIkxK0Vqykmps7EA", "JoZQEiAEAqDuD2kzwK4CdIBECmAbAhgJ4BQpAjMWQAwBcAzFQLRlk1UBMpnLbAbM6zq9SuFADsAxgAtKg/mXZ9SdSourNFAFiqlNqmps3M6NMnuIBWSibIAOYwdulhZExfbNNNdp2IB2Si92eS8LYWInMgs2Jij6KiA=", "JoZQEiAEBiBOCWATAhgT0gQQM5YKYFsAjAG1QCgKBGMgDgC4BmABgFoBOOypigJjI8oAWdnQCsgig35iaLLoxoUJ8wTzmU6PPmVFlKGngDY5POk0MUAMgFcAdgGMAFntPmTjC2QuVTg1pQZNbjJsPCJSPUCeYSEzCTIAdj1BM1lYwUVaZLE1SlFGJiA="],
+};
+function presetLoad(prest) {
+	for (let x of presets[prest]) {
+		importCode(x);
+	}
+}
 var lastClockState = "";
 var saveBackground = "#0a190e";
 var badBackground = "maroon";
@@ -273,7 +281,7 @@ async function saveDraft() {
 		periods.push([elements[0].value, times.join("-")]);
 	}
 	addToSchedule(draftName, periods);
-	document.getElementById("draft-name").value = ""
+	document.getElementById("draft-name").value = "";
 }
 function exportCurrent() {
 	var exportNewLine = [];
@@ -530,7 +538,9 @@ function addToSchedule(nameKey, items) {
 	document.getElementById("schedule-specific").appendChild(selectElement);
 	if (autoChooseSchedule) {
 		var initialOption = document.querySelector("#schedules .option");
-		if (!initialOption) { return }
+		if (!initialOption) {
+			return;
+		}
 		selectOption(document.getElementById("schedule-picker"), initialOption);
 	}
 
@@ -737,7 +747,7 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 			}
 			if (autoHideMenu) {
 				document.getElementById("autoHideMenu-box").checked = true;
-				IdToggle('settings', ['menu-button', 'footer'], 'change1')
+				IdToggle("settings", ["menu-button", "footer"], "change1");
 				document.getElementById("autoHideMenu-box").dispatchEvent(new Event("change", { bubbles: true }));
 			} else {
 				document.getElementById("autoHideMenu-box").checked = false;
@@ -831,7 +841,10 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 			//MISC
 			document.getElementById("period-display").style.left = cacheBox.misc.periodDisplayPos[0];
 			document.getElementById("period-display").style.top = cacheBox.misc.periodDisplayPos[1];
+		} else {
+			IdToggle('', ['preset-organizer'], 'change');
 		}
+
 	}
 }
 
@@ -995,10 +1008,13 @@ function Main() {
 	var currentSchedule = scheduleValue;
 	var usedSchedule = schedules[currentSchedule];
 	if (usedSchedule == undefined) {
-		document.getElementById('current-chedule-wrapper').style.backgroundColor = '#5e0000ff';
+		document.getElementById("current-chedule-wrapper").style.backgroundColor = "#5e0000ff";
+		// document.getElementById("preset-wrapper").style.backgroundColor = "#5e0000ff";
+				flashElement(document.getElementById("preset-wrapper"), ["style", "background"], '', badBackground, 500, 2);
 		return;
 	}
-	document.getElementById('current-chedule-wrapper').style.backgroundColor = '';
+	document.getElementById("current-chedule-wrapper").style.backgroundColor = "";
+	document.getElementById("preset-wrapper").style.backgroundColor = "";
 	var clock = document.getElementById("mainTime");
 	var currentDate = Date.now(); //'3600000 * x'=hours TEST
 	var devTimeFix = document.getElementById("dev-time-fix").value;
@@ -1071,7 +1087,7 @@ window.onload = () => {
 	if (initialOption) {
 		selectOption(document.getElementById("schedule-picker"), initialOption);
 	} else {
-		document.getElementById('schedule-picker').textContent = "No Schedules";
+		document.getElementById("schedule-picker").textContent = "No Schedules";
 	}
 
 	var initalFont = document.querySelector("#fonts .option");
@@ -1092,22 +1108,18 @@ window.onload = () => {
 	new Sortable(document.getElementById("schedule-specific"), {
 		animation: 150,
 		ghostClass: "drag-ghost", // optional class to style dragged item
-		onEnd: function (evt) { },
+		onEnd: function (evt) {},
 	});
 	new Sortable(document.getElementById("font-choices"), {
 		animation: 150,
 		ghostClass: "drag-ghost", // optional class to style dragged item
-		onEnd: function (evt) { },
+		onEnd: function (evt) {},
 	});
 
 	document.addEventListener("click", async function (e) {
 		await sleep(10);
 		lastClickedElement = e.target;
 	});
-
-
-
-
 };
 
 window.addEventListener("beforeunload", (e) => {
@@ -1229,7 +1241,7 @@ var opacityLock = false;
 var negativeTime = true;
 var autoHideMenu = false;
 
-inputBlacklist = ['youtubeInput', 'draft-name']
+inputBlacklist = ["youtubeInput", "draft-name"];
 inputs.forEach((input) => {
 	if (inputBlacklist.includes(input.id)) return;
 	input.addEventListener("focus", () => {
@@ -1242,7 +1254,6 @@ inputs.forEach((input) => {
 	});
 });
 
-
 addToFonts("Time New Roman", "times-new-roman");
 for (let x of fonts) {
 	if (x[1] == "Times New Roman") {
@@ -1252,18 +1263,17 @@ for (let x of fonts) {
 }
 
 function onTabSwitch() {
-    Main() 
-    // Place your custom function logic here
+	Main();
+	// Place your custom function logic here
 }
 
 // Listen for visibility changes
-document.addEventListener("visibilitychange", function() {
-    if (document.hidden) {
-    } else {
-        onTabSwitch();
-    }
+document.addEventListener("visibilitychange", function () {
+	if (document.hidden) {
+	} else {
+		onTabSwitch();
+	}
 });
-
 
 setInterval(Main, 1000);
 Main();
