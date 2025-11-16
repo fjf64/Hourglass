@@ -798,6 +798,7 @@ input[type="file"] {
 .organizer-box.change {
 	display: block;
 }
+
 .preset-box {
 	display: none;
 }
@@ -906,6 +907,7 @@ input[type="file"] {
 	margin-top: 0.5vh; */
 	transform: translate(0, 1vh) rotate(45deg);
 }
+
 .preset-x-button {
 	position: absolute;
 	cursor: pointer;

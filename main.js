@@ -1010,7 +1010,7 @@ function Main() {
 	if (usedSchedule == undefined) {
 		document.getElementById("current-chedule-wrapper").style.backgroundColor = "#5e0000ff";
 		// document.getElementById("preset-wrapper").style.backgroundColor = "#5e0000ff";
-				flashElement(document.getElementById("preset-wrapper"), ["style", "background"], '', badBackground, 500, 2);
+		flashElement(document.getElementById("preset-wrapper"), ["style", "background"], '', badBackground, 500, 2);
 		return;
 	}
 	document.getElementById("current-chedule-wrapper").style.backgroundColor = "";
