@@ -483,11 +483,17 @@ function optionHover(selfItem, toggle) {
 		// console.log(document.getElementById("schedule-tooltip").display)
 	}
 }
-function selectOption(element, option) {
+function selectOption(element, option, skipGetAttribute = false) {
 	ChangeElement("", document.getElementById("schedules"), ["style", "display"], "none");
-	element.setAttribute("data-value", option.getAttribute("data-value"));
-	element.textContent = option.querySelector(".schedule-text").textContent;
-	scheduleValue = option.getAttribute("data-value");
+	if (!skipGetAttribute) {
+		element.setAttribute("data-value", option.getAttribute("data-value"));
+		element.textContent = option.querySelector(".schedule-text").textContent;
+		scheduleValue = option.getAttribute("data-value");
+	} else {
+		element.setAttribute("data-value", option);
+		element.textContent = option;
+		scheduleValue = option;
+	}
 	document.getElementById("schedule-tooltip").textContent = schedules[scheduleValue].map(([period, time]) => `${period}: ${time}`).join("\n\n");
 }
 
@@ -544,6 +550,10 @@ function addToSchedule(nameKey, items) {
 		selectOption(document.getElementById("schedule-picker"), initialOption);
 	}
 
+	for (element of document.getElementsByClassName("autoSwitchList")) {
+		element.appendChild(createElementFromHTML("<option value=" + (JSON.stringify(nameKey)) + ">" + nameKey + "</option>"))
+	}
+
 	flashElement(document.getElementById("settings-column-4"), ["style", "background"], saveBackground, goodBackground, 500, 1);
 }
 function openDB() {
@@ -583,7 +593,9 @@ function allInputs() {
 			negativeTime: true,
 			autoHideMenu: false,
 		},
-		C2: {},
+		C2: {
+			autoswitch: []
+		},
 		C3: {
 			scheduleCurrent: [],
 			scheduleFront: {},
@@ -612,12 +624,16 @@ function allInputs() {
 	returnal.C1.negativeTime = negativeTime;
 	returnal.C1.autoHideMenu = autoHideMenu;
 	//Column 2
+	for (element of document.getElementsByClassName("autoSwitchList")) {
+		returnal.C2.autoswitch.push(element.value)
+	}
 
 	//column 3
 	returnal.C3.scheduleCurrent = [document.getElementById("schedule-picker").getAttribute("data-value"), document.getElementById("schedule-picker").textContent];
 	returnal.C3.scheduleFront = document.getElementById("schedule-specific").innerHTML;
 	returnal.C3.scheduleBack = schedules;
 	returnal.C3.audio = audioToggle;
+	returnal.C3.autoSwitch = autoToggle;
 	returnal.C3.volume = document.getElementById("volume").value;
 	returnal.C3.currentSound = document.getElementById("current-sound").innerHTML;
 	returnal.C3.audioForm = audioForm;
@@ -789,14 +805,31 @@ async function cacheRecall(selfItem, startup = false, source = "") {
 				};
 			}
 			schedules = cacheBox.C3.scheduleBack;
+			for (let name of Object.keys(schedules)) {
+				for (element of document.getElementsByClassName("autoSwitchList")) {
+					element.appendChild(createElementFromHTML("<option value=" + JSON.stringify(name) + ">" + name + "</option>"))
+				}
+			}
+			for (i in document.getElementsByClassName("autoSwitchList")) {
+					document.getElementsByClassName("autoSwitchList")[i].value = cacheBox.C2.autoswitch[i]
+			}
 			document.getElementById("volume").value = cacheBox.C3.volume;
 			audioToggle = cacheBox.C3.audio;
+			autoToggle = cacheBox.C3.autoSwitch;
 			if (audioToggle) {
 				document.getElementById("audio-box").checked = true;
 				document.getElementById("audio-box").dispatchEvent(new Event("change", { bubbles: true }));
 			} else {
 				document.getElementById("audio-box").checked = false;
 				document.getElementById("audio-box").dispatchEvent(new Event("change", { bubbles: true }));
+			}
+			if (autoToggle) {
+				document.getElementById("auto-box").checked = true;
+				IdToggle('auto-switch-organizer', ['auto-switch-organizer'], 'change')
+				document.getElementById("auto-box").dispatchEvent(new Event("change", { bubbles: true }));
+			} else {
+				document.getElementById("auto-box").checked = false;
+				document.getElementById("auto-box").dispatchEvent(new Event("change", { bubbles: true }));
 			}
 			if (!(source == "clipboard")) {
 				const db = await openDB();
@@ -895,6 +928,15 @@ function postCommand(func, args = []) {
 		);
 	}
 }
+var autoToggle = false
+function allowSwitch() {
+	if (autoToggle) {
+		autoToggle = false;
+	} else {
+		autoToggle = true;
+	}
+}
+
 var audioToggle = false;
 var audioForm = "file";
 function activateNoise() {
@@ -909,6 +951,7 @@ function allowAudio() {
 		audioToggle = true;
 	}
 }
+
 function stopAudio() {
 	const audio = document.getElementById("audioPlayer");
 
@@ -1005,7 +1048,12 @@ function setAudioURL(reset = "nah") {
 }
 
 function Main() {
+	if (autoToggle) {
+		dayswitchpick = document.getElementsByClassName("autoSwitchList")[new Date().getDay()]
+		selectOption(document.getElementById("schedule-picker"), dayswitchpick.value, true)
+	}
 	var currentSchedule = scheduleValue;
+
 	var usedSchedule = schedules[currentSchedule];
 	if (usedSchedule == undefined) {
 		document.getElementById("current-chedule-wrapper").style.backgroundColor = "#5e0000ff";

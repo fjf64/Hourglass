@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- To-Do - move auto YSHS append functions to link-->
+<!-- To-Do - implement autoswitch (auto-box)-->
 
 <head>
 	<meta charset="UTF-8" />
@@ -283,6 +283,70 @@
 					</div>
 				</div>
 			</div>
+			<hr class="options-seperator-mini" />
+			<div class="middle-align" style="margin-bottom: 1vh">
+				<button style="min-width: 0; padding: 0; display: inline-block; margin-left: 0.5vh; margin-right: 0.5vh; border: none; width: 100%">
+					<label class="switch" style="width: 100%">
+						<input id="auto-box" type="checkbox" onclick="allowSwitch(); IdToggle('auto-switch-organizer', ['auto-switch-organizer'], 'change')" /><span class="slider">
+							<p style="font-size: 2vh; line-height: 0; padding: 0; margin: 0; margin-top: 1.9vh">Auto Switch</p>
+						</span>
+					</label>
+				</button>
+			</div>
+
+			<div class="organizer-box" id="auto-switch-organizer">
+				<hr class="options-seperator-mini" />
+				<div class="middle-align">
+					<p for="s-list" class="organizer-text">S:</p>
+
+					<select name="s-list" class="autoSwitchList" id="s-list">
+
+					</select>
+				</div>
+				<div class="middle-align">
+					<p for="m-list" class="organizer-text">M:</p>
+
+					<select name="m-list" class="autoSwitchList" id="m-list">
+
+					</select>
+				</div>
+				<div class="middle-align">
+					<p for="t-list" class="organizer-text">T:</p>
+
+					<select name="t-list" class="autoSwitchList" id="t-list">
+
+					</select>
+				</div>
+				<div class="middle-align">
+					<p for="w-list" class="organizer-text">W:</p>
+
+					<select name="w-list" class="autoSwitchList" id="w-list">
+
+					</select>
+				</div>
+				<div class="middle-align">
+					<p for="T-list" class="organizer-text">T:</p>
+
+					<select name="T-list" class="autoSwitchList" id="T-list">
+
+					</select>
+				</div>
+				<div class="middle-align">
+					<p for="f-list" class="organizer-text">F:</p>
+
+					<select name="f-list" class="autoSwitchList" id="f-list">
+
+					</select>
+				</div>
+				<div class="middle-align">
+					<p for="s-list" class="organizer-text">S:</p>
+
+					<select name="s-list" class="autoSwitchList" id="s-list">
+
+					</select>
+				</div>
+			</div>
+
 			<div style="display: flex; justify-content: center; flex-direction: column; align-items: center">
 				<hr class="options-seperator" />
 				<div id="period-selectors" style="display: block; justify-content: center; align-items: center; width: 100%">
